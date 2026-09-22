@@ -1,0 +1,47 @@
+[
+  {
+    "id": "thai",
+    "name": "Thaise massage",
+    "description": "Traditionele Thaise technieken met warme, geurloze olie.",
+    "image": "",
+    "imageAlt": "Thaise massage bij Baitan",
+    "active": true,
+    "durations": [{"minutes":60,"price":65},{"minutes":90,"price":95},{"minutes":120,"price":125}]
+  },
+  {
+    "id": "aroma",
+    "name": "Aromatherapie-massage",
+    "description": "Thaise oliemassage met een geur naar keuze.",
+    "image": "",
+    "imageAlt": "Aromatherapie-massage bij Baitan",
+    "active": true,
+    "durations": [{"minutes":60,"price":65},{"minutes":90,"price":95},{"minutes":120,"price":125}]
+  },
+  {
+    "id": "sport",
+    "name": "Sportmassage",
+    "description": "",
+    "image": "",
+    "imageAlt": "Sportmassage bij Baitan",
+    "active": true,
+    "durations": [{"minutes":60,"price":70},{"minutes":90,"price":100},{"minutes":120,"price":130}]
+  },
+  {
+    "id": "hotstone",
+    "name": "Hot stone massage",
+    "description": "Massage met warme stenen.",
+    "image": "",
+    "imageAlt": "Hot stone massage bij Baitan",
+    "active": true,
+    "durations": [{"minutes":60,"price":70},{"minutes":90,"price":100},{"minutes":120,"price":130}]
+  },
+  {
+    "id": "duo",
+    "name": "Duo-massage",
+    "description": "Samen genieten van een massage.",
+    "image": "",
+    "imageAlt": "Duo-massage bij Baitan",
+    "active": true,
+    "durations": [{"minutes":60,"price":120},{"minutes":90,"price":170},{"minutes":120,"price":220}]
+  }
+]
