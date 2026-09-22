@@ -1,0 +1,6 @@
+{
+  "name": "baitan-thai-massage",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {"build": "python3 build.py"}
+}
