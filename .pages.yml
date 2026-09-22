@@ -1,0 +1,185 @@
+media:
+  - name: images
+    label: Website foto's
+    input: assets/images
+    output: /assets/images
+    extensions: [jpg, jpeg, png, webp]
+    categories: [image]
+    rename: safe
+
+content:
+  - name: website
+    label: Website instellingen
+    type: file
+    path: data/site.json
+    format: json
+    operations:
+      create: false
+      rename: false
+      delete: false
+    fields:
+      - {name: businessName, label: Bedrijfsnaam, type: string, required: true}
+      - {name: tagline, label: Korte omschrijving, type: string}
+      - {name: phoneDisplay, label: Telefoonnummer zichtbaar, type: string, required: true}
+      - {name: phoneHref, label: Telefoonnummer technisch (+31...), type: string, required: true}
+      - {name: email, label: E-mailadres, type: string, required: true}
+      - {name: address, label: Volledig adres, type: string, required: true}
+      - {name: addressLine1, label: Straat en huisnummer, type: string, required: true}
+      - {name: postalCity, label: Postcode en plaats, type: string, required: true}
+      - {name: kvk, label: KvK-nummer, type: string}
+      - {name: btw, label: BTW-nummer, type: string}
+
+      - name: hero
+        label: Bovenkant website
+        type: object
+        fields:
+          - {name: eyebrow, label: Kleine tekst boven titel, type: string}
+          - {name: title, label: Hoofdtitel, type: string}
+          - {name: text, label: Introductietekst, type: text}
+          - {name: primaryButton, label: Primaire knop, type: string}
+          - {name: secondaryButton, label: Tweede knop, type: string}
+          - name: image
+            label: Grote hero-foto
+            type: image
+            options: {media: images}
+          - {name: imageAlt, label: Beschrijving hero-foto, type: string}
+          - {name: badge, label: Kleine tekst op foto, type: string}
+
+      - name: trust
+        label: Snelle informatie
+        type: object
+        fields:
+          - {name: parking, label: Parkeerinformatie, type: string}
+          - {name: location, label: Locatie, type: string}
+
+      - name: booking
+        label: Reserveringssectie
+        type: object
+        fields:
+          - {name: kicker, label: Kleine titel, type: string}
+          - {name: title, label: Titel, type: string}
+          - {name: text, label: Korte uitleg, type: text}
+          - {name: panelTitle, label: Titel in boekingspaneel, type: string}
+          - {name: apiBase, label: Reserverings-API URL, type: string, description: 'Leeg laten wanneer de API op hetzelfde domein draait.'}
+
+      - name: about
+        label: Over Baitan
+        type: object
+        fields:
+          - {name: kicker, label: Kleine titel, type: string}
+          - {name: title, label: Titel, type: string}
+          - {name: text, label: Tekst, type: text}
+          - name: image
+            label: Foto
+            type: image
+            options: {media: images}
+          - {name: imageAlt, label: Beschrijving foto, type: string}
+          - name: facts
+            label: Korte kenmerken
+            type: string
+            list: true
+
+      - name: giftCard
+        label: Cadeaubon
+        type: object
+        fields:
+          - {name: enabled, label: Tonen, type: boolean}
+          - {name: title, label: Titel, type: string}
+          - {name: text, label: Tekst, type: text}
+          - {name: button, label: Knoptekst, type: string}
+
+      - name: loyalty
+        label: Spaarkaart
+        type: object
+        fields:
+          - {name: enabled, label: Tonen, type: boolean}
+          - {name: title, label: Titel, type: string}
+          - {name: text, label: Tekst, type: text}
+          - {name: button, label: Knoptekst, type: string}
+
+      - name: reviews
+        label: Google reviews
+        type: object
+        fields:
+          - {name: rating, label: Gemiddelde score, type: number}
+          - {name: count, label: Aantal reviews, type: number}
+          - {name: button, label: Knoptekst, type: string}
+          - {name: url, label: Google Reviews-link, type: string}
+
+      - name: faq
+        label: Veelgestelde vragen
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{question}"
+        fields:
+          - {name: question, label: Vraag, type: string, required: true}
+          - {name: answer, label: Antwoord, type: text, required: true}
+
+      - name: opening
+        label: Openingstijden
+        type: object
+        fields:
+          - {name: weekdayLabel, label: Dagen doordeweeks, type: string}
+          - {name: weekdayOpen, label: Openingstijd doordeweeks, type: string}
+          - {name: weekdayClose, label: Sluitingstijd doordeweeks, type: string}
+          - {name: weekendLabel, label: Dagen weekend, type: string}
+          - {name: weekendOpen, label: Openingstijd weekend, type: string}
+          - {name: weekendClose, label: Sluitingstijd weekend, type: string}
+          - {name: slotMinutes, label: Interval reserveringstijden (minuten), type: number}
+
+      - name: contact
+        label: Contact & route
+        type: object
+        fields:
+          - {name: kicker, label: Kleine titel, type: string}
+          - {name: routeUrl, label: Google Maps route-link, type: string}
+          - {name: mapEmbedUrl, label: Google Maps embed-link, type: string}
+
+      - name: seo
+        label: Google / SEO
+        type: object
+        fields:
+          - {name: title, label: SEO-titel, type: string}
+          - {name: description, label: Meta description, type: text}
+          - {name: ogTitle, label: Titel bij delen, type: string}
+          - {name: ogDescription, label: Omschrijving bij delen, type: text}
+          - {name: canonical, label: Definitieve website-URL, type: string}
+
+  - name: treatments
+    label: Massages & prijzen
+    type: file
+    path: data/treatments.json
+    format: json
+    list: true
+    operations:
+      create: false
+      rename: false
+      delete: false
+    fields:
+      - {name: id, label: Technische ID, type: string, required: true, readonly: true}
+      - {name: name, label: Naam massage, type: string, required: true}
+      - {name: description, label: Omschrijving, type: text}
+      - name: image
+        label: Foto bij massage
+        type: image
+        options: {media: images}
+      - {name: imageAlt, label: Beschrijving foto, type: string}
+      - {name: active, label: Tonen op website, type: boolean}
+      - name: durations
+        label: Duur en prijs
+        type: object
+        list:
+          collapsible:
+            collapsed: false
+            summary: "{minutes} min — €{price}"
+        fields:
+          - {name: minutes, label: Minuten, type: number, required: true}
+          - {name: price, label: Prijs in euro, type: number, required: true}
+
+settings:
+  commit:
+    identity: app
+    templates:
+      update: "Baitan website aangepast via Pages CMS: {path}"
