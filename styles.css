@@ -116,3 +116,16 @@
   .treatment-dialog-grid{grid-template-columns:1fr}.dialog-media{min-height:0;aspect-ratio:16/10}.dialog-content,.legal-dialog .dialog-content{padding:30px 22px}.dialog-prices{grid-template-columns:1fr}.dialog-prices span{border-right:0;border-bottom:1px solid var(--line)}.dialog-prices span:last-child{border-bottom:0}.dialog-actions{display:grid}.dialog-actions .btn{width:100%}
   .detail-hero-photo{min-height:0;aspect-ratio:16/10}
 }
+
+/* 2026 mobile polish */
+.hero-photo img,.treatment-media img,.gallery-item img,.about-photo img,.gift-visual img{filter:saturate(.94) contrast(1.02)}
+.treatment-visual,.booking-shell,.choice-shell,.seo-card-grid{border-radius:18px}.treatment-visual,.booking-shell,.choice-shell{box-shadow:0 18px 55px rgba(47,41,31,.07)}
+.treatment-media,.booking-visual{border-radius:17px 17px 0 0}.btn{border-radius:999px}.duration-option,.slot,select,.booking-input{border-radius:12px}
+@media(max-width:720px){
+ .section{padding:56px 0}.hero-copy{padding-top:34px}.hero-photo{aspect-ratio:5/4}.hero-photo img{object-position:center 42%}
+ .trustbar{background:#fff}.trust-grid{gap:0}.trust-item{min-width:0}.trust-value{line-height:1.25}
+ .booking-shell,.choice-shell,.treatment-visual{border-radius:16px}.booking-copy{border-radius:15px 15px 0 0}
+ .visual-treatments{gap:18px}.treatment-media,.treatment-visual:nth-child(1) .treatment-media,.treatment-visual:nth-child(2) .treatment-media{aspect-ratio:4/3}
+ .gallery-grid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:10px;margin-right:-16px;padding-right:16px;scrollbar-width:none}.gallery-grid::-webkit-scrollbar{display:none}.gallery-item,.gallery-item-wide,.gallery-item:nth-child(2){flex:0 0 82%;height:auto;aspect-ratio:4/3;scroll-snap-align:start}
+ .footer{padding-top:48px}.footer-grid{gap:30px}.mobile-book{min-height:54px}
+}
