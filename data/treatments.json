@@ -12,7 +12,7 @@
     ],
     "seoTitle": "Thaise Massage Capelle aan den IJssel | Baitan",
     "seoDescription": "Boek een Thaise massage in Capelle aan den IJssel bij Baitan. Bekijk de behandeling, actuele duur en prijzen voor 60, 90 en 120 minuten.",
-    "image": "",
+    "image": "https://cdn1.treatwell.net/images/view/v2.i16219452.w1080.h720.x9EB67FE1/",
     "imageAlt": "Thaise massage bij Baitan in Capelle aan den IJssel",
     "active": true,
     "durations": [
@@ -28,7 +28,8 @@
         "minutes": 120,
         "price": 125
       }
-    ]
+    ],
+    "imageLabel": "Baitan"
   },
   {
     "id": "aroma",
@@ -43,7 +44,7 @@
     ],
     "seoTitle": "Aromatherapie Massage Capelle | Baitan Thai Massage",
     "seoDescription": "Aromatherapie massage in Capelle aan den IJssel bij Baitan. Bekijk actuele prijzen en kies uit 60, 90 of 120 minuten.",
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1675149476008-83dbfa2ee917?auto=format&fit=crop&fm=jpg&q=80&w=1600",
     "imageAlt": "Aromatherapie massage bij Baitan in Capelle aan den IJssel",
     "active": true,
     "durations": [
@@ -59,7 +60,8 @@
         "minutes": 120,
         "price": 125
       }
-    ]
+    ],
+    "imageLabel": "Sfeerbeeld"
   },
   {
     "id": "sport",
@@ -74,7 +76,7 @@
     ],
     "seoTitle": "Sportmassage Capelle aan den IJssel | Baitan",
     "seoDescription": "Sportmassage in Capelle aan den IJssel bij Baitan. Bekijk de actuele prijzen voor 60, 90 en 120 minuten en boek een afspraak.",
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1757689314932-bec6e9c39e51?auto=format&fit=crop&fm=jpg&q=80&w=1600",
     "imageAlt": "Sportmassage bij Baitan in Capelle aan den IJssel",
     "active": true,
     "durations": [
@@ -90,7 +92,8 @@
         "minutes": 120,
         "price": 130
       }
-    ]
+    ],
+    "imageLabel": "Sfeerbeeld"
   },
   {
     "id": "hotstone",
@@ -105,7 +108,7 @@
     ],
     "seoTitle": "Hot Stone Massage Capelle | Baitan Thai Massage",
     "seoDescription": "Hot stone massage in Capelle aan den IJssel bij Baitan. Bekijk de behandeling en actuele prijzen voor 60, 90 en 120 minuten.",
-    "image": "",
+    "image": "https://images.unsplash.com/photo-1745327883348-8d78cb4661b0?auto=format&fit=crop&fm=jpg&q=80&w=1600",
     "imageAlt": "Hot stone massage bij Baitan in Capelle aan den IJssel",
     "active": true,
     "durations": [
@@ -121,7 +124,8 @@
         "minutes": 120,
         "price": 130
       }
-    ]
+    ],
+    "imageLabel": "Sfeerbeeld"
   },
   {
     "id": "duo",
@@ -136,7 +140,7 @@
     ],
     "seoTitle": "Duo Massage Capelle aan den IJssel | Baitan",
     "seoDescription": "Duo massage in Capelle aan den IJssel bij Baitan. Bekijk actuele duo-prijzen voor 60, 90 en 120 minuten en boek samen een afspraak.",
-    "image": "",
+    "image": "https://cdn1.treatwell.net/images/view/v2.i16219452.w1080.h720.x9EB67FE1/",
     "imageAlt": "Duo massage bij Baitan in Capelle aan den IJssel",
     "active": true,
     "durations": [
@@ -152,6 +156,7 @@
         "minutes": 120,
         "price": 220
       }
-    ]
+    ],
+    "imageLabel": "Baitan"
   }
 ]
