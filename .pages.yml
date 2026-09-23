@@ -23,6 +23,7 @@ content:
       - {name: phoneDisplay, label: Telefoonnummer zichtbaar, type: string, required: true}
       - {name: phoneHref, label: Telefoonnummer technisch (+31...), type: string, required: true}
       - {name: email, label: E-mailadres, type: string, required: true}
+      - {name: whatsappUrl, label: WhatsApp-link, type: string}
       - {name: address, label: Volledig adres, type: string, required: true}
       - {name: addressLine1, label: Straat en huisnummer, type: string, required: true}
       - {name: postalCity, label: Postcode en plaats, type: string, required: true}
@@ -69,6 +70,8 @@ content:
                 - {name: treatwell, label: Treatwell}
           - {name: treatwellWidgetUrl, label: Treatwell widget-URL, type: string, description: 'Gebruik de officiële websitewidget-link uit Treatwell Connect. Leeg laten als je alleen een boekingslink hebt.'}
           - {name: treatwellBookingUrl, label: Treatwell boekingslink, type: string, description: 'Officiële commissievrije/website-bookinglink uit Treatwell Connect.'}
+          - {name: image, label: Foto bij boeken, type: string}
+          - {name: imageAlt, label: Beschrijving boekingsfoto, type: string}
           - {name: apiBase, label: Reserverings-API URL, type: string, description: 'Alleen voor het eigen reserveringssysteem. Leeg laten wanneer de API op hetzelfde domein draait.'}
 
       - name: about
@@ -96,6 +99,8 @@ content:
           - {name: title, label: Titel, type: string}
           - {name: text, label: Tekst, type: text}
           - {name: button, label: Knoptekst, type: string}
+          - {name: image, label: Cadeaubon sfeerfoto, type: string}
+          - {name: imageAlt, label: Beschrijving sfeerfoto, type: string}
 
       - name: loyalty
         label: Spaarkaart
@@ -105,6 +110,18 @@ content:
           - {name: title, label: Titel, type: string}
           - {name: text, label: Tekst, type: text}
           - {name: button, label: Knoptekst, type: string}
+
+      - name: gallery
+        label: Galerij / sfeerbeelden
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{label}"
+        fields:
+          - {name: image, label: Afbeeldings-URL of pad, type: string, required: true}
+          - {name: alt, label: Alt-tekst, type: string, required: true}
+          - {name: label, label: Label (Baitan of Sfeerbeeld), type: string}
 
       - name: reviews
         label: Google reviews
@@ -185,6 +202,7 @@ content:
         type: image
         options: {media: images}
       - {name: imageAlt, label: Beschrijving foto, type: string}
+      - {name: imageLabel, label: Foto-label (Baitan of Sfeerbeeld), type: string}
       - {name: active, label: Tonen op website, type: boolean}
       - name: durations
         label: Duur en prijs
