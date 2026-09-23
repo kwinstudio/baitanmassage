@@ -24,6 +24,11 @@ jobs:
           test -f dist/assets/images/hot-stone-massage.webp
           test -f dist/assets/images/thai-leg-massage.webp
           test -f dist/assets/images/thai-hand-massage.webp
+          test -f dist/assets/images/thai-back-massage.webp
+          test -f dist/assets/images/thai-oil-massage.webp
+          test -f dist/assets/images/thai-shoulder-massage.webp
+          test -f dist/assets/images/thai-shoulder-closeup.webp
+          test -f dist/assets/images/thai-herbal-compress.webp
           grep -q "/assets/images/thai-head-massage.webp" dist/index.html
           ! grep -q "images.unsplash.com" dist/index.html
           ! grep -q "cdn1.treatwell.net/images" dist/index.html
