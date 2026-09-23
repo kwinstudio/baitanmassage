@@ -60,7 +60,16 @@ content:
           - {name: title, label: Titel, type: string}
           - {name: text, label: Korte uitleg, type: text}
           - {name: panelTitle, label: Titel in boekingspaneel, type: string}
-          - {name: apiBase, label: Reserverings-API URL, type: string, description: 'Leeg laten wanneer de API op hetzelfde domein draait.'}
+          - name: provider
+            label: Boekingssysteem
+            type: select
+            options:
+              values:
+                - {name: custom, label: Eigen reserveringssysteem}
+                - {name: treatwell, label: Treatwell}
+          - {name: treatwellWidgetUrl, label: Treatwell widget-URL, type: string, description: 'Gebruik de officiële websitewidget-link uit Treatwell Connect. Leeg laten als je alleen een boekingslink hebt.'}
+          - {name: treatwellBookingUrl, label: Treatwell boekingslink, type: string, description: 'Officiële commissievrije/website-bookinglink uit Treatwell Connect.'}
+          - {name: apiBase, label: Reserverings-API URL, type: string, description: 'Alleen voor het eigen reserveringssysteem. Leeg laten wanneer de API op hetzelfde domein draait.'}
 
       - name: about
         label: Over Baitan
