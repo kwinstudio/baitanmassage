@@ -20,6 +20,13 @@ jobs:
           test -f dist/index.html
           test -f dist/sitemap.xml
           test -f dist/robots.txt
+          test -f dist/assets/images/thai-head-massage.webp
+          test -f dist/assets/images/hot-stone-massage.webp
+          test -f dist/assets/images/thai-leg-massage.webp
+          test -f dist/assets/images/thai-hand-massage.webp
+          grep -q "/assets/images/thai-head-massage.webp" dist/index.html
+          ! grep -q "images.unsplash.com" dist/index.html
+          ! grep -q "cdn1.treatwell.net/images" dist/index.html
           test -f dist/404.html
           test -f dist/massages.html
           test -f dist/prijzen.html
