@@ -70,8 +70,12 @@ content:
                 - {name: treatwell, label: Treatwell}
           - {name: treatwellWidgetUrl, label: Treatwell widget-URL, type: string, description: 'Gebruik de officiële websitewidget-link uit Treatwell Connect. Leeg laten als je alleen een boekingslink hebt.'}
           - {name: treatwellBookingUrl, label: Treatwell boekingslink, type: string, description: 'Officiële commissievrije/website-bookinglink uit Treatwell Connect.'}
-          - {name: image, label: Foto bij boeken, type: string}
+          - name: image
+            label: Foto bij boeken
+            type: image
+            options: {media: images}
           - {name: imageAlt, label: Beschrijving boekingsfoto, type: string}
+          - {name: imageLabel, label: Foto-label, type: string}
           - {name: apiBase, label: Reserverings-API URL, type: string, description: 'Alleen voor het eigen reserveringssysteem. Leeg laten wanneer de API op hetzelfde domein draait.'}
 
       - name: about
@@ -86,6 +90,7 @@ content:
             type: image
             options: {media: images}
           - {name: imageAlt, label: Beschrijving foto, type: string}
+          - {name: imageLabel, label: Foto-label, type: string}
           - name: facts
             label: Korte kenmerken
             type: string
@@ -99,7 +104,10 @@ content:
           - {name: title, label: Titel, type: string}
           - {name: text, label: Tekst, type: text}
           - {name: button, label: Knoptekst, type: string}
-          - {name: image, label: Cadeaubon sfeerfoto, type: string}
+          - name: image
+            label: Cadeaubon sfeerfoto
+            type: image
+            options: {media: images}
           - {name: imageAlt, label: Beschrijving sfeerfoto, type: string}
 
       - name: loyalty
@@ -119,7 +127,11 @@ content:
             collapsed: true
             summary: "{label}"
         fields:
-          - {name: image, label: Afbeeldings-URL of pad, type: string, required: true}
+          - name: image
+            label: Afbeelding
+            type: image
+            options: {media: images}
+            required: true
           - {name: alt, label: Alt-tekst, type: string, required: true}
           - {name: label, label: Label (Baitan of Sfeerbeeld), type: string}
 
