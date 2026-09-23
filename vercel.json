@@ -2,5 +2,33 @@
   "buildCommand": "python3 build.py",
   "outputDirectory": "dist",
   "cleanUrls": true,
-  "trailingSlash": false
+  "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/algemene-voorwaarden",
+      "destination": "/voorwaarden",
+      "permanent": true
+    },
+    {
+      "source": "/algemene-voorwaarden/",
+      "destination": "/voorwaarden",
+      "permanent": true
+    },
+    {
+      "source": "/contact/",
+      "destination": "/contact",
+      "permanent": true
+    }
+  ],
+  "headers": [
+    {
+      "source": "/admin/:path*",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
+    }
+  ]
 }
