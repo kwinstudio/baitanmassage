@@ -2,46 +2,156 @@
   {
     "id": "thai",
     "name": "Thaise massage",
+    "slug": "thaise-massage-capelle-aan-den-ijssel",
     "description": "Traditionele Thaise technieken met warme, geurloze olie.",
+    "detailText": "Bij de authentieke Thaise oliemassage combineert Baitan traditionele Thaise methoden met zachte rekbewegingen en spierbewerking met warme, geurloze olie. Op verzoek kan het rekken worden weggelaten en ligt de nadruk volledig op de massage.",
+    "features": [
+      "Traditionele Thaise technieken",
+      "Warme, geurloze olie",
+      "60, 90 of 120 minuten"
+    ],
+    "seoTitle": "Thaise Massage Capelle aan den IJssel | Baitan",
+    "seoDescription": "Boek een Thaise massage in Capelle aan den IJssel bij Baitan. Bekijk de behandeling, actuele duur en prijzen voor 60, 90 en 120 minuten.",
     "image": "",
-    "imageAlt": "Thaise massage bij Baitan",
+    "imageAlt": "Thaise massage bij Baitan in Capelle aan den IJssel",
     "active": true,
-    "durations": [{"minutes":60,"price":65},{"minutes":90,"price":95},{"minutes":120,"price":125}]
+    "durations": [
+      {
+        "minutes": 60,
+        "price": 65
+      },
+      {
+        "minutes": 90,
+        "price": 95
+      },
+      {
+        "minutes": 120,
+        "price": 125
+      }
+    ]
   },
   {
     "id": "aroma",
     "name": "Aromatherapie-massage",
+    "slug": "aromatherapie-massage-capelle",
     "description": "Thaise oliemassage met een geur naar keuze.",
+    "detailText": "De aromatherapie-massage van Baitan volgt de principes van de Thaise oliemassage en voegt een geur naar keuze toe. De behandeling is beschikbaar in dezelfde vaste tijdsduren als de Thaise massage.",
+    "features": [
+      "Geur naar keuze",
+      "Thaise oliemassage",
+      "60, 90 of 120 minuten"
+    ],
+    "seoTitle": "Aromatherapie Massage Capelle | Baitan Thai Massage",
+    "seoDescription": "Aromatherapie massage in Capelle aan den IJssel bij Baitan. Bekijk actuele prijzen en kies uit 60, 90 of 120 minuten.",
     "image": "",
-    "imageAlt": "Aromatherapie-massage bij Baitan",
+    "imageAlt": "Aromatherapie massage bij Baitan in Capelle aan den IJssel",
     "active": true,
-    "durations": [{"minutes":60,"price":65},{"minutes":90,"price":95},{"minutes":120,"price":125}]
+    "durations": [
+      {
+        "minutes": 60,
+        "price": 65
+      },
+      {
+        "minutes": 90,
+        "price": 95
+      },
+      {
+        "minutes": 120,
+        "price": 125
+      }
+    ]
   },
   {
     "id": "sport",
     "name": "Sportmassage",
-    "description": "",
+    "slug": "sportmassage-capelle",
+    "description": "Sportmassage uit het actuele behandelaanbod van Baitan.",
+    "detailText": "Baitan biedt sportmassage aan in Capelle aan den IJssel. De behandeling is te boeken voor 60, 90 of 120 minuten. Omdat Baitan op de huidige website geen uitgebreidere behandelomschrijving publiceert, houden we de informatie hier bewust bij de geverifieerde praktische gegevens.",
+    "features": [
+      "Actueel Baitan-aanbod",
+      "60, 90 of 120 minuten",
+      "Locatie Capelle aan den IJssel"
+    ],
+    "seoTitle": "Sportmassage Capelle aan den IJssel | Baitan",
+    "seoDescription": "Sportmassage in Capelle aan den IJssel bij Baitan. Bekijk de actuele prijzen voor 60, 90 en 120 minuten en boek een afspraak.",
     "image": "",
-    "imageAlt": "Sportmassage bij Baitan",
+    "imageAlt": "Sportmassage bij Baitan in Capelle aan den IJssel",
     "active": true,
-    "durations": [{"minutes":60,"price":70},{"minutes":90,"price":100},{"minutes":120,"price":130}]
+    "durations": [
+      {
+        "minutes": 60,
+        "price": 70
+      },
+      {
+        "minutes": 90,
+        "price": 100
+      },
+      {
+        "minutes": 120,
+        "price": 130
+      }
+    ]
   },
   {
     "id": "hotstone",
     "name": "Hot stone massage",
+    "slug": "hot-stone-massage-capelle",
     "description": "Massage met warme stenen.",
+    "detailText": "De hot stone massage van Baitan combineert traditionele massagetechnieken met warme stenen. De warmte vormt een extra onderdeel van de behandeling en de massage is beschikbaar voor 60, 90 of 120 minuten.",
+    "features": [
+      "Warme stenen",
+      "Traditionele massagetechnieken",
+      "60, 90 of 120 minuten"
+    ],
+    "seoTitle": "Hot Stone Massage Capelle | Baitan Thai Massage",
+    "seoDescription": "Hot stone massage in Capelle aan den IJssel bij Baitan. Bekijk de behandeling en actuele prijzen voor 60, 90 en 120 minuten.",
     "image": "",
-    "imageAlt": "Hot stone massage bij Baitan",
+    "imageAlt": "Hot stone massage bij Baitan in Capelle aan den IJssel",
     "active": true,
-    "durations": [{"minutes":60,"price":70},{"minutes":90,"price":100},{"minutes":120,"price":130}]
+    "durations": [
+      {
+        "minutes": 60,
+        "price": 70
+      },
+      {
+        "minutes": 90,
+        "price": 100
+      },
+      {
+        "minutes": 120,
+        "price": 130
+      }
+    ]
   },
   {
     "id": "duo",
     "name": "Duo-massage",
-    "description": "Samen genieten van een massage.",
+    "slug": "duo-massage-capelle",
+    "description": "Samen genieten van een massage bij Baitan.",
+    "detailText": "Bij Baitan kun je samen met een vriend, vriendin of partner een duo-massage boeken. De duo-massage is beschikbaar voor 60, 90 of 120 minuten en wordt als aparte behandeling aangeboden.",
+    "features": [
+      "Samen boeken",
+      "60, 90 of 120 minuten",
+      "Aparte duo-prijzen"
+    ],
+    "seoTitle": "Duo Massage Capelle aan den IJssel | Baitan",
+    "seoDescription": "Duo massage in Capelle aan den IJssel bij Baitan. Bekijk actuele duo-prijzen voor 60, 90 en 120 minuten en boek samen een afspraak.",
     "image": "",
-    "imageAlt": "Duo-massage bij Baitan",
+    "imageAlt": "Duo massage bij Baitan in Capelle aan den IJssel",
     "active": true,
-    "durations": [{"minutes":60,"price":120},{"minutes":90,"price":170},{"minutes":120,"price":220}]
+    "durations": [
+      {
+        "minutes": 60,
+        "price": 120
+      },
+      {
+        "minutes": 90,
+        "price": 170
+      },
+      {
+        "minutes": 120,
+        "price": 220
+      }
+    ]
   }
 ]
