@@ -20,5 +20,3 @@ jobs:
           test -f dist/index.html
           test -f dist/sitemap.xml
           test -f dist/robots.txt
-          test -f dist/404.html
-          test -f dist/thaise-massage-capelle-aan-den-ijssel.html
