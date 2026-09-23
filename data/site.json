@@ -11,8 +11,8 @@
   "btw": "NL003949907B52",
   "hero": {
     "eyebrow": "Thai Massage & Wellness · Capelle aan den IJssel",
-    "title": "Tijd voor ontspanning.",
-    "text": "Thaise massage, aromatherapie, sportmassage, hot stone en duo-massage.",
+    "title": "Thaise massage in Capelle aan den IJssel",
+    "text": "Authentieke Thaise massage, aromatherapie, sportmassage, hot stone en duo-massage bij Baitan.",
     "primaryButton": "Boek een massage",
     "secondaryButton": "Bekijk massages",
     "image": "https://cdn1.treatwell.net/images/view/v2.i16219452.w1080.h720.x9EB67FE1/",
@@ -62,7 +62,8 @@
     "rating": 4.8,
     "count": 113,
     "button": "Bekijk reviews",
-    "url": "https://www.google.com/maps/search/?api=1&query=Baitan+Thai+Massage+Hollandsch+Diep+71+Capelle+aan+den+IJssel"
+    "url": "https://www.google.com/maps/search/?api=1&query=Baitan+Thai+Massage+Hollandsch+Diep+71+Capelle+aan+den+IJssel",
+    "writeUrl": "https://search.google.com/local/writereview?placeid=ChIJq_OXztzTxUcRKp8nM5EFAqw"
   },
   "faq": [
     {
@@ -101,10 +102,11 @@
     "mapEmbedUrl": "https://www.google.com/maps?q=Hollandsch%20Diep%2071-73%2C%202904%20EP%20Capelle%20aan%20den%20IJssel&output=embed"
   },
   "seo": {
-    "title": "Baitan Thai Massage | Thaise massage in Capelle aan den IJssel",
-    "description": "Baitan Thai Massage in Capelle aan den IJssel. Bekijk massages en prijzen en boek direct online.",
-    "ogTitle": "Baitan Thai Massage — Capelle aan den IJssel",
-    "ogDescription": "Thaise massage & wellness aan het Hollandsch Diep. Bekijk massages, prijzen en boek online.",
-    "canonical": "https://baitanmassage.nl/"
+    "title": "Thaise Massage Capelle aan den IJssel | Baitan",
+    "description": "Thaise massage in Capelle aan den IJssel bij Baitan. Bekijk behandelingen, actuele prijzen en openingstijden en boek eenvoudig een afspraak.",
+    "ogTitle": "Thaise Massage Capelle aan den IJssel | Baitan",
+    "ogDescription": "Bekijk Thaise massage, aromatherapie, sportmassage, hot stone en duo-massage bij Baitan in Capelle aan den IJssel.",
+    "canonical": "https://baitanmassage.nl/",
+    "ogImage": "https://cdn1.treatwell.net/images/view/v2.i16219452.w1080.h720.x9EB67FE1/"
   }
 }
