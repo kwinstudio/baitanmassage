@@ -33,20 +33,22 @@
     "treatwellWidgetUrl": "",
     "treatwellBookingUrl": "https://www.treatwell.nl/salon/baitan-massage/",
     "image": "/assets/images/thai-shoulder-closeup.webp",
-    "imageAlt": "Sfeerbeeld van een gerichte schoudermassage"
+    "imageAlt": "Sfeerbeeld van een gerichte schoudermassage",
+    "imageLabel": "Sfeerbeeld"
   },
   "about": {
     "kicker": "Over Baitan",
     "title": "Thaise wellness in Capelle",
     "text": "Baitan biedt ontspannings- en wellnessmassages aan het Hollandsch Diep in Capelle aan den IJssel.",
-    "image": "https://cdn1.treatwell.net/images/view/v2.i16219452.w1080.h720.x9EB67FE1/",
-    "imageAlt": "Interieur van Baitan Thai Massage",
+    "image": "/assets/images/thai-herbal-compress.webp",
+    "imageAlt": "Sfeerbeeld van een Thaise massage met warme kruidenstempels",
     "facts": [
       "Douchen mogelijk",
       "Pin & contant",
       "Gratis parkeren",
       "Wellnessmassage"
-    ]
+    ],
+    "imageLabel": "Sfeerbeeld"
   },
   "giftCard": {
     "enabled": true,
@@ -54,7 +56,7 @@
     "text": "Verkrijgbaar in de salon en 12 maanden geldig, tenzij anders vermeld.",
     "button": "Bel voor een cadeaubon",
     "image": "/assets/images/thai-hand-massage.webp",
-    "imageAlt": "Sfeerbeeld van een ontspannende handmassage"
+    "imageAlt": "Sfeerbeeld van een rustige handmassage"
   },
   "loyalty": {
     "enabled": true,
