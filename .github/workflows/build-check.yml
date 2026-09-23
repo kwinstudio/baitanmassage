@@ -20,3 +20,15 @@ jobs:
           test -f dist/index.html
           test -f dist/sitemap.xml
           test -f dist/robots.txt
+          test -f dist/404.html
+          test -f dist/massages.html
+          test -f dist/prijzen.html
+          test -f dist/contact.html
+          test -f dist/thaise-massage-capelle-aan-den-ijssel.html
+          test -f dist/aromatherapie-massage-capelle.html
+          test -f dist/sportmassage-capelle.html
+          test -f dist/hot-stone-massage-capelle.html
+          test -f dist/duo-massage-capelle.html
+          grep -q "Thaise Massage Capelle aan den IJssel" dist/index.html
+          grep -q "sitemap.xml" dist/robots.txt
+          grep -q "thaise-massage-capelle-aan-den-ijssel" dist/sitemap.xml
