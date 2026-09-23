@@ -31,7 +31,9 @@
     "apiBase": "",
     "provider": "treatwell",
     "treatwellWidgetUrl": "",
-    "treatwellBookingUrl": "https://www.treatwell.nl/salon/baitan-massage/"
+    "treatwellBookingUrl": "https://www.treatwell.nl/salon/baitan-massage/",
+    "image": "https://cdn1.treatwell.net/images/view/v2.i16219452.w1080.h720.x9EB67FE1/",
+    "imageAlt": "Behandelruimte van Baitan Thai Massage"
   },
   "about": {
     "kicker": "Over Baitan",
@@ -50,7 +52,9 @@
     "enabled": true,
     "title": "Cadeaubon",
     "text": "Verkrijgbaar in de salon en 12 maanden geldig, tenzij anders vermeld.",
-    "button": "Bel voor een cadeaubon"
+    "button": "Bel voor een cadeaubon",
+    "image": "https://images.unsplash.com/photo-1675149476008-83dbfa2ee917?auto=format&fit=crop&fm=jpg&q=80&w=1600",
+    "imageAlt": "Sfeerbeeld met handdoeken en kaars voor wellness"
   },
   "loyalty": {
     "enabled": true,
@@ -108,5 +112,28 @@
     "ogDescription": "Bekijk Thaise massage, aromatherapie, sportmassage, hot stone en duo-massage bij Baitan in Capelle aan den IJssel.",
     "canonical": "https://baitanmassage.nl/",
     "ogImage": "https://cdn1.treatwell.net/images/view/v2.i16219452.w1080.h720.x9EB67FE1/"
-  }
+  },
+  "whatsappUrl": "https://wa.me/31683936366",
+  "gallery": [
+    {
+      "image": "https://cdn1.treatwell.net/images/view/v2.i16219452.w1080.h720.x9EB67FE1/",
+      "alt": "Behandelruimte van Baitan Thai Massage in Capelle aan den IJssel",
+      "label": "Baitan"
+    },
+    {
+      "image": "https://images.unsplash.com/photo-1772378452022-94ee7971fe80?auto=format&fit=crop&fm=jpg&q=80&w=1600",
+      "alt": "Algemeen sfeerbeeld van een rustige massageruimte",
+      "label": "Sfeerbeeld"
+    },
+    {
+      "image": "https://images.unsplash.com/photo-1757689314932-bec6e9c39e51?auto=format&fit=crop&fm=jpg&q=80&w=1600",
+      "alt": "Algemeen sfeerbeeld van een massagebehandeling",
+      "label": "Sfeerbeeld"
+    },
+    {
+      "image": "https://images.unsplash.com/photo-1745327883348-8d78cb4661b0?auto=format&fit=crop&fm=jpg&q=80&w=1600",
+      "alt": "Algemeen sfeerbeeld van een hot stone massage",
+      "label": "Sfeerbeeld"
+    }
+  ]
 }
