@@ -94,10 +94,108 @@ if(menuToggle&&navLinks){menuToggle.addEventListener('click',()=>{const open=nav
 
 const mobileBook=document.querySelector('.mobile-book');
 const bookingSection=document.querySelector('#boeken');
+let bookingVisible=false;
+function updateMobileBook(){
+  if(!mobileBook)return;
+  const scrolled=window.scrollY>420;
+  mobileBook.classList.toggle('is-hidden',!scrolled||bookingVisible);
+}
+if(mobileBook){
+  mobileBook.classList.add('is-hidden');
+  window.addEventListener('scroll',updateMobileBook,{passive:true});
+  updateMobileBook();
+}
 if(mobileBook&&bookingSection&&'IntersectionObserver' in window){
   const mobileBookObserver=new IntersectionObserver(entries=>{
-    const entry=entries[0];
-    mobileBook.classList.toggle('is-hidden',entry.isIntersecting&&entry.intersectionRatio>.08);
+    bookingVisible=entries[0].isIntersecting&&entries[0].intersectionRatio>.08;
+    updateMobileBook();
   },{threshold:[0,.08,.2]});
   mobileBookObserver.observe(bookingSection);
+}
+
+
+// Privacy-friendly Google Maps: load only after explicit click.
+document.querySelectorAll('.load-map').forEach(button=>{
+  button.addEventListener('click',()=>{
+    const shell=button.closest('.map-consent');
+    const src=shell?.dataset.mapUrl;
+    if(!shell||!src)return;
+    const iframe=document.createElement('iframe');
+    iframe.className='map';
+    iframe.title='Kaart van Baitan Thai Massage';
+    iframe.loading='lazy';
+    iframe.referrerPolicy='no-referrer-when-downgrade';
+    iframe.src=src;
+    shell.replaceWith(iframe);
+  });
+});
+
+// Five-question massage choice helper.
+const choiceShell=document.querySelector('.choice-shell');
+if(choiceShell){
+  const questions=[...choiceShell.querySelectorAll('.choice-question')];
+  const result=choiceShell.querySelector('#choiceResult');
+  const progressText=choiceShell.querySelector('#choiceProgressText');
+  const progressBar=choiceShell.querySelector('#choiceProgressBar');
+  const resultTitle=choiceShell.querySelector('#choiceResultTitle');
+  const resultText=choiceShell.querySelector('#choiceResultText');
+  const resultBook=choiceShell.querySelector('#choiceResultBook');
+  const resultDetail=choiceShell.querySelector('#choiceResultDetail');
+  const restart=choiceShell.querySelector('#choiceRestart');
+  let step=0;
+  let scores={thai:0,aroma:0,sport:0,hotstone:0,duo:0};
+
+  const messages={
+    thai:'Traditionele Thaise technieken met warme, geurloze olie.',
+    aroma:'Thaise oliemassage met een geur naar keuze.',
+    sport:'Sportmassage uit het actuele behandelaanbod van Baitan.',
+    hotstone:'Massage met warme stenen.',
+    duo:'Samen genieten van een massage bij Baitan.'
+  };
+
+  function treatmentFor(id){return cmsTreatments.find(t=>t.id===id);}
+  function showStep(index){
+    questions.forEach((q,i)=>q.hidden=i!==index);
+    if(progressText)progressText.textContent=`Vraag ${Math.min(index+1,5)} van 5`;
+    if(progressBar)progressBar.style.width=`${Math.min((index/5)*100,100)}%`;
+  }
+  function finish(){
+    questions.forEach(q=>q.hidden=true);
+    if(progressText)progressText.textContent='Je resultaat';
+    if(progressBar)progressBar.style.width='100%';
+    const best=Object.entries(scores).sort((a,b)=>b[1]-a[1])[0]?.[0]||'thai';
+    const t=treatmentFor(best);
+    if(resultTitle)resultTitle.textContent=t?.name||'Thaise massage';
+    if(resultText)resultText.textContent=messages[best]||'Bekijk deze behandeling bij Baitan.';
+    if(resultDetail)resultDetail.href=t?.slug?`/${t.slug}`:'/massages';
+    if(resultBook){
+      resultBook.dataset.service=best;
+      resultBook.addEventListener('click',()=>{
+        if(serviceSelect&&services[best]){
+          serviceSelect.value=best;
+          renderDurations(best);
+        }
+      },{once:true});
+    }
+    if(result)result.hidden=false;
+  }
+  questions.forEach((q,index)=>{
+    q.querySelectorAll('.choice-option').forEach(btn=>btn.addEventListener('click',()=>{
+      const score=btn.dataset.score;
+      if(score==='neutral'){
+        Object.keys(scores).forEach(k=>scores[k]+=0.2);
+      }else if(scores[score]!==undefined){
+        scores[score]+=2;
+      }
+      if(index===4){finish();}
+      else{step=index+1;showStep(step);}
+    }));
+  });
+  restart?.addEventListener('click',()=>{
+    scores={thai:0,aroma:0,sport:0,hotstone:0,duo:0};
+    step=0;
+    if(result)result.hidden=true;
+    showStep(0);
+  });
+  showStep(0);
 }
