@@ -37,14 +37,15 @@ def booking(site, treatments):
     treatwell_widget = str(b.get("treatwellWidgetUrl") or "").strip()
     treatwell_link = str(b.get("treatwellBookingUrl") or "").strip()
     image = b.get("image") or site.get("hero",{}).get("image")
-    image_alt = b.get("imageAlt") or "Behandelruimte van Baitan Thai Massage"
+    image_alt = b.get("imageAlt") or "Sfeerbeeld van een massagebehandeling"
+    image_label = b.get("imageLabel") or "Sfeerbeeld"
 
     if provider == "treatwell" and (treatwell_widget or treatwell_link):
         if treatwell_widget:
             booking_ui = f'''<div class="treatwell-panel"><iframe class="treatwell-widget" src="{esc(treatwell_widget)}" title="Boek een afspraak bij Baitan via Treatwell" loading="lazy" allow="payment *"></iframe></div>'''
         else:
             booking_ui = f'''<div class="treatwell-panel treatwell-link-panel"><div><div class="eyebrow">Treatwell</div><h3>Bekijk beschikbare tijden</h3><p>Boek direct in de actuele agenda van Baitan.</p><a class="btn booking-submit" href="{esc(treatwell_link)}" target="_blank" rel="noopener">Boek via Treatwell <span aria-hidden="true">→</span></a></div></div>'''
-        return f'''<section class="section" id="boeken"><div class="container"><div class="section-head"><div><div class="eyebrow">{esc(b.get('kicker'))}</div><h2>{esc(b.get('title'))}</h2></div><p>{esc(b.get('text'))}</p></div><div class="booking-shell treatwell-booking"><div class="booking-copy booking-copy-rich"><figure class="booking-visual"><img src="{esc(image)}" alt="{esc(image_alt)}" loading="lazy"><figcaption>Baitan</figcaption></figure><div class="booking-copy-text"><div class="eyebrow">Online reserveren</div><h3>{esc(b.get('panelTitle'))}</h3><p>Beschikbaarheid en afspraken worden rechtstreeks via Treatwell gesynchroniseerd.</p></div></div>{booking_ui}</div></div></section>'''
+        return f'''<section class="section" id="boeken"><div class="container"><div class="section-head"><div><div class="eyebrow">{esc(b.get('kicker'))}</div><h2>{esc(b.get('title'))}</h2></div><p>{esc(b.get('text'))}</p></div><div class="booking-shell treatwell-booking"><div class="booking-copy booking-copy-rich"><figure class="booking-visual"><img src="{esc(image)}" alt="{esc(image_alt)}" loading="lazy"><figcaption>{esc(image_label)}</figcaption></figure><div class="booking-copy-text"><div class="eyebrow">Online reserveren</div><h3>{esc(b.get('panelTitle'))}</h3><p>Beschikbaarheid en afspraken worden rechtstreeks via Treatwell gesynchroniseerd.</p></div></div>{booking_ui}</div></div></section>'''
 
     options = ''.join(f'<option value="{esc(t["id"])}">{esc(t["name"])}</option>' for t in active_treatments(treatments))
     return f'''<section class="section" id="boeken"><div class="container"><div class="section-head"><div><div class="eyebrow">{esc(b.get('kicker'))}</div><h2>{esc(b.get('title'))}</h2></div><p>{esc(b.get('text'))}</p></div><div class="booking-shell"><div class="booking-copy"><div class="eyebrow">Reserveren</div><h3 style="font-size:2.4rem;margin-top:12px">{esc(b.get('panelTitle'))}</h3><ol class="booking-steps"><li class="booking-step"><span class="booking-step-num">01</span><span>Behandeling</span></li><li class="booking-step"><span class="booking-step-num">02</span><span>Datum &amp; tijd</span></li><li class="booking-step"><span class="booking-step-num">03</span><span>Bevestigen</span></li></ol></div><div class="booking-panel">
@@ -103,7 +104,8 @@ def prices_section(treatments):
 
 def about_section(site):
     a=site['about']; facts=''.join(f'<div class="about-fact"><strong>{esc(x)}</strong></div>' for x in a.get('facts',[]))
-    return f'''<section class="section section-soft" id="over"><div class="container about-grid"><div class="about-photo"><img src="{esc(a.get('image'))}" alt="{esc(a.get('imageAlt'))}" loading="lazy"><span class="media-label">Baitan</span></div><div class="about-copy"><div class="eyebrow">{esc(a.get('kicker'))}</div><h2>{esc(a.get('title'))}</h2><p>{esc(a.get('text'))}</p><div class="about-facts">{facts}</div></div></div></section>'''
+    image_label=a.get('imageLabel') or 'Sfeerbeeld'
+    return f'''<section class="section section-soft" id="over"><div class="container about-grid"><div class="about-photo"><img src="{esc(a.get('image'))}" alt="{esc(a.get('imageAlt'))}" loading="lazy"><span class="media-label">{esc(image_label)}</span></div><div class="about-copy"><div class="eyebrow">{esc(a.get('kicker'))}</div><h2>{esc(a.get('title'))}</h2><p>{esc(a.get('text'))}</p><div class="about-facts">{facts}</div></div></div></section>'''
 
 def gallery_section(site):
     items=[]
