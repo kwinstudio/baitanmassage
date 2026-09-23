@@ -129,3 +129,110 @@
  .gallery-grid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:10px;margin-right:-16px;padding-right:16px;scrollbar-width:none}.gallery-grid::-webkit-scrollbar{display:none}.gallery-item,.gallery-item-wide,.gallery-item:nth-child(2){flex:0 0 82%;height:auto;aspect-ratio:4/3;scroll-snap-align:start}
  .footer{padding-top:48px}.footer-grid{gap:30px}.mobile-book{min-height:54px}
 }
+
+
+/* Final photo + mobile polish — uploaded imagery stays in original colour */
+.hero-photo img,
+.treatment-media img,
+.gallery-item img,
+.about-photo img,
+.gift-visual img,
+.booking-visual img,
+.choice-photo img,
+.dialog-media img,
+.detail-hero-photo img,
+.seo-card-media img{filter:none}
+
+.hero-photo img,
+.treatment-media img,
+.gallery-item img,
+.booking-visual img,
+.choice-photo img,
+.gift-visual img,
+.detail-hero-photo img,
+.seo-card-media img{object-position:center}
+
+.gallery-section .section-head p{max-width:560px}
+.gallery-item{border-radius:14px}
+.gallery-item img{will-change:transform}
+.treatment-visual p{max-width:52ch}
+
+@media(max-width:720px){
+  .hero-copy{padding:30px 20px 28px}
+  .hero-copy h1{font-size:clamp(2.25rem,10.5vw,3.15rem);line-height:1;margin:12px 0 16px}
+  .hero-copy .lead{font-size:.96rem;line-height:1.55}
+  .hero-photo{aspect-ratio:4/3;border-radius:0}
+  .hero-photo img{object-position:center 45%}
+  .photo-badge{font-size:.62rem;letter-spacing:.08em}
+
+  .section-head h2{font-size:clamp(2.2rem,11vw,3.15rem)}
+  .section-head p{font-size:.92rem}
+
+  .treatment-body{padding:18px}
+  .treatment-visual h3{font-size:1.7rem}
+  .treatment-visual p{
+    margin-top:8px;
+    display:-webkit-box;
+    -webkit-box-orient:vertical;
+    -webkit-line-clamp:2;
+    overflow:hidden;
+  }
+  .treatment-visual .treatment-meta{gap:2px;padding-top:13px}
+  .treatment-actions{margin-top:10px!important}
+  .treatment-actions .text-link{margin-top:8px}
+  .treatment-media,
+  .treatment-visual:nth-child(1) .treatment-media,
+  .treatment-visual:nth-child(2) .treatment-media{aspect-ratio:4/3}
+
+  .choice-layout{gap:12px}
+  .choice-photo{aspect-ratio:4/3;border-radius:14px}
+  .choice-shell{border-radius:14px;padding:24px 18px}
+  .choice-question legend{font-size:1.65rem}
+  .choice-option{min-height:54px;padding:12px 14px;border-radius:10px}
+
+  .gallery-section{overflow:hidden}
+  .gallery-grid{
+    display:flex;
+    overflow-x:auto;
+    gap:10px;
+    margin-right:-16px;
+    padding:0 16px 5px 0;
+    scroll-snap-type:x mandatory;
+    overscroll-behavior-inline:contain;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+  }
+  .gallery-grid::-webkit-scrollbar{display:none}
+  .gallery-item,
+  .gallery-item-wide,
+  .gallery-item:nth-child(2){
+    flex:0 0 min(82vw,330px);
+    height:auto;
+    aspect-ratio:4/3;
+    grid-column:auto;
+    grid-row:auto;
+    scroll-snap-align:start;
+    border-radius:12px;
+  }
+
+  .booking-copy-text{padding:22px 18px}
+  .booking-copy-text h3{font-size:2rem}
+  .booking-visual{aspect-ratio:4/3}
+  .treatwell-link-panel{padding:26px 18px}
+
+  .gift-visual{aspect-ratio:4/3;border-radius:14px}
+  .gift-block{padding:22px 0}
+  .map-consent{border-radius:14px;overflow:hidden}
+  .map{height:260px}
+
+  .site-dialog{width:calc(100% - 20px);max-height:92dvh;border-radius:16px}
+  .dialog-media{aspect-ratio:4/3}
+  .dialog-content,.legal-dialog .dialog-content{padding:26px 18px}
+  .dialog-content h2{font-size:2.4rem}
+
+  .mobile-book{left:10px;right:10px;bottom:10px;border-radius:999px}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .treatment-media img,.gallery-item img{transform:none!important;transition:none!important}
+}
