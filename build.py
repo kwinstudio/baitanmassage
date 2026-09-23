@@ -115,7 +115,7 @@ def gallery_section(site):
         items.append(f'''<figure class="gallery-item{cls}"><img src="{esc(item.get('image'))}" alt="{esc(item.get('alt'))}" loading="lazy" decoding="async">{label}</figure>''')
     if not items:
         return ''
-    return '<section class="section gallery-section" id="sfeer"><div class="container"><div class="section-head"><div><div class="eyebrow">Sfeer</div><h2>Even uit de drukte.</h2></div><p>Echte Baitan-beelden worden als Baitan aangeduid. Aanvullende beelden zijn algemene sfeerbeelden.</p></div><div class="gallery-grid">'+''.join(items)+'</div></div></section>'
+    return '<section class="section gallery-section" id="sfeer"><div class="container"><div class="section-head"><div><div class="eyebrow">Sfeer</div><h2>Even uit de drukte.</h2></div><p>Een rustige indruk van de massages, technieken en wellness-sfeer.</p></div><div class="gallery-grid">'+''.join(items)+'</div></div></section>'
 
 def gift_section(site):
     blocks=[]
