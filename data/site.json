@@ -26,12 +26,12 @@
   "booking": {
     "kicker": "Online boeken",
     "title": "Boek je massage",
-    "text": "Kies een behandeling, duur, datum en tijd.",
-    "panelTitle": "Snel geregeld.",
+    "text": "Bekijk de behandeling en boek via de actuele Treatwell-agenda.",
+    "panelTitle": "Boek direct via Treatwell.",
     "apiBase": "",
-    "provider": "custom",
+    "provider": "treatwell",
     "treatwellWidgetUrl": "",
-    "treatwellBookingUrl": ""
+    "treatwellBookingUrl": "https://www.treatwell.nl/salon/baitan-massage/"
   },
   "about": {
     "kicker": "Over Baitan",
