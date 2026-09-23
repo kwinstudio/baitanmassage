@@ -12,8 +12,8 @@
     ],
     "seoTitle": "Thaise Massage Capelle aan den IJssel | Baitan",
     "seoDescription": "Boek een Thaise massage in Capelle aan den IJssel bij Baitan. Bekijk de behandeling, actuele duur en prijzen voor 60, 90 en 120 minuten.",
-    "image": "https://cdn1.treatwell.net/images/view/v2.i16219452.w1080.h720.x9EB67FE1/",
-    "imageAlt": "Thaise massage bij Baitan in Capelle aan den IJssel",
+    "image": "/assets/images/massage-head.webp",
+    "imageAlt": "Thaise massage in warme wellness-sfeer",
     "active": true,
     "durations": [
       {
@@ -29,7 +29,7 @@
         "price": 125
       }
     ],
-    "imageLabel": "Baitan"
+    "imageLabel": "Massage"
   },
   {
     "id": "aroma",
