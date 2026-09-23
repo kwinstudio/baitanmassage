@@ -24,7 +24,8 @@ def active_treatments(treatments):
 
 def hero(site):
     h = site["hero"]
-    return f'''<section class="hero" id="home"><div class="hero-copy"><span class="eyebrow">{esc(h.get('eyebrow'))}</span><h1>{esc(h.get('title'))}</h1><p class="lead">{esc(h.get('text'))}</p><div class="hero-actions"><a class="btn" href="#boeken">{esc(h.get('primaryButton'))}</a><a class="btn btn-outline" href="#massages">{esc(h.get('secondaryButton'))}</a></div></div><div class="hero-photo"><img src="{esc(h.get('image'))}" alt="{esc(h.get('imageAlt'))}" fetchpriority="high"><span class="photo-badge">{esc(h.get('badge'))}</span></div></section>'''
+    return f'''<section class="hero" id="home"><div class="hero-copy"><span class="eyebrow">{esc(h.get('eyebrow'))}</span><h1>{esc(h.get('title'))}</h1><p class="lead">{esc(h.get('text'))}</p><div class="hero-actions"><a class="btn" href="#boeken">{esc(h.get('primaryButton'))}</a><a class="btn btn-outline" href="#massagekeuze">{esc(h.get('secondaryButton'))}</a></div></div><div class="hero-photo"><img src="{esc(h.get('image'))}" alt="{esc(h.get('imageAlt'))}" fetchpriority="high"><span class="photo-badge">{esc(h.get('badge'))}</span></div></section>'''
+
 
 def trustbar(site):
     o = site["opening"]; r = site["reviews"]; t = site["trust"]
@@ -35,13 +36,15 @@ def booking(site, treatments):
     provider = str(b.get("provider") or "custom").lower()
     treatwell_widget = str(b.get("treatwellWidgetUrl") or "").strip()
     treatwell_link = str(b.get("treatwellBookingUrl") or "").strip()
+    image = b.get("image") or site.get("hero",{}).get("image")
+    image_alt = b.get("imageAlt") or "Behandelruimte van Baitan Thai Massage"
 
     if provider == "treatwell" and (treatwell_widget or treatwell_link):
         if treatwell_widget:
             booking_ui = f'''<div class="treatwell-panel"><iframe class="treatwell-widget" src="{esc(treatwell_widget)}" title="Boek een afspraak bij Baitan via Treatwell" loading="lazy" allow="payment *"></iframe></div>'''
         else:
             booking_ui = f'''<div class="treatwell-panel treatwell-link-panel"><div><div class="eyebrow">Treatwell</div><h3>Bekijk beschikbare tijden</h3><p>Boek direct in de actuele agenda van Baitan.</p><a class="btn booking-submit" href="{esc(treatwell_link)}" target="_blank" rel="noopener">Boek via Treatwell <span aria-hidden="true">→</span></a></div></div>'''
-        return f'''<section class="section" id="boeken"><div class="container"><div class="section-head"><div><div class="eyebrow">{esc(b.get('kicker'))}</div><h2>{esc(b.get('title'))}</h2></div><p>{esc(b.get('text'))}</p></div><div class="booking-shell treatwell-booking"><div class="booking-copy"><div class="eyebrow">Online reserveren</div><h3 style="font-size:2.4rem;margin-top:12px">{esc(b.get('panelTitle'))}</h3><p>Beschikbaarheid en afspraken worden rechtstreeks via Treatwell gesynchroniseerd.</p></div>{booking_ui}</div></div></section>'''
+        return f'''<section class="section" id="boeken"><div class="container"><div class="section-head"><div><div class="eyebrow">{esc(b.get('kicker'))}</div><h2>{esc(b.get('title'))}</h2></div><p>{esc(b.get('text'))}</p></div><div class="booking-shell treatwell-booking"><div class="booking-copy booking-copy-rich"><figure class="booking-visual"><img src="{esc(image)}" alt="{esc(image_alt)}" loading="lazy"><figcaption>Baitan</figcaption></figure><div class="booking-copy-text"><div class="eyebrow">Online reserveren</div><h3>{esc(b.get('panelTitle'))}</h3><p>Beschikbaarheid en afspraken worden rechtstreeks via Treatwell gesynchroniseerd.</p></div></div>{booking_ui}</div></div></section>'''
 
     options = ''.join(f'<option value="{esc(t["id"])}">{esc(t["name"])}</option>' for t in active_treatments(treatments))
     return f'''<section class="section" id="boeken"><div class="container"><div class="section-head"><div><div class="eyebrow">{esc(b.get('kicker'))}</div><h2>{esc(b.get('title'))}</h2></div><p>{esc(b.get('text'))}</p></div><div class="booking-shell"><div class="booking-copy"><div class="eyebrow">Reserveren</div><h3 style="font-size:2.4rem;margin-top:12px">{esc(b.get('panelTitle'))}</h3><ol class="booking-steps"><li class="booking-step"><span class="booking-step-num">01</span><span>Behandeling</span></li><li class="booking-step"><span class="booking-step-num">02</span><span>Datum &amp; tijd</span></li><li class="booking-step"><span class="booking-step-num">03</span><span>Bevestigen</span></li></ol></div><div class="booking-panel">
@@ -55,19 +58,27 @@ def booking(site, treatments):
 <div class="booking-confirmation" id="bookingConfirmation" hidden><div class="confirmation-mark" aria-hidden="true">✓</div><div><div class="eyebrow">Reservering bevestigd</div><h3>Tot snel bij Baitan.</h3><p id="confirmationText"></p></div></div>
 </div></div></div></section>'''
 
-def treatments_section(treatments):
+
+def treatments_section(site, treatments):
     cards=[]
+    booking_url=str(site.get('booking',{}).get('treatwellBookingUrl') or '#boeken')
+    external=' target="_blank" rel="noopener"' if booking_url.startswith('http') else ''
     for t in active_treatments(treatments):
         ds=t.get('durations') or []
         meta=''.join(f'<span>{int(d["minutes"])} min · {money(d["price"])}</span>' for d in ds)
         start=min((float(d['price']) for d in ds), default=0)
-        desc=f'<p>{esc(t.get("description"))}</p>' if t.get('description') else ''
         detail='/' + str(t.get('slug') or '').strip('/')
-        actions=f'<div class="treatment-actions"><a class="text-link" href="{esc(detail)}">Bekijk behandeling <span>→</span></a><a class="text-link" href="#boeken" data-service="{esc(t.get("id"))}">Afspraak <span>→</span></a></div>'
-        cards.append(f'''<article class="treatment"><div><h3>{esc(t.get('name'))}</h3>{desc}<div class="treatment-meta">{meta}</div>{actions}</div><div class="treatment-price">vanaf {money(start)}</div></article>''')
-    return '<section class="section section-soft" id="massages"><div class="container"><div class="section-head"><div><div class="eyebrow">Behandelingen</div><h2>Onze massages</h2></div><a class="btn btn-outline" href="/massages">Alle behandelingen</a></div><div class="treatments">'+''.join(cards)+'</div></div></section>'
+        image=t.get('image') or site.get('hero',{}).get('image')
+        label=t.get('imageLabel') or ''
+        label_html=f'<span class="media-label">{esc(label)}</span>' if label else ''
+        cards.append(f'''<article class="treatment treatment-visual"><a class="treatment-media" href="{esc(detail)}" data-treatment-modal="{esc(t.get('id'))}"><img src="{esc(image)}" alt="{esc(t.get('imageAlt') or t.get('name'))}" loading="lazy" decoding="async">{label_html}</a><div class="treatment-body"><div class="treatment-topline"><h3>{esc(t.get('name'))}</h3><div class="treatment-price">vanaf {money(start)}</div></div><p>{esc(t.get('description'))}</p><div class="treatment-meta">{meta}</div><div class="treatment-actions"><a class="text-link" href="{esc(detail)}" data-treatment-modal="{esc(t.get('id'))}">Bekijk behandeling <span>→</span></a><a class="text-link" href="{esc(booking_url)}"{external}>Afspraak <span>→</span></a></div></div></article>''')
+    modal='''<dialog class="site-dialog treatment-dialog" id="treatmentDialog" aria-labelledby="treatmentDialogTitle"><button class="dialog-close" type="button" data-dialog-close aria-label="Sluiten">×</button><div class="treatment-dialog-grid"><div class="dialog-media"><img id="treatmentDialogImage" alt=""><span class="media-label" id="treatmentDialogLabel"></span></div><div class="dialog-content"><div class="eyebrow">Behandeling</div><h2 id="treatmentDialogTitle"></h2><p id="treatmentDialogText"></p><ul class="dialog-features" id="treatmentDialogFeatures"></ul><div class="dialog-prices" id="treatmentDialogPrices"></div><div class="dialog-actions"><a class="btn" id="treatmentDialogBook" href="#boeken">Afspraak maken</a><a class="text-link" id="treatmentDialogPage" href="/massages">Volledige pagina <span>→</span></a></div></div></div></dialog>'''
+    return '<section class="section section-soft" id="massages"><div class="container"><div class="section-head"><div><div class="eyebrow">Behandelingen</div><h2>Onze massages</h2></div><a class="btn btn-outline" href="/massages">Alle behandelingen</a></div><div class="treatments visual-treatments">'+''.join(cards)+'</div></div></section>'+modal
 
-def massage_choice_section():
+def massage_choice_section(site):
+    mood=(site.get('gallery') or [{}])[2] if len(site.get('gallery') or [])>2 else {}
+    image=mood.get('image') or site.get('hero',{}).get('image')
+    label=mood.get('label') or 'Sfeerbeeld'
     questions = [
       ("Waar heb je vandaag vooral behoefte aan?", [("Ontspannen","aroma"),("Traditionele technieken","thai"),("Steviger gericht op spieren","sport"),("Samen ontspannen","duo")]),
       ("Wat spreekt je het meest aan?", [("Warme olie","thai"),("Geur naar keuze","aroma"),("Warme stenen","hotstone"),("Geen voorkeur","neutral")]),
@@ -80,7 +91,8 @@ def massage_choice_section():
         opts=''.join(f'<button type="button" class="choice-option" data-score="{esc(score)}">{esc(label)}</button>' for label,score in answers)
         hidden=' hidden' if i>1 else ''
         blocks.append(f'<fieldset class="choice-question" data-question="{i}"{hidden}><legend><span>0{i}</span>{esc(question)}</legend><div class="choice-options">{opts}</div></fieldset>')
-    return '''<section class="section" id="massagekeuze"><div class="container"><div class="section-head"><div><div class="eyebrow">Massagekeuze</div><h2>Welke massage past bij mij?</h2></div><p>Beantwoord vijf korte vragen. De uitkomst is een praktische keuzehulp, geen medische diagnose.</p></div><div class="choice-shell"><div class="choice-progress"><span id="choiceProgressText">Vraag 1 van 5</span><div class="choice-progress-track"><span id="choiceProgressBar"></span></div></div>'''+''.join(blocks)+'''<div class="choice-result" id="choiceResult" hidden><div class="eyebrow">Beste match</div><h3 id="choiceResultTitle"></h3><p id="choiceResultText"></p><div class="choice-result-actions"><a class="btn" id="choiceResultBook" href="#boeken">Afspraak maken</a><a class="btn btn-outline" id="choiceResultDetail" href="#massages">Bekijk behandelingen</a></div><button type="button" class="text-button choice-restart" id="choiceRestart">Opnieuw kiezen</button></div></div></div></section>'''
+    return f'''<section class="section" id="massagekeuze"><div class="container"><div class="section-head"><div><div class="eyebrow">Massagekeuze</div><h2>Welke massage past bij mij?</h2></div><p>Beantwoord vijf korte vragen. De uitkomst is een praktische keuzehulp, geen medische diagnose.</p></div><div class="choice-layout"><figure class="choice-photo"><img src="{esc(image)}" alt="Algemeen sfeerbeeld bij de massagekeuze" loading="lazy"><figcaption>{esc(label)}</figcaption></figure><div class="choice-shell"><div class="choice-progress"><span id="choiceProgressText">Vraag 1 van 5</span><div class="choice-progress-track"><span id="choiceProgressBar"></span></div></div>'''+''.join(blocks)+'''<div class="choice-result" id="choiceResult" hidden><div class="eyebrow">Beste match</div><h3 id="choiceResultTitle"></h3><p id="choiceResultText"></p><div class="choice-result-actions"><a class="btn" id="choiceResultBook" href="#boeken">Afspraak maken</a><a class="btn btn-outline" id="choiceResultDetail" href="#massages">Bekijk behandeling</a></div><button type="button" class="text-button choice-restart" id="choiceRestart">Opnieuw kiezen</button></div></div></div></div></section>'''
+
 
 def prices_section(treatments):
     rows=[]
@@ -91,18 +103,33 @@ def prices_section(treatments):
 
 def about_section(site):
     a=site['about']; facts=''.join(f'<div class="about-fact"><strong>{esc(x)}</strong></div>' for x in a.get('facts',[]))
-    return f'''<section class="section section-soft" id="over"><div class="container about-grid"><div class="about-photo"><img src="{esc(a.get('image'))}" alt="{esc(a.get('imageAlt'))}" loading="lazy"></div><div class="about-copy"><div class="eyebrow">{esc(a.get('kicker'))}</div><h2>{esc(a.get('title'))}</h2><p>{esc(a.get('text'))}</p><div class="about-facts">{facts}</div></div></div></section>'''
+    return f'''<section class="section section-soft" id="over"><div class="container about-grid"><div class="about-photo"><img src="{esc(a.get('image'))}" alt="{esc(a.get('imageAlt'))}" loading="lazy"><span class="media-label">Baitan</span></div><div class="about-copy"><div class="eyebrow">{esc(a.get('kicker'))}</div><h2>{esc(a.get('title'))}</h2><p>{esc(a.get('text'))}</p><div class="about-facts">{facts}</div></div></div></section>'''
+
+def gallery_section(site):
+    items=[]
+    for i,item in enumerate(site.get('gallery') or []):
+        cls=' gallery-item-wide' if i==0 else ''
+        label=f'<span class="media-label">{esc(item.get("label"))}</span>' if item.get('label') else ''
+        items.append(f'''<figure class="gallery-item{cls}"><img src="{esc(item.get('image'))}" alt="{esc(item.get('alt'))}" loading="lazy" decoding="async">{label}</figure>''')
+    if not items:
+        return ''
+    return '<section class="section gallery-section" id="sfeer"><div class="container"><div class="section-head"><div><div class="eyebrow">Sfeer</div><h2>Even uit de drukte.</h2></div><p>Echte Baitan-beelden worden als Baitan aangeduid. Aanvullende beelden zijn algemene sfeerbeelden.</p></div><div class="gallery-grid">'+''.join(items)+'</div></div></section>'
 
 def gift_section(site):
     blocks=[]
+    wa=str(site.get('whatsappUrl') or '').rstrip('/')
+    gift_href=(wa+'?text=Hallo%20Baitan%2C%20ik%20wil%20graag%20informatie%20over%20een%20cadeaubon.') if wa else 'tel:'+str(site.get('phoneHref') or '')
     g=site.get('giftCard',{})
     if g.get('enabled'):
-        blocks.append(f'''<div class="gift-block"><h3>{esc(g.get('title'))}</h3><p>{esc(g.get('text'))}</p><a class="btn btn-light" href="tel:{esc(site.get('phoneHref'))}">{esc(g.get('button'))}</a></div>''')
+        blocks.append(f'''<div class="gift-block"><h3>{esc(g.get('title'))}</h3><p>{esc(g.get('text'))}</p><a class="btn btn-light" href="{esc(gift_href)}" target="_blank" rel="noopener">Vraag via WhatsApp</a></div>''')
     l=site.get('loyalty',{})
     if l.get('enabled'):
         blocks.append(f'''<div class="gift-block"><h3>{esc(l.get('title'))}</h3><p>{esc(l.get('text'))}</p><a class="btn btn-light" href="#contact">{esc(l.get('button'))}</a></div>''')
     if not blocks: return ''
-    return '<section class="section section-dark" id="cadeaubon"><div class="container"><div class="eyebrow">Cadeau &amp; voordeel</div><div class="gift-grid">'+''.join(blocks)+'</div></div></section>'
+    image=g.get('image') or site.get('hero',{}).get('image')
+    image_alt=g.get('imageAlt') or 'Sfeerbeeld wellness'
+    return f'''<section class="section section-dark" id="cadeaubon"><div class="container gift-shell"><figure class="gift-visual"><img src="{esc(image)}" alt="{esc(image_alt)}" loading="lazy"><figcaption>Sfeerbeeld</figcaption></figure><div><div class="eyebrow">Cadeau &amp; voordeel</div><div class="gift-grid">{''.join(blocks)}</div></div></div></section>'''
+
 
 def reviews_section(site):
     r=site['reviews']
@@ -120,7 +147,8 @@ def contact_section(site):
     return f'''<section class="section" id="contact"><div class="container contact-grid"><div class="contact-details"><div class="eyebrow">{esc(c.get('kicker'))}</div><h2>{esc(site.get('businessName'))}</h2><div class="detail-row"><span class="detail-label">Adres</span><div class="detail-value">{esc(site.get('addressLine1'))}<br>{esc(site.get('postalCity'))}</div></div><div class="detail-row"><span class="detail-label">Telefoon</span><div class="detail-value"><a href="tel:{esc(site.get('phoneHref'))}">{esc(site.get('phoneDisplay'))}</a></div></div><div class="detail-row"><span class="detail-label">E-mail</span><div class="detail-value"><a href="mailto:{esc(site.get('email'))}">{esc(site.get('email'))}</a></div></div><table class="hours" aria-label="Openingstijden"><tbody><tr><td>{esc(o.get('weekdayLabel'))}</td><td>{esc(o.get('weekdayOpen'))} — {esc(o.get('weekdayClose'))}</td></tr><tr><td>{esc(o.get('weekendLabel'))}</td><td>{esc(o.get('weekendOpen'))} — {esc(o.get('weekendClose'))}</td></tr></tbody></table><div class="contact-actions"><a class="btn" href="{esc(c.get('routeUrl'))}" target="_blank" rel="noopener">Route naar Baitan</a><a class="btn btn-outline" href="#boeken">Boek afspraak</a></div></div><div class="map-consent" data-map-url="{esc(c.get('mapEmbedUrl'))}"><div class="map-consent-inner"><div class="eyebrow">Google Maps</div><h3>Bekijk Baitan op de kaart</h3><p>De interactieve kaart wordt pas geladen nadat je hiervoor kiest.</p><button class="btn btn-outline load-map" type="button">Kaart laden</button></div></div></div></section>'''
 
 def footer(site):
-    return f'''<footer class="footer"><div class="container"><div class="footer-grid"><div><a class="brand" href="/"><span class="brand-mark"><span>B</span></span><span class="brand-name">BAITAN</span></a><p style="max-width:330px;margin-top:20px">{esc(site.get('tagline'))}</p></div><div><h4>Navigatie</h4><div class="footer-links"><a href="/massages">Massages</a><a href="/prijzen">Prijzen</a><a href="/#massagekeuze">Massagekeuze</a><a href="/#boeken">Boeken</a></div></div><div><h4>Contact</h4><div class="footer-links"><a href="tel:{esc(site.get('phoneHref'))}">{esc(site.get('phoneDisplay'))}</a><a href="mailto:{esc(site.get('email'))}">{esc(site.get('email'))}</a><span>{esc(site.get('addressLine1'))}</span><span>{esc(site.get('postalCity'))}</span></div></div><div><h4>Informatie</h4><div class="footer-links"><a href="/contact">Contact</a><a href="/voorwaarden">Huisregels &amp; voorwaarden</a><a href="/privacy">Privacy</a></div></div></div><div class="footer-bottom"><span>© {esc(site.get('businessName'))}</span><span>KVK {esc(site.get('kvk'))} · BTW {esc(site.get('btw'))}</span></div></div></footer>'''
+    return f'''<footer class="footer"><div class="container"><div class="footer-grid"><div><a class="brand" href="/"><span class="brand-mark"><span>B</span></span><span class="brand-name">BAITAN</span></a><p style="max-width:330px;margin-top:20px">{esc(site.get('tagline'))}</p></div><div><h4>Navigatie</h4><div class="footer-links"><a href="/massages">Massages</a><a href="/prijzen">Prijzen</a><a href="/#massagekeuze">Massagekeuze</a><a href="/#boeken">Boeken</a></div></div><div><h4>Contact</h4><div class="footer-links"><a href="tel:{esc(site.get('phoneHref'))}">{esc(site.get('phoneDisplay'))}</a><a href="mailto:{esc(site.get('email'))}">{esc(site.get('email'))}</a><span>{esc(site.get('addressLine1'))}</span><span>{esc(site.get('postalCity'))}</span></div></div><div><h4>Informatie</h4><div class="footer-links"><button class="footer-link-button" type="button" data-legal-modal="terms">Algemene voorwaarden</button><button class="footer-link-button" type="button" data-legal-modal="privacy">Privacy &amp; cookies</button><button class="footer-link-button" type="button" data-legal-modal="cancel">Annuleren &amp; afspraken</button><button class="footer-link-button" type="button" data-legal-modal="business">Bedrijfsgegevens</button></div></div></div><div class="footer-bottom"><span>© {esc(site.get('businessName'))}</span><span>KVK {esc(site.get('kvk'))} · BTW {esc(site.get('btw'))}</span></div></div></footer><dialog class="site-dialog legal-dialog" id="legalDialog" aria-labelledby="legalDialogTitle"><button class="dialog-close" type="button" data-dialog-close aria-label="Sluiten">×</button><div class="dialog-content"><div class="eyebrow">Baitan</div><h2 id="legalDialogTitle"></h2><div id="legalDialogBody"></div><a class="text-link" id="legalDialogLink" href="/voorwaarden">Lees volledige informatie <span>→</span></a></div></dialog>'''
+
 
 def schema(site):
     o=site['opening']
@@ -172,8 +200,13 @@ def treatment_page(site, treatment, treatments):
     title=treatment.get('seoTitle') or (str(treatment.get('name'))+' | Baitan')
     description=treatment.get('seoDescription') or treatment.get('description') or ''
     breadcrumbs=[("Home",base+"/"),("Massages",base+"/massages"),(treatment.get('name'),canonical)]
-    body=f"""<main id="main"><section class="detail-hero"><div class="container detail-hero-grid"><div><div class="eyebrow">Baitan · Capelle aan den IJssel</div><h1>{esc(treatment.get('name'))} in Capelle aan den IJssel</h1><p>{esc(treatment.get('description'))}</p><div class="hero-actions"><a class="btn" href="/#boeken">Boek afspraak</a><a class="btn btn-outline" href="/massages">Alle massages</a></div></div><div class="detail-facts"><span>Hollandsch Diep 71–73</span><span>Gratis parkeren</span><span>Pin &amp; contant</span></div></div></section><section class="section"><div class="container detail-layout"><article class="detail-copy"><div class="eyebrow">Over de behandeling</div><h2>{esc(treatment.get('name'))}</h2><p>{esc(treatment.get('detailText') or treatment.get('description'))}</p><ul class="feature-list">{feature_items}</ul></article><aside class="detail-price"><div class="eyebrow">Duur &amp; prijs</div><div class="price-list">{''.join(rows)}</div><a class="btn booking-submit" href="/#boeken">Afspraak maken</a></aside></div></section><section class="section section-soft"><div class="container"><div class="section-head"><div><div class="eyebrow">Andere behandelingen</div><h2>Bekijk ook</h2></div></div><div class="related-grid">{''.join(related)}</div></div></section></main>"""
-    return subpage_head(site,title,description,canonical,breadcrumbs)+subpage_header()+body+footer(site)+'<script src="/app.js"></script></body></html>'
+    booking_url=str(site.get('booking',{}).get('treatwellBookingUrl') or '/#boeken')
+    external=' target="_blank" rel="noopener"' if booking_url.startswith('http') else ''
+    image=treatment.get('image') or site.get('hero',{}).get('image')
+    label=treatment.get('imageLabel') or ''
+    label_html=f'<span class="media-label">{esc(label)}</span>' if label else ''
+    body=f"""<main id="main"><section class="detail-hero"><div class="container detail-hero-grid"><div><div class="eyebrow">Baitan · Capelle aan den IJssel</div><h1>{esc(treatment.get('name'))} in Capelle aan den IJssel</h1><p>{esc(treatment.get('description'))}</p><div class="hero-actions"><a class="btn" href="{esc(booking_url)}"{external}>Afspraak maken</a><a class="btn btn-outline" href="/massages">Alle massages</a></div></div><figure class="detail-hero-photo"><img src="{esc(image)}" alt="{esc(treatment.get('imageAlt') or treatment.get('name'))}">{label_html}</figure></div></section><section class="section"><div class="container detail-layout"><article class="detail-copy"><div class="eyebrow">Over de behandeling</div><h2>{esc(treatment.get('name'))}</h2><p>{esc(treatment.get('detailText') or treatment.get('description'))}</p><ul class="feature-list">{feature_items}</ul></article><aside class="detail-price"><div class="eyebrow">Duur &amp; prijs</div><div class="price-list">{''.join(rows)}</div><a class="btn booking-submit" href="{esc(booking_url)}"{external}>Afspraak maken</a></aside></div></section><section class="section section-soft"><div class="container"><div class="section-head"><div><div class="eyebrow">Andere behandelingen</div><h2>Bekijk ook</h2></div></div><div class="related-grid">{''.join(related)}</div></div></section></main>"""
+    return subpage_head(site,title,description,canonical,breadcrumbs)+subpage_header()+body+footer(site)+'<script>window.BAITAN_SITE='+json.dumps(site,ensure_ascii=False).replace('</','<\\/')+';window.BAITAN_TREATMENTS='+json.dumps(active_treatments(treatments),ensure_ascii=False).replace('</','<\\/')+';</script><script src="/app.js"></script></body></html>'
 
 def massages_page(site, treatments):
     base=str(site['seo']['canonical']).rstrip('/')
@@ -182,9 +215,12 @@ def massages_page(site, treatments):
     for t in active_treatments(treatments):
         prices=t.get('durations',[])
         start=min((float(d['price']) for d in prices), default=0)
-        cards.append(f'<a class="seo-card" href="/{esc(t.get("slug"))}"><div class="eyebrow">Vanaf {money(start)}</div><h2>{esc(t.get("name"))}</h2><p>{esc(t.get("description"))}</p><span>Bekijk behandeling →</span></a>')
+        image=t.get('image') or site.get('hero',{}).get('image')
+        label=t.get('imageLabel') or ''
+        label_html=f'<span class="media-label">{esc(label)}</span>' if label else ''
+        cards.append(f'<a class="seo-card seo-card-visual" href="/{esc(t.get("slug"))}"><div class="seo-card-media"><img src="{esc(image)}" alt="{esc(t.get("imageAlt") or t.get("name"))}" loading="lazy">{label_html}</div><div class="seo-card-copy"><div class="eyebrow">Vanaf {money(start)}</div><h2>{esc(t.get("name"))}</h2><p>{esc(t.get("description"))}</p><span>Bekijk behandeling →</span></div></a>')
     body='<main id="main"><section class="detail-hero"><div class="container"><div class="eyebrow">Baitan Thai Massage</div><h1>Massages in Capelle aan den IJssel</h1><p>Bekijk het actuele massageaanbod van Baitan met duur en prijzen.</p></div></section><section class="section"><div class="container seo-card-grid">'+''.join(cards)+'</div></section></main>'
-    return subpage_head(site,'Massages in Capelle aan den IJssel | Baitan','Bekijk Thaise massage, aromatherapie, sportmassage, hot stone en duo-massage bij Baitan in Capelle aan den IJssel.',canonical,[("Home",base+"/"),("Massages",canonical)])+subpage_header()+body+footer(site)+'<script src="/app.js"></script></body></html>'
+    return subpage_head(site,'Massages in Capelle aan den IJssel | Baitan','Bekijk Thaise massage, aromatherapie, sportmassage, hot stone en duo-massage bij Baitan in Capelle aan den IJssel.',canonical,[("Home",base+"/"),("Massages",canonical)])+subpage_header()+body+footer(site)+'<script>window.BAITAN_SITE='+json.dumps(site,ensure_ascii=False).replace('</','<\\/')+';window.BAITAN_TREATMENTS='+json.dumps(active_treatments(treatments),ensure_ascii=False).replace('</','<\\/')+';</script><script src="/app.js"></script></body></html>'
 
 def prices_page(site, treatments):
     base=str(site['seo']['canonical']).rstrip('/')
@@ -222,10 +258,11 @@ def build():
       'HERO':hero(site),
       'TRUSTBAR':trustbar(site),
       'BOOKING':booking(site,treatments),
-      'TREATMENTS':treatments_section(treatments),
-      'MASSAGE_CHOICE':massage_choice_section(),
+      'TREATMENTS':treatments_section(site,treatments),
+      'MASSAGE_CHOICE':massage_choice_section(site),
       'PRICES':prices_section(treatments),
       'ABOUT':about_section(site),
+      'GALLERY':gallery_section(site),
       'GIFT':gift_section(site),
       'REVIEWS':reviews_section(site),
       'FAQ':faq_section(site),
