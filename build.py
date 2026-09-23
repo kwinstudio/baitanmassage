@@ -137,6 +137,70 @@ def schema(site):
     }
     return '<script type="application/ld+json">'+json.dumps(payload,ensure_ascii=False,separators=(',',':'))+'</script>'
 
+def subpage_head(site, title, description, canonical, breadcrumbs=None, noindex=False):
+    image=esc(site.get('seo',{}).get('ogImage') or site.get('hero',{}).get('image'))
+    robots='<meta name="robots" content="noindex,follow">' if noindex else ''
+    breadcrumb_schema=''
+    if breadcrumbs:
+        items=[]
+        for pos,(name,url) in enumerate(breadcrumbs,1):
+            items.append({"@type":"ListItem","position":pos,"name":name,"item":url})
+        breadcrumb_schema='<script type="application/ld+json">'+json.dumps({"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":items},ensure_ascii=False,separators=(',',':'))+'</script>'
+    return f"""<!doctype html><html lang="nl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{esc(title)}</title><meta name="description" content="{esc(description)}">{robots}<link rel="canonical" href="{esc(canonical)}"><meta property="og:title" content="{esc(title)}"><meta property="og:description" content="{esc(description)}"><meta property="og:type" content="website"><meta property="og:url" content="{esc(canonical)}"><meta property="og:image" content="{image}"><meta name="twitter:card" content="summary_large_image"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="/styles.css">{breadcrumb_schema}</head><body>"""
+
+def subpage_header():
+    return """<a class="skip-link" href="#main">Ga naar inhoud</a><header class="header"><div class="container nav"><a class="brand" href="/" aria-label="Baitan home"><span class="brand-mark"><span>B</span></span><span class="brand-name">BAITAN</span></a><nav class="nav-links" aria-label="Hoofdnavigatie"><a class="nav-link" href="/massages">Behandelingen</a><a class="nav-link" href="/#massagekeuze">Massagekeuze</a><a class="nav-link" href="/prijzen">Prijzen</a><a class="nav-link" href="/#reviews">Reviews</a><a class="nav-link" href="/contact">Contact</a></nav><div class="nav-actions"><a class="btn" href="/#boeken">Boek afspraak</a><button class="menu-toggle" aria-label="Open menu" aria-expanded="false"><span></span><span></span></button></div></div></header>"""
+
+def treatment_page(site, treatment, treatments):
+    base=str(site['seo']['canonical']).rstrip('/')
+    slug=str(treatment.get('slug') or '').strip('/')
+    canonical=base+'/'+slug
+    rows=[]
+    for d in treatment.get('durations',[]):
+        rows.append(f'<div class="price-row"><strong>{int(d["minutes"])} minuten</strong><span>{money(d["price"])}</span></div>')
+    feature_items=''.join(f'<li>{esc(x)}</li>' for x in treatment.get('features',[]))
+    related=[]
+    for other in active_treatments(treatments):
+        if other.get('id') != treatment.get('id'):
+            related.append(f'<a class="related-treatment" href="/{esc(other.get("slug"))}"><span>{esc(other.get("name"))}</span><span>→</span></a>')
+    title=treatment.get('seoTitle') or (str(treatment.get('name'))+' | Baitan')
+    description=treatment.get('seoDescription') or treatment.get('description') or ''
+    breadcrumbs=[("Home",base+"/"),("Massages",base+"/massages"),(treatment.get('name'),canonical)]
+    body=f"""<main id="main"><section class="detail-hero"><div class="container detail-hero-grid"><div><div class="eyebrow">Baitan · Capelle aan den IJssel</div><h1>{esc(treatment.get('name'))} in Capelle aan den IJssel</h1><p>{esc(treatment.get('description'))}</p><div class="hero-actions"><a class="btn" href="/#boeken">Boek afspraak</a><a class="btn btn-outline" href="/massages">Alle massages</a></div></div><div class="detail-facts"><span>Hollandsch Diep 71–73</span><span>Gratis parkeren</span><span>Pin &amp; contant</span></div></div></section><section class="section"><div class="container detail-layout"><article class="detail-copy"><div class="eyebrow">Over de behandeling</div><h2>{esc(treatment.get('name'))}</h2><p>{esc(treatment.get('detailText') or treatment.get('description'))}</p><ul class="feature-list">{feature_items}</ul></article><aside class="detail-price"><div class="eyebrow">Duur &amp; prijs</div><div class="price-list">{''.join(rows)}</div><a class="btn booking-submit" href="/#boeken">Afspraak maken</a></aside></div></section><section class="section section-soft"><div class="container"><div class="section-head"><div><div class="eyebrow">Andere behandelingen</div><h2>Bekijk ook</h2></div></div><div class="related-grid">{''.join(related)}</div></div></section></main>"""
+    return subpage_head(site,title,description,canonical,breadcrumbs)+subpage_header()+body+footer(site)+'<script src="/app.js"></script></body></html>'
+
+def massages_page(site, treatments):
+    base=str(site['seo']['canonical']).rstrip('/')
+    canonical=base+'/massages'
+    cards=[]
+    for t in active_treatments(treatments):
+        prices=t.get('durations',[])
+        start=min((float(d['price']) for d in prices), default=0)
+        cards.append(f'<a class="seo-card" href="/{esc(t.get("slug"))}"><div class="eyebrow">Vanaf {money(start)}</div><h2>{esc(t.get("name"))}</h2><p>{esc(t.get("description"))}</p><span>Bekijk behandeling →</span></a>')
+    body='<main id="main"><section class="detail-hero"><div class="container"><div class="eyebrow">Baitan Thai Massage</div><h1>Massages in Capelle aan den IJssel</h1><p>Bekijk het actuele massageaanbod van Baitan met duur en prijzen.</p></div></section><section class="section"><div class="container seo-card-grid">'+''.join(cards)+'</div></section></main>'
+    return subpage_head(site,'Massages in Capelle aan den IJssel | Baitan','Bekijk Thaise massage, aromatherapie, sportmassage, hot stone en duo-massage bij Baitan in Capelle aan den IJssel.',canonical,[("Home",base+"/"),("Massages",canonical)])+subpage_header()+body+footer(site)+'<script src="/app.js"></script></body></html>'
+
+def prices_page(site, treatments):
+    base=str(site['seo']['canonical']).rstrip('/')
+    canonical=base+'/prijzen'
+    rows=[]
+    for t in active_treatments(treatments):
+        prices=' · '.join(f'{int(d["minutes"])} min {money(d["price"])}' for d in t.get('durations',[]))
+        rows.append(f'<div class="price-row"><strong><a href="/{esc(t.get("slug"))}">{esc(t.get("name"))}</a></strong><span>{prices}</span></div>')
+    body='<main id="main"><section class="detail-hero"><div class="container"><div class="eyebrow">Baitan Thai Massage</div><h1>Massageprijzen in Capelle aan den IJssel</h1><p>Actuele duur en prijzen van de behandelingen van Baitan.</p></div></section><section class="section"><div class="container"><div class="price-list wide-price-list">'+''.join(rows)+'</div><div class="hero-actions"><a class="btn" href="/#boeken">Boek afspraak</a><a class="btn btn-outline" href="/massages">Bekijk behandelingen</a></div></div></section></main>'
+    return subpage_head(site,'Massage Prijzen Capelle aan den IJssel | Baitan','Bekijk de actuele prijzen van Baitan Thai Massage in Capelle aan den IJssel voor 60, 90 en 120 minuten.',canonical,[("Home",base+"/"),("Prijzen",canonical)])+subpage_header()+body+footer(site)+'<script src="/app.js"></script></body></html>'
+
+def contact_page(site):
+    base=str(site['seo']['canonical']).rstrip('/')
+    canonical=base+'/contact'
+    body='<main id="main"><section class="detail-hero"><div class="container"><div class="eyebrow">Contact & route</div><h1>Baitan Thai Massage in Capelle aan den IJssel</h1><p>Hollandsch Diep 71–73, 2904 EP Capelle aan den IJssel.</p></div></section>'+contact_section(site)+'</main>'
+    return subpage_head(site,'Contact Baitan Thai Massage | Capelle aan den IJssel','Contact, openingstijden, route en adres van Baitan Thai Massage aan het Hollandsch Diep in Capelle aan den IJssel.',canonical,[("Home",base+"/"),("Contact",canonical)])+subpage_header()+body+footer(site)+'<script src="/app.js"></script></body></html>'
+
+def not_found_page(site):
+    base=str(site['seo']['canonical']).rstrip('/')
+    body='''<main id="main"><section class="detail-hero"><div class="container"><div class="eyebrow">404</div><h1>Pagina niet gevonden</h1><p>Ga terug naar Baitan of bekijk de massages en prijzen.</p><div class="hero-actions"><a class="btn" href="/">Home</a><a class="btn btn-outline" href="/massages">Massages</a></div></div></section></main>'''
+    return subpage_head(site,'Pagina niet gevonden | Baitan','Deze pagina bestaat niet of is verplaatst.',base+'/404',noindex=True)+subpage_header()+body+footer(site)+'</body></html>'
+
 def build():
     site=load_json('data/site.json')
     treatments=load_json('data/treatments.json')
@@ -172,7 +236,21 @@ def build():
     DIST.mkdir()
     (DIST/'index.html').write_text(tpl,encoding='utf-8')
     base=str(site['seo']['canonical']).rstrip('/')
-    (DIST/'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  <url><loc>'+base+'/</loc></url>\n  <url><loc>'+base+'/voorwaarden</loc></url>\n  <url><loc>'+base+'/privacy</loc></url>\n</urlset>\n',encoding='utf-8')
+    (DIST/'massages.html').write_text(massages_page(site,treatments),encoding='utf-8')
+    (DIST/'prijzen.html').write_text(prices_page(site,treatments),encoding='utf-8')
+    (DIST/'contact.html').write_text(contact_page(site),encoding='utf-8')
+    for treatment in active_treatments(treatments):
+        slug=str(treatment.get('slug') or '').strip('/')
+        if slug:
+            (DIST/(slug+'.html')).write_text(treatment_page(site,treatment,treatments),encoding='utf-8')
+    (DIST/'404.html').write_text(not_found_page(site),encoding='utf-8')
+
+    urls=[base+'/',base+'/massages',base+'/prijzen',base+'/contact',base+'/voorwaarden',base+'/privacy']
+    urls.extend(base+'/'+str(t.get('slug')).strip('/') for t in active_treatments(treatments) if t.get('slug'))
+    sitemap='<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+    sitemap+=''.join('  <url><loc>'+html.escape(url)+'</loc></url>\n' for url in urls)
+    sitemap+='</urlset>\n'
+    (DIST/'sitemap.xml').write_text(sitemap,encoding='utf-8')
     (DIST/'robots.txt').write_text('User-agent: *\nAllow: /\nDisallow: /admin\nSitemap: '+base+'/sitemap.xml\n',encoding='utf-8')
     for name in ['styles.css','app.js','privacy.html','voorwaarden.html','favicon.svg']:
         if (ROOT/name).exists():
