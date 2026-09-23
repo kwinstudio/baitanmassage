@@ -62,8 +62,10 @@ def treatments_section(treatments):
         meta=''.join(f'<span>{int(d["minutes"])} min · {money(d["price"])}</span>' for d in ds)
         start=min((float(d['price']) for d in ds), default=0)
         desc=f'<p>{esc(t.get("description"))}</p>' if t.get('description') else ''
-        cards.append(f'''<article class="treatment"><div><h3>{esc(t.get('name'))}</h3>{desc}<div class="treatment-meta">{meta}</div><a class="text-link" href="#boeken" data-service="{esc(t.get('id'))}">Boek massage <span>→</span></a></div><div class="treatment-price">vanaf {money(start)}</div></article>''')
-    return '<section class="section section-soft" id="massages"><div class="container"><div class="section-head"><div><div class="eyebrow">Behandelingen</div><h2>Onze massages</h2></div></div><div class="treatments">'+''.join(cards)+'</div></div></section>'
+        detail='/' + str(t.get('slug') or '').strip('/')
+        actions=f'<div class="treatment-actions"><a class="text-link" href="{esc(detail)}">Bekijk behandeling <span>→</span></a><a class="text-link" href="#boeken" data-service="{esc(t.get("id"))}">Afspraak <span>→</span></a></div>'
+        cards.append(f'''<article class="treatment"><div><h3>{esc(t.get('name'))}</h3>{desc}<div class="treatment-meta">{meta}</div>{actions}</div><div class="treatment-price">vanaf {money(start)}</div></article>''')
+    return '<section class="section section-soft" id="massages"><div class="container"><div class="section-head"><div><div class="eyebrow">Behandelingen</div><h2>Onze massages</h2></div><a class="btn btn-outline" href="/massages">Alle behandelingen</a></div><div class="treatments">'+''.join(cards)+'</div></div></section>'
 
 def massage_choice_section():
     questions = [
@@ -118,23 +120,27 @@ def contact_section(site):
     return f'''<section class="section" id="contact"><div class="container contact-grid"><div class="contact-details"><div class="eyebrow">{esc(c.get('kicker'))}</div><h2>{esc(site.get('businessName'))}</h2><div class="detail-row"><span class="detail-label">Adres</span><div class="detail-value">{esc(site.get('addressLine1'))}<br>{esc(site.get('postalCity'))}</div></div><div class="detail-row"><span class="detail-label">Telefoon</span><div class="detail-value"><a href="tel:{esc(site.get('phoneHref'))}">{esc(site.get('phoneDisplay'))}</a></div></div><div class="detail-row"><span class="detail-label">E-mail</span><div class="detail-value"><a href="mailto:{esc(site.get('email'))}">{esc(site.get('email'))}</a></div></div><table class="hours" aria-label="Openingstijden"><tbody><tr><td>{esc(o.get('weekdayLabel'))}</td><td>{esc(o.get('weekdayOpen'))} — {esc(o.get('weekdayClose'))}</td></tr><tr><td>{esc(o.get('weekendLabel'))}</td><td>{esc(o.get('weekendOpen'))} — {esc(o.get('weekendClose'))}</td></tr></tbody></table><div class="contact-actions"><a class="btn" href="{esc(c.get('routeUrl'))}" target="_blank" rel="noopener">Route naar Baitan</a><a class="btn btn-outline" href="#boeken">Boek afspraak</a></div></div><div class="map-consent" data-map-url="{esc(c.get('mapEmbedUrl'))}"><div class="map-consent-inner"><div class="eyebrow">Google Maps</div><h3>Bekijk Baitan op de kaart</h3><p>De interactieve kaart wordt pas geladen nadat je hiervoor kiest.</p><button class="btn btn-outline load-map" type="button">Kaart laden</button></div></div></div></section>'''
 
 def footer(site):
-    return f'''<footer class="footer"><div class="container"><div class="footer-grid"><div><a class="brand" href="#home"><span class="brand-mark"><span>B</span></span><span class="brand-name">BAITAN</span></a><p style="max-width:330px;margin-top:20px">{esc(site.get('tagline'))}</p></div><div><h4>Navigatie</h4><div class="footer-links"><a href="#massages">Massages</a><a href="#boeken">Boeken</a><a href="#cadeaubon">Cadeaubon</a><a href="#faq">FAQ</a></div></div><div><h4>Contact</h4><div class="footer-links"><a href="tel:{esc(site.get('phoneHref'))}">{esc(site.get('phoneDisplay'))}</a><a href="mailto:{esc(site.get('email'))}">{esc(site.get('email'))}</a><span>{esc(site.get('addressLine1'))}</span><span>{esc(site.get('postalCity'))}</span></div></div><div><h4>Informatie</h4><div class="footer-links"><a href="voorwaarden.html">Huisregels &amp; voorwaarden</a><a href="privacy.html">Privacy</a></div></div></div><div class="footer-bottom"><span>© {esc(site.get('businessName'))}</span><span>KVK {esc(site.get('kvk'))} · BTW {esc(site.get('btw'))}</span></div></div></footer>'''
+    return f'''<footer class="footer"><div class="container"><div class="footer-grid"><div><a class="brand" href="/"><span class="brand-mark"><span>B</span></span><span class="brand-name">BAITAN</span></a><p style="max-width:330px;margin-top:20px">{esc(site.get('tagline'))}</p></div><div><h4>Navigatie</h4><div class="footer-links"><a href="/massages">Massages</a><a href="/prijzen">Prijzen</a><a href="/#massagekeuze">Massagekeuze</a><a href="/#boeken">Boeken</a></div></div><div><h4>Contact</h4><div class="footer-links"><a href="tel:{esc(site.get('phoneHref'))}">{esc(site.get('phoneDisplay'))}</a><a href="mailto:{esc(site.get('email'))}">{esc(site.get('email'))}</a><span>{esc(site.get('addressLine1'))}</span><span>{esc(site.get('postalCity'))}</span></div></div><div><h4>Informatie</h4><div class="footer-links"><a href="/contact">Contact</a><a href="/voorwaarden">Huisregels &amp; voorwaarden</a><a href="/privacy">Privacy</a></div></div></div><div class="footer-bottom"><span>© {esc(site.get('businessName'))}</span><span>KVK {esc(site.get('kvk'))} · BTW {esc(site.get('btw'))}</span></div></div></footer>'''
 
 def schema(site):
     o=site['opening']
-    payload={
-        "@context":"https://schema.org",
+    canonical=str(site.get('seo',{}).get('canonical') or '').rstrip('/')+'/'
+    business={
         "@type":"HealthAndBeautyBusiness",
+        "@id":canonical+"#business",
         "name":site.get('businessName'),
-        "url":site.get('seo',{}).get('canonical'),
+        "url":canonical,
         "telephone":site.get('phoneHref'),
         "email":site.get('email'),
-        "address":{"@type":"PostalAddress","streetAddress":site.get('addressLine1'),"postalCode":(site.get('postalCity') or '').split(' ',2)[0]+' '+(site.get('postalCity') or '').split(' ',2)[1] if len((site.get('postalCity') or '').split())>=2 else '',"addressLocality":"Capelle aan den IJssel","addressCountry":"NL"},
+        "image":site.get('seo',{}).get('ogImage') or site.get('hero',{}).get('image'),
+        "address":{"@type":"PostalAddress","streetAddress":site.get('addressLine1'),"postalCode":"2904 EP","addressLocality":"Capelle aan den IJssel","addressCountry":"NL"},
         "openingHoursSpecification":[
             {"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday"],"opens":o.get('weekdayOpen'),"closes":o.get('weekdayClose')},
             {"@type":"OpeningHoursSpecification","dayOfWeek":["Saturday","Sunday"],"opens":o.get('weekendOpen'),"closes":o.get('weekendClose')}
         ]
     }
+    website={"@type":"WebSite","@id":canonical+"#website","url":canonical,"name":site.get('businessName'),"inLanguage":"nl-NL"}
+    payload={"@context":"https://schema.org","@graph":[business,website]}
     return '<script type="application/ld+json">'+json.dumps(payload,ensure_ascii=False,separators=(',',':'))+'</script>'
 
 def subpage_head(site, title, description, canonical, breadcrumbs=None, noindex=False):
