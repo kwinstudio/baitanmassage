@@ -15,8 +15,8 @@
     "text": "Authentieke Thaise massage, aromatherapie, sportmassage, hot stone en duo-massage bij Baitan.",
     "primaryButton": "Afspraak maken",
     "secondaryButton": "Vind mijn massage",
-    "image": "https://cdn1.treatwell.net/images/view/v2.i16219452.w1080.h720.x9EB67FE1/",
-    "imageAlt": "Massageruimte van Baitan Thai Massage in Capelle aan den IJssel",
+    "image": "/assets/images/massage-head.webp",
+    "imageAlt": "Ontspannende hoofdmassage in warme wellness-sfeer",
     "badge": "Baitan · Hollandsch Diep"
   },
   "trust": {
@@ -111,10 +111,15 @@
     "ogTitle": "Thaise Massage Capelle aan den IJssel | Baitan",
     "ogDescription": "Bekijk Thaise massage, aromatherapie, sportmassage, hot stone en duo-massage bij Baitan in Capelle aan den IJssel.",
     "canonical": "https://baitanmassage.nl/",
-    "ogImage": "https://cdn1.treatwell.net/images/view/v2.i16219452.w1080.h720.x9EB67FE1/"
+    "ogImage": "/assets/images/massage-head.webp"
   },
   "whatsappUrl": "https://wa.me/31683936366",
   "gallery": [
+    {
+      "image": "/assets/images/massage-head.webp",
+      "alt": "Ontspannende hoofdmassage in warme wellness-sfeer",
+      "label": "Massage"
+    },
     {
       "image": "https://cdn1.treatwell.net/images/view/v2.i16219452.w1080.h720.x9EB67FE1/",
       "alt": "Behandelruimte van Baitan Thai Massage in Capelle aan den IJssel",
