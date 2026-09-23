@@ -169,13 +169,21 @@ if(choiceShell){
     if(resultText)resultText.textContent=messages[best]||'Bekijk deze behandeling bij Baitan.';
     if(resultDetail)resultDetail.href=t?.slug?`/${t.slug}`:'/massages';
     if(resultBook){
-      resultBook.dataset.service=best;
-      resultBook.addEventListener('click',()=>{
-        if(serviceSelect&&services[best]){
-          serviceSelect.value=best;
-          renderDurations(best);
-        }
-      },{once:true});
+      const treatwell=siteConfig?.booking?.provider==='treatwell' ? siteConfig?.booking?.treatwellBookingUrl : '';
+      if(treatwell){
+        resultBook.href=treatwell;
+        resultBook.target='_blank';
+        resultBook.rel='noopener';
+      }else{
+        resultBook.dataset.service=best;
+        resultBook.href='#boeken';
+        resultBook.addEventListener('click',()=>{
+          if(serviceSelect&&services[best]){
+            serviceSelect.value=best;
+            renderDurations(best);
+          }
+        },{once:true});
+      }
     }
     if(result)result.hidden=false;
   }
@@ -199,3 +207,105 @@ if(choiceShell){
   });
   showStep(0);
 }
+
+
+// Treatwell is the active booking destination: make the floating CTA direct.
+if(mobileBook && siteConfig?.booking?.provider==='treatwell' && siteConfig?.booking?.treatwellBookingUrl){
+  mobileBook.href=siteConfig.booking.treatwellBookingUrl;
+  mobileBook.target='_blank';
+  mobileBook.rel='noopener';
+}
+
+// Treatment detail modal. Links remain normal SEO links without JavaScript.
+const treatmentDialog=document.querySelector('#treatmentDialog');
+if(treatmentDialog){
+  const dialogImage=treatmentDialog.querySelector('#treatmentDialogImage');
+  const dialogLabel=treatmentDialog.querySelector('#treatmentDialogLabel');
+  const dialogTitle=treatmentDialog.querySelector('#treatmentDialogTitle');
+  const dialogText=treatmentDialog.querySelector('#treatmentDialogText');
+  const dialogFeatures=treatmentDialog.querySelector('#treatmentDialogFeatures');
+  const dialogPrices=treatmentDialog.querySelector('#treatmentDialogPrices');
+  const dialogBook=treatmentDialog.querySelector('#treatmentDialogBook');
+  const dialogPage=treatmentDialog.querySelector('#treatmentDialogPage');
+
+  function openTreatment(id){
+    const t=cmsTreatments.find(item=>item.id===id);
+    if(!t)return;
+    dialogTitle.textContent=t.name||'Behandeling';
+    dialogText.textContent=t.detailText||t.description||'';
+    dialogImage.src=t.image||siteConfig?.hero?.image||'';
+    dialogImage.alt=t.imageAlt||t.name||'Massagebehandeling';
+    dialogLabel.textContent=t.imageLabel||'';
+    dialogLabel.hidden=!t.imageLabel;
+    dialogFeatures.innerHTML=(t.features||[]).map(x=>`<li>${x}</li>`).join('');
+    dialogPrices.innerHTML=(t.durations||[]).map(d=>`<span><strong>${d.minutes} min</strong> €${Number(d.price).toLocaleString('nl-NL')}</span>`).join('');
+    dialogPage.href=t.slug?`/${t.slug}`:'/massages';
+    const treatwell=siteConfig?.booking?.provider==='treatwell' ? siteConfig?.booking?.treatwellBookingUrl : '';
+    dialogBook.href=treatwell||'#boeken';
+    if(treatwell){dialogBook.target='_blank';dialogBook.rel='noopener';}
+    else{dialogBook.removeAttribute('target');dialogBook.removeAttribute('rel');}
+    if(typeof treatmentDialog.showModal==='function')treatmentDialog.showModal();
+    else treatmentDialog.setAttribute('open','');
+  }
+
+  document.querySelectorAll('[data-treatment-modal]').forEach(link=>{
+    link.addEventListener('click',e=>{
+      e.preventDefault();
+      openTreatment(link.dataset.treatmentModal);
+    });
+  });
+}
+
+// Legal footer modal.
+const legalDialog=document.querySelector('#legalDialog');
+if(legalDialog){
+  const title=legalDialog.querySelector('#legalDialogTitle');
+  const body=legalDialog.querySelector('#legalDialogBody');
+  const link=legalDialog.querySelector('#legalDialogLink');
+  const legalContent={
+    terms:{
+      title:'Algemene voorwaarden',
+      html:'<p>De voorwaarden van Baitan gelden voor diensten, boekingen, betalingen, annuleringen en gedrag in de salon.</p>',
+      href:'/voorwaarden'
+    },
+    privacy:{
+      title:'Privacy & cookies',
+      html:'<p>De website gebruikt de gegevens die nodig zijn voor contact en verwijst voor online boeken naar Treatwell. Google Maps wordt pas na jouw keuze geladen.</p>',
+      href:'/privacy'
+    },
+    cancel:{
+      title:'Annuleren & afspraken',
+      html:'<p>Kosteloos annuleren kan tot 24 uur vóór de afspraak. Binnen 24 uur vindt volgens de gepubliceerde voorwaarden geen restitutie plaats. Bij te laat komen kan de behandeltijd worden ingekort.</p>',
+      href:'/voorwaarden'
+    },
+    business:{
+      title:'Bedrijfsgegevens',
+      html:`<p><strong>${siteConfig.businessName||'Baitan Thai Massage'}</strong><br>${siteConfig.address||''}<br><a href="tel:${siteConfig.phoneHref||''}">${siteConfig.phoneDisplay||''}</a><br><a href="mailto:${siteConfig.email||''}">${siteConfig.email||''}</a></p><p>KVK: ${siteConfig.kvk||''}<br>BTW: ${siteConfig.btw||''}</p>`,
+      href:'/contact'
+    }
+  };
+  document.querySelectorAll('[data-legal-modal]').forEach(btn=>btn.addEventListener('click',()=>{
+    const item=legalContent[btn.dataset.legalModal];
+    if(!item)return;
+    title.textContent=item.title;
+    body.innerHTML=item.html;
+    link.href=item.href;
+    if(typeof legalDialog.showModal==='function')legalDialog.showModal();
+    else legalDialog.setAttribute('open','');
+  }));
+}
+
+// Shared dialog controls and backdrop close.
+document.querySelectorAll('[data-dialog-close]').forEach(btn=>btn.addEventListener('click',()=>{
+  const dialog=btn.closest('dialog');
+  if(dialog?.close)dialog.close(); else dialog?.removeAttribute('open');
+}));
+document.querySelectorAll('dialog.site-dialog').forEach(dialog=>{
+  dialog.addEventListener('click',e=>{
+    if(e.target===dialog){
+      const rect=dialog.getBoundingClientRect();
+      const inside=e.clientX>=rect.left&&e.clientX<=rect.right&&e.clientY>=rect.top&&e.clientY<=rect.bottom;
+      if(!inside){if(dialog.close)dialog.close();else dialog.removeAttribute('open');}
+    }
+  });
+});
