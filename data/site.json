@@ -28,7 +28,10 @@
     "title": "Boek je massage",
     "text": "Kies een behandeling, duur, datum en tijd.",
     "panelTitle": "Snel geregeld.",
-    "apiBase": ""
+    "apiBase": "",
+    "provider": "custom",
+    "treatwellWidgetUrl": "",
+    "treatwellBookingUrl": ""
   },
   "about": {
     "kicker": "Over Baitan",
@@ -62,26 +65,46 @@
     "url": "https://www.google.com/maps/search/?api=1&query=Baitan+Thai+Massage+Hollandsch+Diep+71+Capelle+aan+den+IJssel"
   },
   "faq": [
-    {"question":"Kan ik annuleren?","answer":"Kosteloos tot 24 uur vóór de afspraak. Binnen 24 uur vindt geen restitutie plaats."},
-    {"question":"Wat als ik te laat kom?","answer":"De behandeltijd wordt ingekort; de geboekte kosten blijven verschuldigd."},
-    {"question":"Kan ik pinnen?","answer":"Ja, betalen kan contant of met pin."},
-    {"question":"Waar kan ik parkeren?","answer":"Parkeren is gratis in de directe omgeving van de salon."},
-    {"question":"Wat moet ik vooraf melden?","answer":"Meld relevante blessures, zwangerschap en medicatie vóór de behandeling."}
+    {
+      "question": "Kan ik annuleren?",
+      "answer": "Kosteloos tot 24 uur vóór de afspraak. Binnen 24 uur vindt geen restitutie plaats."
+    },
+    {
+      "question": "Wat als ik te laat kom?",
+      "answer": "De behandeltijd wordt ingekort; de geboekte kosten blijven verschuldigd."
+    },
+    {
+      "question": "Kan ik pinnen?",
+      "answer": "Ja, betalen kan contant of met pin."
+    },
+    {
+      "question": "Waar kan ik parkeren?",
+      "answer": "Parkeren is gratis in de directe omgeving van de salon."
+    },
+    {
+      "question": "Wat moet ik vooraf melden?",
+      "answer": "Meld relevante blessures, zwangerschap en medicatie vóór de behandeling."
+    }
   ],
   "opening": {
-    "weekdayLabel":"Maandag — vrijdag","weekdayOpen":"10:00","weekdayClose":"21:00",
-    "weekendLabel":"Zaterdag — zondag","weekendOpen":"11:00","weekendClose":"20:00","slotMinutes":30
+    "weekdayLabel": "Maandag — vrijdag",
+    "weekdayOpen": "10:00",
+    "weekdayClose": "21:00",
+    "weekendLabel": "Zaterdag — zondag",
+    "weekendOpen": "11:00",
+    "weekendClose": "20:00",
+    "slotMinutes": 30
   },
   "contact": {
-    "kicker":"Contact",
-    "routeUrl":"https://www.google.com/maps/dir/?api=1&destination=Hollandsch+Diep+71-73%2C+2904+EP+Capelle+aan+den+IJssel",
-    "mapEmbedUrl":"https://www.google.com/maps?q=Hollandsch%20Diep%2071-73%2C%202904%20EP%20Capelle%20aan%20den%20IJssel&output=embed"
+    "kicker": "Contact",
+    "routeUrl": "https://www.google.com/maps/dir/?api=1&destination=Hollandsch+Diep+71-73%2C+2904+EP+Capelle+aan+den+IJssel",
+    "mapEmbedUrl": "https://www.google.com/maps?q=Hollandsch%20Diep%2071-73%2C%202904%20EP%20Capelle%20aan%20den%20IJssel&output=embed"
   },
   "seo": {
-    "title":"Baitan Thai Massage | Thaise massage in Capelle aan den IJssel",
-    "description":"Baitan Thai Massage in Capelle aan den IJssel. Bekijk massages en prijzen en boek direct online.",
-    "ogTitle":"Baitan Thai Massage — Capelle aan den IJssel",
-    "ogDescription":"Thaise massage & wellness aan het Hollandsch Diep. Bekijk massages, prijzen en boek online.",
-    "canonical":"https://baitanmassage.nl/"
+    "title": "Baitan Thai Massage | Thaise massage in Capelle aan den IJssel",
+    "description": "Baitan Thai Massage in Capelle aan den IJssel. Bekijk massages en prijzen en boek direct online.",
+    "ogTitle": "Baitan Thai Massage — Capelle aan den IJssel",
+    "ogDescription": "Thaise massage & wellness aan het Hollandsch Diep. Bekijk massages, prijzen en boek online.",
+    "canonical": "https://baitanmassage.nl/"
   }
 }
