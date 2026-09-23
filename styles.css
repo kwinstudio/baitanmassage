@@ -28,3 +28,20 @@
   .treatments{display:block}.treatment{display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;padding:26px 0!important;border-right:0!important;gap:14px}.treatment h3{font-size:1.6rem}.treatment-meta{display:grid;gap:3px;font-size:.68rem}.treatment-price{font-size:.98rem}.price-row{grid-template-columns:1fr;gap:4px}.about-facts{grid-template-columns:1fr 1fr}.review-band{grid-template-columns:1fr}.review-band .btn,.contact-actions .btn,.gift-block .btn,.section-head>.btn{width:100%}.contact-actions{display:grid}.map{min-height:300px}.footer-grid{grid-template-columns:1fr}.footer-bottom{display:block;padding-bottom:62px}.mobile-book{display:flex}.mobile-book.is-hidden{opacity:0;visibility:hidden;pointer-events:none;transform:translateY(12px)}
 }
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+
+
+/* Treatwell booking integration */
+.treatwell-panel{padding:0;background:#fff;min-height:620px}
+.treatwell-widget{display:block;width:100%;height:760px;border:0;background:#fff}
+.treatwell-link-panel{display:grid;place-items:center;padding:52px;text-align:left}
+.treatwell-link-panel>div{width:min(100%,520px)}
+.treatwell-link-panel h3{font-size:2.2rem;margin:10px 0 14px}
+.treatwell-link-panel p{margin-bottom:24px}
+.treatwell-link-panel .booking-submit{width:auto}
+@media(max-width:720px){
+  .treatwell-booking{margin-left:-16px;margin-right:-16px}
+  .treatwell-panel{min-height:0}
+  .treatwell-widget{height:720px}
+  .treatwell-link-panel{padding:30px 22px}
+  .treatwell-link-panel .booking-submit{width:100%}
+}
