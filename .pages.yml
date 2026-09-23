@@ -114,6 +114,7 @@ content:
           - {name: count, label: Aantal reviews, type: number}
           - {name: button, label: Knoptekst, type: string}
           - {name: url, label: Google Reviews-link, type: string}
+          - {name: writeUrl, label: Google review schrijven-link, type: string}
 
       - name: faq
         label: Veelgestelde vragen
@@ -154,6 +155,7 @@ content:
           - {name: description, label: Meta description, type: text}
           - {name: ogTitle, label: Titel bij delen, type: string}
           - {name: ogDescription, label: Omschrijving bij delen, type: text}
+          - {name: ogImage, label: Social share afbeelding, type: string}
           - {name: canonical, label: Definitieve website-URL, type: string}
 
   - name: treatments
@@ -169,7 +171,15 @@ content:
     fields:
       - {name: id, label: Technische ID, type: string, required: true, readonly: true}
       - {name: name, label: Naam massage, type: string, required: true}
-      - {name: description, label: Omschrijving, type: text}
+      - {name: slug, label: SEO URL, type: string, required: true}
+      - {name: description, label: Korte omschrijving, type: text}
+      - {name: detailText, label: Uitgebreide behandeltekst, type: text}
+      - name: features
+        label: Kenmerken
+        type: string
+        list: true
+      - {name: seoTitle, label: SEO-titel behandelpagina, type: string}
+      - {name: seoDescription, label: Meta description behandelpagina, type: text}
       - name: image
         label: Foto bij massage
         type: image
