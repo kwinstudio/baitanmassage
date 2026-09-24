@@ -92,12 +92,18 @@ def massage_choice_section(site):
     return f'''<section class="choice-section" id="massagekeuze"><div class="container choice-section-inner"><div class="choice-copy"><div class="eyebrow">Persoonlijke massagekeuze</div><h2>In vijf vragen naar jouw beste match.</h2><p>Beantwoord vijf korte vragen. Je krijgt daarna direct de behandeling die het beste bij jouw voorkeur past.</p></div><div class="choice-card"><div class="choice-progress"><span id="choiceProgressText">Vraag 1 van 5</span><div class="choice-progress-track"><span id="choiceProgressBar"></span></div></div>'''+''.join(blocks)+'''<div class="choice-result" id="choiceResult" hidden><div class="eyebrow">Beste match</div><h3 id="choiceResultTitle"></h3><p id="choiceResultText"></p><div class="choice-result-actions"><a class="btn" id="choiceResultBook" href="#boeken">Afspraak maken</a><a class="btn btn-outline" id="choiceResultDetail" href="#massages">Bekijk behandeling</a></div><button type="button" class="text-button choice-restart" id="choiceRestart">Opnieuw kiezen</button></div></div></div></section>'''
 
 
-def prices_section(treatments):
+def prices_section(site, treatments):
+    booking_url=str(site.get('booking',{}).get('treatwellBookingUrl') or '#boeken')
+    external=' target="_blank" rel="noopener"' if booking_url.startswith('http') else ''
     rows=[]
     for t in active_treatments(treatments):
-        prices=' · '.join(money(d['price']) for d in (t.get('durations') or []))
-        rows.append(f'<div class="price-row"><strong>{esc(t.get("name"))}</strong><span>{prices}</span></div>')
-    return '<section class="section" id="prijzen"><div class="container"><div class="section-head"><div><div class="eyebrow">Prijzen</div><h2>Duidelijk vooraf</h2></div><a class="btn btn-outline" href="#boeken">Afspraak maken</a></div><div class="price-list">'+''.join(rows)+'<p class="price-note">Kies de gewenste duur in het reserveringssysteem.</p></div></div></section>'
+        options=[]
+        for d in (t.get('durations') or []):
+            minutes=int(d.get('minutes') or 0)
+            price=money(d.get('price'))
+            options.append(f'<a class="price-option" href="{esc(booking_url)}"{external} aria-label="Boek {esc(t.get("name"))}, {minutes} minuten voor {price} via Treatwell"><span class="price-duration">{minutes} min</span><strong>{price}</strong></a>')
+        rows.append(f'<div class="price-treatment"><div class="price-treatment-head"><h3>{esc(t.get("name"))}</h3><a class="price-book-link" href="{esc(booking_url)}"{external}>Boek via Treatwell <span aria-hidden="true">→</span></a></div><div class="price-options">{"" .join(options)}</div></div>')
+    return f'''<section class="section" id="prijzen"><div class="container"><div class="section-head"><div><div class="eyebrow">Prijzen</div><h2>Duidelijk vooraf</h2><p>Bekijk direct de duur en prijs. Tik op een optie om te reserveren via Treatwell.</p></div><a class="btn btn-outline" href="{esc(booking_url)}"{external}>Afspraak maken</a></div><div class="price-list price-list-clear">{''.join(rows)}</div></div></section>'''
 
 def about_section(site):
     a=site['about']; facts=''.join(f'<div class="about-fact"><strong>{esc(x)}</strong></div>' for x in a.get('facts',[]))
@@ -275,11 +281,17 @@ def massages_page(site, treatments):
 def prices_page(site, treatments):
     base=str(site['seo']['canonical']).rstrip('/')
     canonical=base+'/prijzen'
+    booking_url=str(site.get('booking',{}).get('treatwellBookingUrl') or '/#boeken')
+    external=' target="_blank" rel="noopener"' if booking_url.startswith('http') else ''
     rows=[]
     for t in active_treatments(treatments):
-        prices=' · '.join(f'{int(d["minutes"])} min {money(d["price"])}' for d in t.get('durations',[]))
-        rows.append(f'<div class="price-row"><strong><a href="/{esc(t.get("slug"))}">{esc(t.get("name"))}</a></strong><span>{prices}</span></div>')
-    body='<main id="main"><section class="detail-hero"><div class="container"><div class="eyebrow">Baitan Thai Massage</div><h1>Massageprijzen in Capelle aan den IJssel</h1><p>Actuele duur en prijzen van de behandelingen van Baitan.</p></div></section><section class="section"><div class="container"><div class="price-list wide-price-list">'+''.join(rows)+'</div><div class="hero-actions"><a class="btn" href="/#boeken">Afspraak maken</a><a class="btn btn-outline" href="/massages">Bekijk behandelingen</a></div></div></section></main>'
+        options=[]
+        for d in t.get('durations',[]):
+            minutes=int(d.get('minutes') or 0)
+            price=money(d.get('price'))
+            options.append(f'<a class="price-option" href="{esc(booking_url)}"{external} aria-label="Boek {esc(t.get("name"))}, {minutes} minuten voor {price} via Treatwell"><span class="price-duration">{minutes} min</span><strong>{price}</strong></a>')
+        rows.append(f'<div class="price-treatment"><div class="price-treatment-head"><h2><a href="/{esc(t.get("slug"))}">{esc(t.get("name"))}</a></h2><a class="price-book-link" href="{esc(booking_url)}"{external}>Boek via Treatwell <span aria-hidden="true">→</span></a></div><div class="price-options">{"" .join(options)}</div></div>')
+    body=f'''<main id="main"><section class="detail-hero"><div class="container"><div class="eyebrow">Baitan Thai Massage</div><h1>Massageprijzen in Capelle aan den IJssel</h1><p>Bekijk in één oogopslag de duur en prijs per massage. Tik op een prijs om direct via Treatwell te reserveren.</p></div></section><section class="section"><div class="container"><div class="price-list price-list-clear">{''.join(rows)}</div><div class="hero-actions"><a class="btn" href="{esc(booking_url)}"{external}>Afspraak maken</a><a class="btn btn-outline" href="/massages">Bekijk behandelingen</a></div></div></section></main>'''
     return subpage_head(site,'Massage Prijzen Capelle aan den IJssel | Baitan','Bekijk de actuele prijzen van Baitan Thai Massage in Capelle aan den IJssel voor 60, 90 en 120 minuten.',canonical,[("Home",base+"/"),("Prijzen",canonical)])+subpage_header()+body+footer(site)+'<script src="/app.js"></script></body></html>'
 
 def contact_page(site):
@@ -312,7 +324,7 @@ def build():
       'BOOKING':booking(site,treatments),
       'TREATMENTS':treatments_section(site,treatments),
       'MASSAGE_CHOICE':massage_choice_section(site),
-      'PRICES':prices_section(treatments),
+      'PRICES':prices_section(site,treatments),
       'ABOUT':about_section(site),
       'LOCAL_SEO':local_seo_section(site),
       'GALLERY':gallery_section(site),
