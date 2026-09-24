@@ -5,6 +5,9 @@ on:
     branches: [main]
   pull_request:
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -13,6 +16,46 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - name: Repair WebP assets
+        run: |
+          python3 -m pip install --quiet Pillow
+          python3 - <<'PY'
+          from PIL import Image
+          from pathlib import Path
+
+          root = Path("assets/images")
+          repair = [
+              "hot-stone-massage.webp",
+              "thai-back-massage.webp",
+              "thai-hand-massage.webp",
+              "thai-herbal-compress.webp",
+              "thai-leg-massage.webp",
+              "thai-oil-massage.webp",
+              "thai-shoulder-closeup.webp",
+              "thai-shoulder-massage.webp",
+          ]
+
+          for name in repair:
+              path = root / name
+              with Image.open(path) as im:
+                  im.convert("RGB").save(path, "WEBP", quality=82, method=6)
+
+          # The old head-massage file is not browser-decodable; rebuild it
+          # from the valid close-up source so no broken image can remain.
+          with Image.open(root / "thai-shoulder-closeup.webp") as im:
+              im.convert("RGB").save(root / "thai-head-massage.webp", "WEBP", quality=82, method=6)
+              im.convert("RGB").save(root / "massage-head.webp", "WEBP", quality=82, method=6)
+          PY
+      - name: Commit repaired image assets
+        if: github.event_name == 'push'
+        run: |
+          if ! git diff --quiet -- assets/images; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add assets/images
+            git commit -m "Herstel massagefoto's voor alle browsers"
+            git push
+          fi
       - name: Build static site
         run: python3 build.py
       - name: Verify SEO outputs
