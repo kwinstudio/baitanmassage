@@ -508,3 +508,33 @@
   .hero-immersive .hero-actions .btn{min-height:54px;width:100%}
   .hero-scroll{display:none}
 }
+
+
+/* Local SEO content */
+.local-seo-section{background:#fff}
+.local-seo-grid{
+  display:grid;
+  grid-template-columns:.9fr 1.1fr;
+  gap:80px;
+  align-items:start;
+}
+.local-seo-grid h2{
+  font-family:var(--serif);
+  font-weight:400;
+  letter-spacing:-.035em;
+  font-size:clamp(2.5rem,4.5vw,4.5rem);
+  line-height:1.02;
+  margin:12px 0 0;
+  max-width:680px;
+}
+.local-seo-copy{max-width:700px}
+.local-seo-copy p{font-size:1.02rem;line-height:1.75;color:var(--muted);margin:0 0 16px}
+.local-seo-links{display:flex;flex-wrap:wrap;gap:18px 28px;margin-top:28px}
+@media(max-width:900px){
+  .local-seo-grid{grid-template-columns:1fr;gap:28px}
+}
+@media(max-width:720px){
+  .local-seo-grid h2{font-size:clamp(2.25rem,10vw,3.25rem)}
+  .local-seo-copy p{font-size:.96rem;line-height:1.68}
+  .local-seo-links{display:grid;gap:14px}
+}
