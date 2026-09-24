@@ -309,3 +309,14 @@ document.querySelectorAll('dialog.site-dialog').forEach(dialog=>{
     }
   });
 });
+
+
+/* Image fallback: never leave a broken image visible. */
+document.addEventListener('error', function (event) {
+  const img = event.target;
+  if (!(img instanceof HTMLImageElement) || img.dataset.fallbackApplied === 'true') return;
+  const fallback = window.BAITAN_SITE && window.BAITAN_SITE.hero && window.BAITAN_SITE.hero.image;
+  if (!fallback || img.src === fallback) return;
+  img.dataset.fallbackApplied = 'true';
+  img.src = fallback;
+}, true);
