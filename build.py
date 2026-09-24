@@ -33,19 +33,21 @@ def trustbar(site):
 
 def booking(site, treatments):
     b = site["booking"]
-    provider = str(b.get("provider") or "custom").lower()
-    treatwell_widget = str(b.get("treatwellWidgetUrl") or "").strip()
-    treatwell_link = str(b.get("treatwellBookingUrl") or "").strip()
+    provider = str(b.get("provider") or "salonized").lower()
+    salonized_link = str(b.get("salonizedBookingUrl") or "").strip()
     image = b.get("image") or site.get("hero",{}).get("image")
     image_alt = b.get("imageAlt") or "Sfeerbeeld van een massagebehandeling"
     image_label = b.get("imageLabel") or "Sfeerbeeld"
 
-    if provider == "treatwell" and (treatwell_widget or treatwell_link):
-        if treatwell_widget:
-            booking_ui = f'''<div class="treatwell-panel"><iframe class="treatwell-widget" src="{esc(treatwell_widget)}" title="Boek een afspraak bij Baitan via Treatwell" loading="lazy" allow="payment *"></iframe></div>'''
+    if provider == "salonized":
+        if salonized_link:
+            booking_ui = f'''<div class="external-booking-panel"><div><div class="eyebrow">Salonized</div><h3>Bekijk beschikbare tijden</h3><p>Open de actuele online agenda van Baitan en kies direct een beschikbaar moment.</p><a class="btn booking-submit" href="{esc(salonized_link)}" target="_blank" rel="noopener">Boek online <span aria-hidden="true">→</span></a></div></div>'''
+            status_text='Beschikbaarheid en afspraken verlopen via Salonized.'
         else:
-            booking_ui = f'''<div class="treatwell-panel treatwell-link-panel"><div><div class="eyebrow">Treatwell</div><h3>Bekijk beschikbare tijden</h3><p>Boek direct in de actuele agenda van Baitan.</p><a class="btn booking-submit" href="{esc(treatwell_link)}" target="_blank" rel="noopener">Boek via Treatwell <span aria-hidden="true">→</span></a></div></div>'''
-        return f'''<section class="section" id="boeken"><div class="container"><div class="section-head"><div><div class="eyebrow">{esc(b.get('kicker'))}</div><h2>{esc(b.get('title'))}</h2></div><p>{esc(b.get('text'))}</p></div><div class="booking-shell treatwell-booking"><div class="booking-copy booking-copy-rich"><figure class="booking-visual"><img src="{esc(image)}" alt="{esc(image_alt)}" loading="lazy"><figcaption>{esc(image_label)}</figcaption></figure><div class="booking-copy-text"><div class="eyebrow">Online reserveren</div><h3>{esc(b.get('panelTitle'))}</h3><p>Beschikbaarheid en afspraken worden rechtstreeks via Treatwell gesynchroniseerd.</p></div></div>{booking_ui}</div></div></section>'''
+            phone='tel:'+str(site.get('phoneHref') or '')
+            booking_ui = f'''<div class="external-booking-panel"><div><div class="eyebrow">Salonized</div><h3>Online reserveren</h3><p>De Salonized-reserveringslink wordt aan deze demo gekoppeld zodra de salon de officiële boekingslink heeft aangeleverd.</p><a class="btn booking-submit" href="{esc(phone)}">Bel voor een afspraak <span aria-hidden="true">→</span></a></div></div>'''
+            status_text='Het reserveringssysteem van Baitan is Salonized.'
+        return f'''<section class="section" id="boeken"><div class="container"><div class="section-head"><div><div class="eyebrow">{esc(b.get('kicker'))}</div><h2>{esc(b.get('title'))}</h2></div><p>{esc(b.get('text'))}</p></div><div class="booking-shell external-booking"><div class="booking-copy booking-copy-rich"><figure class="booking-visual"><img src="{esc(image)}" alt="{esc(image_alt)}" loading="lazy"><figcaption>{esc(image_label)}</figcaption></figure><div class="booking-copy-text"><div class="eyebrow">Online reserveren</div><h3>{esc(b.get('panelTitle'))}</h3><p>{esc(status_text)}</p></div></div>{booking_ui}</div></div></section>'''
 
     options = ''.join(f'<option value="{esc(t["id"])}">{esc(t["name"])}</option>' for t in active_treatments(treatments))
     return f'''<section class="section" id="boeken"><div class="container"><div class="section-head"><div><div class="eyebrow">{esc(b.get('kicker'))}</div><h2>{esc(b.get('title'))}</h2></div><p>{esc(b.get('text'))}</p></div><div class="booking-shell"><div class="booking-copy"><div class="eyebrow">Reserveren</div><h3 style="font-size:2.4rem;margin-top:12px">{esc(b.get('panelTitle'))}</h3><ol class="booking-steps"><li class="booking-step"><span class="booking-step-num">01</span><span>Behandeling</span></li><li class="booking-step"><span class="booking-step-num">02</span><span>Datum &amp; tijd</span></li><li class="booking-step"><span class="booking-step-num">03</span><span>Bevestigen</span></li></ol></div><div class="booking-panel">
@@ -62,7 +64,7 @@ def booking(site, treatments):
 
 def treatments_section(site, treatments):
     cards=[]
-    booking_url=str(site.get('booking',{}).get('treatwellBookingUrl') or '#boeken')
+    booking_url=str(site.get('booking',{}).get('salonizedBookingUrl') or '#boeken')
     external=' target="_blank" rel="noopener"' if booking_url.startswith('http') else ''
     for t in active_treatments(treatments):
         ds=t.get('durations') or []
@@ -93,7 +95,7 @@ def massage_choice_section(site):
 
 
 def prices_section(site, treatments):
-    booking_url=str(site.get('booking',{}).get('treatwellBookingUrl') or '#boeken')
+    booking_url=str(site.get('booking',{}).get('salonizedBookingUrl') or '#boeken')
     external=' target="_blank" rel="noopener"' if booking_url.startswith('http') else ''
     rows=[]
     for t in active_treatments(treatments):
@@ -101,9 +103,9 @@ def prices_section(site, treatments):
         for d in (t.get('durations') or []):
             minutes=int(d.get('minutes') or 0)
             price=money(d.get('price'))
-            options.append(f'<a class="price-option" href="{esc(booking_url)}"{external} aria-label="Boek {esc(t.get("name"))}, {minutes} minuten voor {price} via Treatwell"><span class="price-duration">{minutes} min</span><strong>{price}</strong></a>')
-        rows.append(f'<div class="price-treatment"><div class="price-treatment-head"><h3>{esc(t.get("name"))}</h3><a class="price-book-link" href="{esc(booking_url)}"{external}>Boek via Treatwell <span aria-hidden="true">→</span></a></div><div class="price-options">{"" .join(options)}</div></div>')
-    return f'''<section class="section" id="prijzen"><div class="container"><div class="section-head"><div><div class="eyebrow">Prijzen</div><h2>Duidelijk vooraf</h2><p>Bekijk direct de duur en prijs. Tik op een optie om te reserveren via Treatwell.</p></div><a class="btn btn-outline" href="{esc(booking_url)}"{external}>Afspraak maken</a></div><div class="price-list price-list-clear">{''.join(rows)}</div></div></section>'''
+            options.append(f'<a class="price-option" href="{esc(booking_url)}"{external} aria-label="Boek {esc(t.get("name"))}, {minutes} minuten voor {price} via Salonized"><span class="price-duration">{minutes} min</span><strong>{price}</strong></a>')
+        rows.append(f'<div class="price-treatment"><div class="price-treatment-head"><h3>{esc(t.get("name"))}</h3><a class="price-book-link" href="{esc(booking_url)}"{external}>Boek via Salonized <span aria-hidden="true">→</span></a></div><div class="price-options">{"" .join(options)}</div></div>')
+    return f'''<section class="section" id="prijzen"><div class="container"><div class="section-head"><div><div class="eyebrow">Prijzen</div><h2>Duidelijk vooraf</h2><p>Bekijk direct de duur en prijs. Tik op een optie om te reserveren via Salonized.</p></div><a class="btn btn-outline" href="{esc(booking_url)}"{external}>Afspraak maken</a></div><div class="price-list price-list-clear">{''.join(rows)}</div></div></section>'''
 
 def about_section(site):
     a=site['about']; facts=''.join(f'<div class="about-fact"><strong>{esc(x)}</strong></div>' for x in a.get('facts',[]))
@@ -165,7 +167,7 @@ def schema(site, treatments):
     o=site['opening']
     canonical=str(site.get('seo',{}).get('canonical') or '').rstrip('/')+'/'
     maps_url=site.get('reviews',{}).get('url') or site.get('contact',{}).get('routeUrl')
-    booking_url=site.get('booking',{}).get('treatwellBookingUrl')
+    booking_url=site.get('booking',{}).get('salonizedBookingUrl')
     services=[]
     for t in active_treatments(treatments):
         offers=[]
@@ -254,7 +256,7 @@ def treatment_page(site, treatment, treatments):
     title=treatment.get('seoTitle') or (str(treatment.get('name'))+' | Baitan')
     description=treatment.get('seoDescription') or treatment.get('description') or ''
     breadcrumbs=[("Home",base+"/"),("Massages",base+"/massages"),(treatment.get('name'),canonical)]
-    booking_url=str(site.get('booking',{}).get('treatwellBookingUrl') or '/#boeken')
+    booking_url=str(site.get('booking',{}).get('salonizedBookingUrl') or '/#boeken')
     external=' target="_blank" rel="noopener"' if booking_url.startswith('http') else ''
     image=treatment.get('image') or site.get('hero',{}).get('image')
     label=treatment.get('imageLabel') or ''
@@ -281,7 +283,7 @@ def massages_page(site, treatments):
 def prices_page(site, treatments):
     base=str(site['seo']['canonical']).rstrip('/')
     canonical=base+'/prijzen'
-    booking_url=str(site.get('booking',{}).get('treatwellBookingUrl') or '/#boeken')
+    booking_url=str(site.get('booking',{}).get('salonizedBookingUrl') or '/#boeken')
     external=' target="_blank" rel="noopener"' if booking_url.startswith('http') else ''
     rows=[]
     for t in active_treatments(treatments):
@@ -289,9 +291,9 @@ def prices_page(site, treatments):
         for d in t.get('durations',[]):
             minutes=int(d.get('minutes') or 0)
             price=money(d.get('price'))
-            options.append(f'<a class="price-option" href="{esc(booking_url)}"{external} aria-label="Boek {esc(t.get("name"))}, {minutes} minuten voor {price} via Treatwell"><span class="price-duration">{minutes} min</span><strong>{price}</strong></a>')
-        rows.append(f'<div class="price-treatment"><div class="price-treatment-head"><h2><a href="/{esc(t.get("slug"))}">{esc(t.get("name"))}</a></h2><a class="price-book-link" href="{esc(booking_url)}"{external}>Boek via Treatwell <span aria-hidden="true">→</span></a></div><div class="price-options">{"" .join(options)}</div></div>')
-    body=f'''<main id="main"><section class="detail-hero"><div class="container"><div class="eyebrow">Baitan Thai Massage</div><h1>Massageprijzen in Capelle aan den IJssel</h1><p>Bekijk in één oogopslag de duur en prijs per massage. Tik op een prijs om direct via Treatwell te reserveren.</p></div></section><section class="section"><div class="container"><div class="price-list price-list-clear">{''.join(rows)}</div><div class="hero-actions"><a class="btn" href="{esc(booking_url)}"{external}>Afspraak maken</a><a class="btn btn-outline" href="/massages">Bekijk behandelingen</a></div></div></section></main>'''
+            options.append(f'<a class="price-option" href="{esc(booking_url)}"{external} aria-label="Boek {esc(t.get("name"))}, {minutes} minuten voor {price} via Salonized"><span class="price-duration">{minutes} min</span><strong>{price}</strong></a>')
+        rows.append(f'<div class="price-treatment"><div class="price-treatment-head"><h2><a href="/{esc(t.get("slug"))}">{esc(t.get("name"))}</a></h2><a class="price-book-link" href="{esc(booking_url)}"{external}>Boek via Salonized <span aria-hidden="true">→</span></a></div><div class="price-options">{"" .join(options)}</div></div>')
+    body=f'''<main id="main"><section class="detail-hero"><div class="container"><div class="eyebrow">Baitan Thai Massage</div><h1>Massageprijzen in Capelle aan den IJssel</h1><p>Bekijk in één oogopslag de duur en prijs per massage. Tik op een prijs om direct via Salonized te reserveren.</p></div></section><section class="section"><div class="container"><div class="price-list price-list-clear">{''.join(rows)}</div><div class="hero-actions"><a class="btn" href="{esc(booking_url)}"{external}>Afspraak maken</a><a class="btn btn-outline" href="/massages">Bekijk behandelingen</a></div></div></section></main>'''
     return subpage_head(site,'Massage Prijzen Capelle aan den IJssel | Baitan','Bekijk de actuele prijzen van Baitan Thai Massage in Capelle aan den IJssel voor 60, 90 en 120 minuten.',canonical,[("Home",base+"/"),("Prijzen",canonical)])+subpage_header()+body+footer(site)+'<script src="/app.js"></script></body></html>'
 
 def contact_page(site):
