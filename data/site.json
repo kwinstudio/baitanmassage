@@ -30,8 +30,8 @@
     "panelTitle": "Boek je afspraak via Salonized.",
     "apiBase": "",
     "provider": "salonized",
-    "image": "https://images.unsplash.com/photo-1757689314932-bec6e9c39e51?auto=format&fit=crop&fm=jpg&q=82&w=1600",
-    "imageAlt": "Sfeerbeeld van een professionele massagebehandeling",
+    "image": "/assets/images/thai-oil-massage.webp",
+    "imageAlt": "Sfeerbeeld van een professionele oliemassage bij Baitan",
     "imageLabel": "Sfeerbeeld",
     "salonizedBookingUrl": ""
   },
@@ -39,8 +39,8 @@
     "kicker": "Over Baitan",
     "title": "Thaise wellness in Capelle",
     "text": "Baitan biedt ontspannings- en wellnessmassages aan het Hollandsch Diep in Capelle aan den IJssel.",
-    "image": "https://images.unsplash.com/photo-1772378452022-94ee7971fe80?auto=format&fit=crop&fm=jpg&q=82&w=1600",
-    "imageAlt": "Sfeerbeeld van een rustige massagebehandeling",
+    "image": "/assets/images/thai-shoulder-massage.webp",
+    "imageAlt": "Sfeerbeeld van een rustige schoudermassage",
     "facts": [
       "Douchen mogelijk",
       "Pin & contant",
@@ -54,7 +54,7 @@
     "title": "Cadeaubon",
     "text": "Verkrijgbaar in de salon en 12 maanden geldig, tenzij anders vermeld.",
     "button": "Bel voor een cadeaubon",
-    "image": "https://images.unsplash.com/photo-1675149476008-83dbfa2ee917?auto=format&fit=crop&fm=jpg&q=82&w=1600",
+    "image": "/assets/images/thai-hand-massage.webp",
     "imageAlt": "Sfeerbeeld van ontspanning en wellness"
   },
   "loyalty": {
@@ -130,47 +130,47 @@
   "gallery": [
     {
       "image": "/assets/images/baitan-hero-atmospheric.webp",
-      "alt": "Baitan Thai Massage in Capelle aan den IJssel",
+      "alt": "Sfeervolle Thaise massage bij Baitan",
       "label": "Baitan"
     },
     {
-      "image": "https://images.unsplash.com/photo-1675149476008-83dbfa2ee917?auto=format&fit=crop&fm=jpg&q=82&w=1600",
-      "alt": "Sfeerbeeld van een ontspannende oliemassage",
+      "image": "/assets/images/thai-oil-massage.webp",
+      "alt": "Sfeerbeeld van een oliemassage",
       "label": "Sfeerbeeld"
     },
     {
-      "image": "https://images.unsplash.com/photo-1757689314932-bec6e9c39e51?auto=format&fit=crop&fm=jpg&q=82&w=1600",
-      "alt": "Sfeerbeeld van een professionele massagebehandeling",
+      "image": "/assets/images/thai-shoulder-massage.webp",
+      "alt": "Sfeerbeeld van een schoudermassage",
       "label": "Sfeerbeeld"
     },
     {
-      "image": "https://images.unsplash.com/photo-1745327883348-8d78cb4661b0?auto=format&fit=crop&fm=jpg&q=82&w=1600",
+      "image": "/assets/images/hot-stone-massage.webp",
       "alt": "Sfeerbeeld van een hot stone massage",
       "label": "Sfeerbeeld"
     },
     {
-      "image": "https://images.unsplash.com/photo-1772378452022-94ee7971fe80?auto=format&fit=crop&fm=jpg&q=82&w=1600",
-      "alt": "Sfeerbeeld van een rustige wellnessmassage",
+      "image": "/assets/images/thai-back-massage.webp",
+      "alt": "Sfeerbeeld van een rugmassage",
       "label": "Sfeerbeeld"
     },
     {
-      "image": "https://images.unsplash.com/photo-1757689314932-bec6e9c39e51?auto=format&fit=crop&fm=jpg&q=82&w=1600",
-      "alt": "Sfeerbeeld van massage voor rug en schouders",
+      "image": "/assets/images/thai-leg-massage.webp",
+      "alt": "Sfeerbeeld van een beenmassage",
       "label": "Sfeerbeeld"
     },
     {
-      "image": "https://images.unsplash.com/photo-1675149476008-83dbfa2ee917?auto=format&fit=crop&fm=jpg&q=82&w=1600",
-      "alt": "Sfeerbeeld van ontspanning met massageolie",
+      "image": "/assets/images/thai-hand-massage.webp",
+      "alt": "Sfeerbeeld van een handmassage",
       "label": "Sfeerbeeld"
     },
     {
-      "image": "https://images.unsplash.com/photo-1772378452022-94ee7971fe80?auto=format&fit=crop&fm=jpg&q=82&w=1600",
-      "alt": "Sfeerbeeld van Thaise wellness",
+      "image": "/assets/images/thai-herbal-compress.webp",
+      "alt": "Sfeerbeeld van een Thaise kruidenstempelmassage",
       "label": "Sfeerbeeld"
     },
     {
-      "image": "https://images.unsplash.com/photo-1745327883348-8d78cb4661b0?auto=format&fit=crop&fm=jpg&q=82&w=1600",
-      "alt": "Sfeerbeeld van massage met warme stenen",
+      "image": "/assets/images/thai-head-massage.webp",
+      "alt": "Sfeerbeeld van een hoofdmassage",
       "label": "Sfeerbeeld"
     }
   ],
