@@ -24,7 +24,7 @@ def active_treatments(treatments):
 
 def hero(site):
     h = site["hero"]
-    return f'''<section class="hero hero-immersive" id="home"><img class="hero-bg" src="{esc(h.get('image'))}" alt="{esc(h.get('imageAlt'))}" fetchpriority="high"><div class="hero-shade" aria-hidden="true"></div><div class="container hero-immersive-inner"><div class="hero-copy"><span class="eyebrow">{esc(h.get('eyebrow'))}</span><h1>{esc(h.get('title'))}</h1><p class="lead">{esc(h.get('text'))}</p><div class="hero-actions"><a class="btn" href="#boeken">{esc(h.get('primaryButton'))}</a><a class="btn btn-outline" href="#massagekeuze">{esc(h.get('secondaryButton'))}</a></div></div><a class="hero-scroll" href="#boeken" aria-label="Scroll naar online boeken">Bekijk mogelijkheden <span aria-hidden="true">↓</span></a></div></section>'''
+    return f'''<section class="hero hero-immersive" id="home"><img class="hero-bg" src="{esc(h.get('image'))}" alt="{esc(h.get('imageAlt'))}" width="1280" height="720" fetchpriority="high" decoding="async"><div class="hero-shade" aria-hidden="true"></div><div class="container hero-immersive-inner"><div class="hero-copy"><span class="eyebrow">{esc(h.get('eyebrow'))}</span><h1>{esc(h.get('title'))}</h1><p class="lead">{esc(h.get('text'))}</p><div class="hero-actions"><a class="btn" href="#boeken">{esc(h.get('primaryButton'))}</a><a class="btn btn-outline" href="#massagekeuze">{esc(h.get('secondaryButton'))}</a></div></div><a class="hero-scroll" href="#boeken" aria-label="Scroll naar online boeken">Bekijk mogelijkheden <span aria-hidden="true">↓</span></a></div></section>'''
 
 
 def trustbar(site):
@@ -104,6 +104,12 @@ def about_section(site):
     image_label=a.get('imageLabel') or 'Sfeerbeeld'
     return f'''<section class="section section-soft" id="over"><div class="container about-grid"><div class="about-photo"><img src="{esc(a.get('image'))}" alt="{esc(a.get('imageAlt'))}" loading="lazy"><span class="media-label">{esc(image_label)}</span></div><div class="about-copy"><div class="eyebrow">{esc(a.get('kicker'))}</div><h2>{esc(a.get('title'))}</h2><p>{esc(a.get('text'))}</p><div class="about-facts">{facts}</div></div></div></section>'''
 
+def local_seo_section(site):
+    x=site.get('localSeo') or {}
+    if not x.get('title'):
+        return ''
+    return f'''<section class="section local-seo-section" id="thaise-massage-capelle"><div class="container local-seo-grid"><div><div class="eyebrow">{esc(x.get('kicker'))}</div><h2>{esc(x.get('title'))}</h2></div><div class="local-seo-copy"><p>{esc(x.get('intro'))}</p><p>{esc(x.get('text'))}</p><div class="local-seo-links"><a class="text-link" href="/thaise-massage-capelle-aan-den-ijssel">Thaise massage <span>→</span></a><a class="text-link" href="/massages">Alle massages <span>→</span></a><a class="text-link" href="/contact">Adres &amp; route <span>→</span></a></div></div></div></section>'''
+
 def gallery_section(site):
     items=[]
     for i,item in enumerate(site.get('gallery') or []):
@@ -149,9 +155,35 @@ def footer(site):
     return f'''<footer class="footer"><div class="container"><div class="footer-grid"><div><a class="brand" href="/"><span class="brand-mark"><span>B</span></span><span class="brand-name">BAITAN</span></a><p style="max-width:330px;margin-top:20px">{esc(site.get('tagline'))}</p></div><div><h4>Navigatie</h4><div class="footer-links"><a href="/massages">Massages</a><a href="/prijzen">Prijzen</a><a href="/#massagekeuze">Massagekeuze</a><a href="/#boeken">Boeken</a></div></div><div><h4>Contact</h4><div class="footer-links"><a href="tel:{esc(site.get('phoneHref'))}">{esc(site.get('phoneDisplay'))}</a><a href="mailto:{esc(site.get('email'))}">{esc(site.get('email'))}</a><span>{esc(site.get('addressLine1'))}</span><span>{esc(site.get('postalCity'))}</span></div></div><div><h4>Informatie</h4><div class="footer-links"><button class="footer-link-button" type="button" data-legal-modal="terms">Algemene voorwaarden</button><button class="footer-link-button" type="button" data-legal-modal="privacy">Privacy &amp; cookies</button><button class="footer-link-button" type="button" data-legal-modal="cancel">Annuleren &amp; afspraken</button><button class="footer-link-button" type="button" data-legal-modal="business">Bedrijfsgegevens</button></div></div></div><div class="footer-bottom"><span>© {esc(site.get('businessName'))}</span><span>KVK {esc(site.get('kvk'))} · BTW {esc(site.get('btw'))}</span></div></div></footer><dialog class="site-dialog legal-dialog" id="legalDialog" aria-labelledby="legalDialogTitle"><button class="dialog-close" type="button" data-dialog-close aria-label="Sluiten">×</button><div class="dialog-content"><div class="eyebrow">Baitan</div><h2 id="legalDialogTitle"></h2><div id="legalDialogBody"></div><a class="text-link" id="legalDialogLink" href="/voorwaarden">Lees volledige informatie <span>→</span></a></div></dialog>'''
 
 
-def schema(site):
+def schema(site, treatments):
     o=site['opening']
     canonical=str(site.get('seo',{}).get('canonical') or '').rstrip('/')+'/'
+    maps_url=site.get('reviews',{}).get('url') or site.get('contact',{}).get('routeUrl')
+    booking_url=site.get('booking',{}).get('treatwellBookingUrl')
+    services=[]
+    for t in active_treatments(treatments):
+        offers=[]
+        for d in t.get('durations',[]):
+            offers.append({
+                "@type":"Offer",
+                "price":str(d.get('price')),
+                "priceCurrency":"EUR",
+                "url":canonical+str(t.get('slug') or '').strip('/'),
+                "availability":"https://schema.org/InStock"
+            })
+        services.append({
+            "@type":"Offer",
+            "itemOffered":{
+                "@type":"Service",
+                "name":t.get('name'),
+                "description":t.get('description'),
+                "url":canonical+str(t.get('slug') or '').strip('/'),
+                "areaServed":{"@type":"City","name":"Capelle aan den IJssel"},
+                "offers":offers
+            }
+        })
+    same_as=[]
+    if booking_url: same_as.append(booking_url)
     business={
         "@type":"HealthAndBeautyBusiness",
         "@id":canonical+"#business",
@@ -160,26 +192,43 @@ def schema(site):
         "telephone":site.get('phoneHref'),
         "email":site.get('email'),
         "image":site.get('seo',{}).get('ogImage') or site.get('hero',{}).get('image'),
-        "address":{"@type":"PostalAddress","streetAddress":site.get('addressLine1'),"postalCode":"2904 EP","addressLocality":"Capelle aan den IJssel","addressCountry":"NL"},
+        "description":site.get('seo',{}).get('description'),
+        "address":{"@type":"PostalAddress","streetAddress":site.get('addressLine1'),"postalCode":"2904 EP","addressLocality":"Capelle aan den IJssel","addressRegion":"Zuid-Holland","addressCountry":"NL"},
+        "areaServed":{"@type":"City","name":"Capelle aan den IJssel"},
+        "currenciesAccepted":"EUR",
+        "paymentAccepted":"Cash, Debit Card",
+        "hasMap":maps_url,
+        "sameAs":same_as,
         "openingHoursSpecification":[
             {"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday"],"opens":o.get('weekdayOpen'),"closes":o.get('weekdayClose')},
             {"@type":"OpeningHoursSpecification","dayOfWeek":["Saturday","Sunday"],"opens":o.get('weekendOpen'),"closes":o.get('weekendClose')}
-        ]
+        ],
+        "makesOffer":services
     }
-    website={"@type":"WebSite","@id":canonical+"#website","url":canonical,"name":site.get('businessName'),"inLanguage":"nl-NL"}
-    payload={"@context":"https://schema.org","@graph":[business,website]}
+    website={"@type":"WebSite","@id":canonical+"#website","url":canonical,"name":site.get('businessName'),"inLanguage":"nl-NL","publisher":{"@id":canonical+"#business"}}
+    webpage={"@type":"WebPage","@id":canonical+"#webpage","url":canonical,"name":site.get('seo',{}).get('title'),"description":site.get('seo',{}).get('description'),"inLanguage":"nl-NL","isPartOf":{"@id":canonical+"#website"},"about":{"@id":canonical+"#business"},"primaryImageOfPage":{"@type":"ImageObject","url":site.get('seo',{}).get('ogImage')}}
+    faq_entities=[]
+    for x in site.get('faq',[]):
+        if x.get('question') and x.get('answer'):
+            faq_entities.append({"@type":"Question","name":x.get('question'),"acceptedAnswer":{"@type":"Answer","text":x.get('answer')}})
+    graph=[business,website,webpage]
+    if faq_entities:
+        graph.append({"@type":"FAQPage","@id":canonical+"#faq","mainEntity":faq_entities})
+    payload={"@context":"https://schema.org","@graph":graph}
     return '<script type="application/ld+json">'+json.dumps(payload,ensure_ascii=False,separators=(',',':'))+'</script>'
 
-def subpage_head(site, title, description, canonical, breadcrumbs=None, noindex=False):
+def subpage_head(site, title, description, canonical, breadcrumbs=None, noindex=False, extra_schema=None):
     image=esc(site.get('seo',{}).get('ogImage') or site.get('hero',{}).get('image'))
-    robots='<meta name="robots" content="noindex,follow">' if noindex else ''
+    image_alt=esc(site.get('hero',{}).get('imageAlt') or site.get('businessName'))
+    robots_value='noindex,follow' if noindex else 'index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1'
     breadcrumb_schema=''
     if breadcrumbs:
         items=[]
         for pos,(name,url) in enumerate(breadcrumbs,1):
             items.append({"@type":"ListItem","position":pos,"name":name,"item":url})
         breadcrumb_schema='<script type="application/ld+json">'+json.dumps({"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":items},ensure_ascii=False,separators=(',',':'))+'</script>'
-    return f"""<!doctype html><html lang="nl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{esc(title)}</title><meta name="description" content="{esc(description)}">{robots}<link rel="canonical" href="{esc(canonical)}"><meta property="og:title" content="{esc(title)}"><meta property="og:description" content="{esc(description)}"><meta property="og:type" content="website"><meta property="og:url" content="{esc(canonical)}"><meta property="og:image" content="{image}"><meta name="twitter:card" content="summary_large_image"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="/styles.css">{breadcrumb_schema}</head><body>"""
+    extra=extra_schema or ''
+    return f"""<!doctype html><html lang="nl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{esc(title)}</title><meta name="description" content="{esc(description)}"><meta name="robots" content="{robots_value}"><meta name="theme-color" content="#3f4932"><link rel="canonical" href="{esc(canonical)}"><link rel="alternate" hreflang="nl-NL" href="{esc(canonical)}"><link rel="alternate" hreflang="x-default" href="{esc(canonical)}"><meta property="og:title" content="{esc(title)}"><meta property="og:description" content="{esc(description)}"><meta property="og:type" content="website"><meta property="og:url" content="{esc(canonical)}"><meta property="og:site_name" content="Baitan Thai Massage"><meta property="og:locale" content="nl_NL"><meta property="og:image" content="{image}"><meta property="og:image:alt" content="{image_alt}"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="{esc(title)}"><meta name="twitter:description" content="{esc(description)}"><meta name="twitter:image" content="{image}"><meta name="twitter:image:alt" content="{image_alt}"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="/styles.css">{breadcrumb_schema}{extra}</head><body>"""
 
 def subpage_header():
     return """<a class="skip-link" href="#main">Ga naar inhoud</a><header class="header"><div class="container nav"><a class="brand" href="/" aria-label="Baitan home"><span class="brand-mark"><span>B</span></span><span class="brand-name">BAITAN</span></a><nav class="nav-links" aria-label="Hoofdnavigatie"><a class="nav-link" href="/massages">Behandelingen</a><a class="nav-link" href="/#massagekeuze">Massagekeuze</a><a class="nav-link" href="/prijzen">Prijzen</a><a class="nav-link" href="/#reviews">Reviews</a><a class="nav-link" href="/contact">Contact</a></nav><div class="nav-actions"><a class="btn" href="/#boeken">Afspraak maken</a><button class="menu-toggle" aria-label="Open menu" aria-expanded="false"><span></span><span></span></button></div></div></header>"""
@@ -205,7 +254,9 @@ def treatment_page(site, treatment, treatments):
     label=treatment.get('imageLabel') or ''
     label_html=f'<span class="media-label">{esc(label)}</span>' if label else ''
     body=f"""<main id="main"><section class="detail-hero"><div class="container detail-hero-grid"><div><div class="eyebrow">Baitan · Capelle aan den IJssel</div><h1>{esc(treatment.get('name'))} in Capelle aan den IJssel</h1><p>{esc(treatment.get('description'))}</p><div class="hero-actions"><a class="btn" href="{esc(booking_url)}"{external}>Afspraak maken</a><a class="btn btn-outline" href="/massages">Alle massages</a></div></div><figure class="detail-hero-photo"><img src="{esc(image)}" alt="{esc(treatment.get('imageAlt') or treatment.get('name'))}">{label_html}</figure></div></section><section class="section"><div class="container detail-layout"><article class="detail-copy"><div class="eyebrow">Over de behandeling</div><h2>{esc(treatment.get('name'))}</h2><p>{esc(treatment.get('detailText') or treatment.get('description'))}</p><ul class="feature-list">{feature_items}</ul></article><aside class="detail-price"><div class="eyebrow">Duur &amp; prijs</div><div class="price-list">{''.join(rows)}</div><a class="btn booking-submit" href="{esc(booking_url)}"{external}>Afspraak maken</a></aside></div></section><section class="section section-soft"><div class="container"><div class="section-head"><div><div class="eyebrow">Andere behandelingen</div><h2>Bekijk ook</h2></div></div><div class="related-grid">{''.join(related)}</div></div></section></main>"""
-    return subpage_head(site,title,description,canonical,breadcrumbs)+subpage_header()+body+footer(site)+'<script>window.BAITAN_SITE='+json.dumps(site,ensure_ascii=False).replace('</','<\\/')+';window.BAITAN_TREATMENTS='+json.dumps(active_treatments(treatments),ensure_ascii=False).replace('</','<\\/')+';</script><script src="/app.js"></script></body></html>'
+    service_offers=[{"@type":"Offer","price":str(d.get("price")),"priceCurrency":"EUR","url":canonical} for d in treatment.get("durations",[])]
+    service_schema='<script type="application/ld+json">'+json.dumps({"@context":"https://schema.org","@type":"Service","@id":canonical+"#service","name":treatment.get("name"),"description":treatment.get("detailText") or treatment.get("description"),"url":canonical,"image":image,"provider":{"@id":base+"/#business"},"areaServed":{"@type":"City","name":"Capelle aan den IJssel"},"offers":service_offers},ensure_ascii=False,separators=(',',':'))+'</script>'
+    return subpage_head(site,title,description,canonical,breadcrumbs,extra_schema=service_schema)+subpage_header()+body+footer(site)+'<script>window.BAITAN_SITE=+json.dumps(site,ensure_ascii=False).replace('</','<\\/')+';window.BAITAN_TREATMENTS='+json.dumps(active_treatments(treatments),ensure_ascii=False).replace('</','<\\/')+';</script><script src="/app.js"></script></body></html>'
 
 def massages_page(site, treatments):
     base=str(site['seo']['canonical']).rstrip('/')
@@ -253,14 +304,17 @@ def build():
       'OG_DESCRIPTION':esc(site['seo']['ogDescription']),
       'OG_IMAGE':esc(site['seo'].get('ogImage') or site.get('hero',{}).get('image')),
       'CANONICAL':esc(site['seo']['canonical']),
-      'SCHEMA_JSON':schema(site),
+      'SCHEMA_JSON':schema(site,treatments),
       'HERO':hero(site),
+      'HERO_IMAGE':esc(site.get('hero',{}).get('image')),
+      'HERO_ALT':esc(site.get('hero',{}).get('imageAlt')),
       'TRUSTBAR':trustbar(site),
       'BOOKING':booking(site,treatments),
       'TREATMENTS':treatments_section(site,treatments),
       'MASSAGE_CHOICE':massage_choice_section(site),
       'PRICES':prices_section(treatments),
       'ABOUT':about_section(site),
+      'LOCAL_SEO':local_seo_section(site),
       'GALLERY':gallery_section(site),
       'GIFT':gift_section(site),
       'REVIEWS':reviews_section(site),
@@ -287,10 +341,15 @@ def build():
             (DIST/(slug+'.html')).write_text(treatment_page(site,treatment,treatments),encoding='utf-8')
     (DIST/'404.html').write_text(not_found_page(site),encoding='utf-8')
 
-    urls=[base+'/',base+'/massages',base+'/prijzen',base+'/contact',base+'/voorwaarden',base+'/privacy']
+    urls=[base+'/',base+'/massages',base+'/prijzen',base+'/contact']
     urls.extend(base+'/'+str(t.get('slug')).strip('/') for t in active_treatments(treatments) if t.get('slug'))
-    sitemap='<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
-    sitemap+=''.join('  <url><loc>'+html.escape(url)+'</loc></url>\n' for url in urls)
+    sitemap='<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">\n'
+    hero_image=site.get('seo',{}).get('ogImage') or (base+str(site.get('hero',{}).get('image') or ''))
+    for url in urls:
+        sitemap+='  <url><loc>'+html.escape(url)+'</loc>'
+        if url == base+'/' and hero_image:
+            sitemap+='<image:image><image:loc>'+html.escape(hero_image)+'</image:loc><image:title>'+html.escape(site.get('hero',{}).get('imageAlt') or site.get('businessName'))+'</image:title></image:image>'
+        sitemap+='</url>\n'
     sitemap+='</urlset>\n'
     (DIST/'sitemap.xml').write_text(sitemap,encoding='utf-8')
     (DIST/'robots.txt').write_text('User-agent: *\nAllow: /\nDisallow: /admin\nSitemap: '+base+'/sitemap.xml\n',encoding='utf-8')
