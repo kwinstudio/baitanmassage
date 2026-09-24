@@ -51,3 +51,11 @@ jobs:
           grep -q "Thaise massage in Capelle" dist/index.html
           grep -q 'name="robots" content="noindex,follow"' dist/privacy.html
           grep -q 'name="robots" content="noindex,follow"' dist/voorwaarden.html
+
+      - name: Upload rendered site artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: baitan-rendered-site
+          path: dist/
+          if-no-files-found: error
+          retention-days: 3
