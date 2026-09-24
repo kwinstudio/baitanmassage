@@ -169,9 +169,9 @@ if(choiceShell){
     if(resultText)resultText.textContent=messages[best]||'Bekijk deze behandeling bij Baitan.';
     if(resultDetail)resultDetail.href=t?.slug?`/${t.slug}`:'/massages';
     if(resultBook){
-      const treatwell=siteConfig?.booking?.provider==='treatwell' ? siteConfig?.booking?.treatwellBookingUrl : '';
-      if(treatwell){
-        resultBook.href=treatwell;
+      const salonized=siteConfig?.booking?.provider==='salonized' ? siteConfig?.booking?.salonizedBookingUrl : '';
+      if(salonized){
+        resultBook.href=salonized;
         resultBook.target='_blank';
         resultBook.rel='noopener';
       }else{
@@ -209,9 +209,9 @@ if(choiceShell){
 }
 
 
-// Treatwell is the active booking destination: make the floating CTA direct.
-if(mobileBook && siteConfig?.booking?.provider==='treatwell' && siteConfig?.booking?.treatwellBookingUrl){
-  mobileBook.href=siteConfig.booking.treatwellBookingUrl;
+// Salonized is the active booking destination: make the floating CTA direct.
+if(mobileBook && siteConfig?.booking?.provider==='salonized' && siteConfig?.booking?.salonizedBookingUrl){
+  mobileBook.href=siteConfig.booking.salonizedBookingUrl;
   mobileBook.target='_blank';
   mobileBook.rel='noopener';
 }
@@ -240,9 +240,9 @@ if(treatmentDialog){
     dialogFeatures.innerHTML=(t.features||[]).map(x=>`<li>${x}</li>`).join('');
     dialogPrices.innerHTML=(t.durations||[]).map(d=>`<span><strong>${d.minutes} min</strong> €${Number(d.price).toLocaleString('nl-NL')}</span>`).join('');
     dialogPage.href=t.slug?`/${t.slug}`:'/massages';
-    const treatwell=siteConfig?.booking?.provider==='treatwell' ? siteConfig?.booking?.treatwellBookingUrl : '';
-    dialogBook.href=treatwell||'#boeken';
-    if(treatwell){dialogBook.target='_blank';dialogBook.rel='noopener';}
+    const salonized=siteConfig?.booking?.provider==='salonized' ? siteConfig?.booking?.salonizedBookingUrl : '';
+    dialogBook.href=salonized||'#boeken';
+    if(salonized){dialogBook.target='_blank';dialogBook.rel='noopener';}
     else{dialogBook.removeAttribute('target');dialogBook.removeAttribute('rel');}
     if(typeof treatmentDialog.showModal==='function')treatmentDialog.showModal();
     else treatmentDialog.setAttribute('open','');
@@ -270,7 +270,7 @@ if(legalDialog){
     },
     privacy:{
       title:'Privacy & cookies',
-      html:'<p>De website gebruikt de gegevens die nodig zijn voor contact en verwijst voor online boeken naar Treatwell. Google Maps wordt pas na jouw keuze geladen.</p>',
+      html:'<p>De website gebruikt de gegevens die nodig zijn voor contact en verwijst voor online boeken naar Salonized. Google Maps wordt pas na jouw keuze geladen.</p>',
       href:'/privacy'
     },
     cancel:{
