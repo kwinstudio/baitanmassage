@@ -4,8 +4,12 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{{SEO_TITLE}}</title>
 <meta name="description" content="{{SEO_DESCRIPTION}}">
-<meta property="og:title" content="{{OG_TITLE}}"><meta property="og:description" content="{{OG_DESCRIPTION}}"><meta property="og:type" content="website"><meta property="og:url" content="{{CANONICAL}}"><meta property="og:image" content="{{OG_IMAGE}}">
-<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="{{OG_TITLE}}"><meta name="twitter:description" content="{{OG_DESCRIPTION}}"><meta name="twitter:image" content="{{OG_IMAGE}}">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+<meta name="theme-color" content="#3f4932">
+<link rel="alternate" hreflang="nl-NL" href="{{CANONICAL}}"><link rel="alternate" hreflang="x-default" href="{{CANONICAL}}">
+<link rel="preload" as="image" href="{{HERO_IMAGE}}" fetchpriority="high">
+<meta property="og:title" content="{{OG_TITLE}}"><meta property="og:description" content="{{OG_DESCRIPTION}}"><meta property="og:type" content="website"><meta property="og:url" content="{{CANONICAL}}"><meta property="og:site_name" content="Baitan Thai Massage"><meta property="og:locale" content="nl_NL"><meta property="og:image" content="{{OG_IMAGE}}"><meta property="og:image:alt" content="{{HERO_ALT}}">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="{{OG_TITLE}}"><meta name="twitter:description" content="{{OG_DESCRIPTION}}"><meta name="twitter:image" content="{{OG_IMAGE}}"><meta name="twitter:image:alt" content="{{HERO_ALT}}">
 <link rel="canonical" href="{{CANONICAL}}"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="/styles.css">
 {{SCHEMA_JSON}}
 </head>
@@ -20,6 +24,7 @@
 {{MASSAGE_CHOICE}}
 {{PRICES}}
 {{ABOUT}}
+{{LOCAL_SEO}}
 {{GALLERY}}
 {{GIFT}}
 {{REVIEWS}}
