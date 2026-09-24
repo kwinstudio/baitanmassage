@@ -15,9 +15,9 @@
     "text": "Authentieke Thaise massage, aromatherapie, sportmassage, hot stone en duo-massage bij Baitan.",
     "primaryButton": "Afspraak maken",
     "secondaryButton": "Vind mijn massage",
-    "image": "/assets/images/thai-head-massage.webp",
-    "imageAlt": "Sfeerbeeld van een ontspannende hoofdmassage",
-    "badge": "Baitan · Thai Massage & Wellness"
+    "image": "https://cdn1.treatwell.net/images/view/v2.i16219452.w1080.h720.x9EB67FE1/",
+    "imageAlt": "Thaise massage en wellness bij Baitan in Capelle aan den IJssel",
+    "badge": "Baitan · Capelle aan den IJssel"
   },
   "trust": {
     "parking": "Gratis in de omgeving",
@@ -32,16 +32,16 @@
     "provider": "treatwell",
     "treatwellWidgetUrl": "",
     "treatwellBookingUrl": "https://www.treatwell.nl/salon/baitan-massage/",
-    "image": "/assets/images/thai-shoulder-closeup.webp",
-    "imageAlt": "Sfeerbeeld van een gerichte schoudermassage",
+    "image": "https://images.unsplash.com/photo-1757689314932-bec6e9c39e51?auto=format&fit=crop&fm=jpg&q=82&w=1600",
+    "imageAlt": "Sfeerbeeld van een professionele massagebehandeling",
     "imageLabel": "Sfeerbeeld"
   },
   "about": {
     "kicker": "Over Baitan",
     "title": "Thaise wellness in Capelle",
     "text": "Baitan biedt ontspannings- en wellnessmassages aan het Hollandsch Diep in Capelle aan den IJssel.",
-    "image": "/assets/images/thai-herbal-compress.webp",
-    "imageAlt": "Sfeerbeeld van een Thaise massage met warme kruidenstempels",
+    "image": "https://images.unsplash.com/photo-1772378452022-94ee7971fe80?auto=format&fit=crop&fm=jpg&q=82&w=1600",
+    "imageAlt": "Sfeerbeeld van een rustige massagebehandeling",
     "facts": [
       "Douchen mogelijk",
       "Pin & contant",
@@ -55,8 +55,8 @@
     "title": "Cadeaubon",
     "text": "Verkrijgbaar in de salon en 12 maanden geldig, tenzij anders vermeld.",
     "button": "Bel voor een cadeaubon",
-    "image": "/assets/images/thai-hand-massage.webp",
-    "imageAlt": "Sfeerbeeld van een rustige handmassage"
+    "image": "https://images.unsplash.com/photo-1675149476008-83dbfa2ee917?auto=format&fit=crop&fm=jpg&q=82&w=1600",
+    "imageAlt": "Sfeerbeeld van ontspanning en wellness"
   },
   "loyalty": {
     "enabled": true,
@@ -113,53 +113,53 @@
     "ogTitle": "Thaise Massage Capelle aan den IJssel | Baitan",
     "ogDescription": "Bekijk Thaise massage, aromatherapie, sportmassage, hot stone en duo-massage bij Baitan in Capelle aan den IJssel.",
     "canonical": "https://baitanmassage.nl/",
-    "ogImage": "https://baitanmassage.nl/assets/images/thai-head-massage.webp"
+    "ogImage": "https://cdn1.treatwell.net/images/view/v2.i16219452.w1080.h720.x9EB67FE1/"
   },
   "whatsappUrl": "https://wa.me/31683936366",
   "gallery": [
     {
-      "image": "/assets/images/thai-head-massage.webp",
-      "alt": "Sfeerbeeld van een ontspannende hoofdmassage",
-      "label": "Sfeerbeeld"
+      "image": "https://cdn1.treatwell.net/images/view/v2.i16219452.w1080.h720.x9EB67FE1/",
+      "alt": "Baitan Thai Massage in Capelle aan den IJssel",
+      "label": "Baitan"
     },
     {
-      "image": "/assets/images/thai-back-massage.webp",
-      "alt": "Sfeerbeeld van een rugmassage",
-      "label": "Sfeerbeeld"
-    },
-    {
-      "image": "/assets/images/thai-shoulder-massage.webp",
-      "alt": "Sfeerbeeld van een schoudermassage",
-      "label": "Sfeerbeeld"
-    },
-    {
-      "image": "/assets/images/hot-stone-massage.webp",
-      "alt": "Sfeerbeeld van een hot stone massage",
-      "label": "Sfeerbeeld"
-    },
-    {
-      "image": "/assets/images/thai-oil-massage.webp",
+      "image": "https://images.unsplash.com/photo-1675149476008-83dbfa2ee917?auto=format&fit=crop&fm=jpg&q=82&w=1600",
       "alt": "Sfeerbeeld van een ontspannende oliemassage",
       "label": "Sfeerbeeld"
     },
     {
-      "image": "/assets/images/thai-shoulder-closeup.webp",
-      "alt": "Sfeerbeeld van een gerichte schoudermassage",
+      "image": "https://images.unsplash.com/photo-1757689314932-bec6e9c39e51?auto=format&fit=crop&fm=jpg&q=82&w=1600",
+      "alt": "Sfeerbeeld van een professionele massagebehandeling",
       "label": "Sfeerbeeld"
     },
     {
-      "image": "/assets/images/thai-leg-massage.webp",
-      "alt": "Sfeerbeeld van een beenmassage",
+      "image": "https://images.unsplash.com/photo-1745327883348-8d78cb4661b0?auto=format&fit=crop&fm=jpg&q=82&w=1600",
+      "alt": "Sfeerbeeld van een hot stone massage",
       "label": "Sfeerbeeld"
     },
     {
-      "image": "/assets/images/thai-hand-massage.webp",
-      "alt": "Sfeerbeeld van een handmassage",
+      "image": "https://images.unsplash.com/photo-1772378452022-94ee7971fe80?auto=format&fit=crop&fm=jpg&q=82&w=1600",
+      "alt": "Sfeerbeeld van een rustige wellnessmassage",
       "label": "Sfeerbeeld"
     },
     {
-      "image": "/assets/images/thai-herbal-compress.webp",
-      "alt": "Algemeen sfeerbeeld van een massage met warme kruidenstempels",
+      "image": "https://images.unsplash.com/photo-1757689314932-bec6e9c39e51?auto=format&fit=crop&fm=jpg&q=82&w=1600",
+      "alt": "Sfeerbeeld van massage voor rug en schouders",
+      "label": "Sfeerbeeld"
+    },
+    {
+      "image": "https://images.unsplash.com/photo-1675149476008-83dbfa2ee917?auto=format&fit=crop&fm=jpg&q=82&w=1600",
+      "alt": "Sfeerbeeld van ontspanning met massageolie",
+      "label": "Sfeerbeeld"
+    },
+    {
+      "image": "https://images.unsplash.com/photo-1772378452022-94ee7971fe80?auto=format&fit=crop&fm=jpg&q=82&w=1600",
+      "alt": "Sfeerbeeld van Thaise wellness",
+      "label": "Sfeerbeeld"
+    },
+    {
+      "image": "https://images.unsplash.com/photo-1745327883348-8d78cb4661b0?auto=format&fit=crop&fm=jpg&q=82&w=1600",
+      "alt": "Sfeerbeeld van massage met warme stenen",
       "label": "Sfeerbeeld"
     }
   ]
