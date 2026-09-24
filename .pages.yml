@@ -67,9 +67,8 @@ content:
             options:
               values:
                 - {name: custom, label: Eigen reserveringssysteem}
-                - {name: treatwell, label: Treatwell}
-          - {name: treatwellWidgetUrl, label: Treatwell widget-URL, type: string, description: 'Gebruik de officiële websitewidget-link uit Treatwell Connect. Leeg laten als je alleen een boekingslink hebt.'}
-          - {name: treatwellBookingUrl, label: Treatwell boekingslink, type: string, description: 'Officiële commissievrije/website-bookinglink uit Treatwell Connect.'}
+                - {name: salonized, label: Salonized}
+          - {name: salonizedBookingUrl, label: Salonized boekingslink, type: string, description: 'Plak hier de officiële online boekingslink uit het Salonized-account van de salon.'}
           - name: image
             label: Foto bij boeken
             type: image
