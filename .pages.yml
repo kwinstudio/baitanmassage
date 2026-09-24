@@ -96,6 +96,15 @@ content:
             type: string
             list: true
 
+      - name: localSeo
+        label: Lokale SEO tekst
+        type: object
+        fields:
+          - {name: kicker, label: Kleine titel, type: string}
+          - {name: title, label: Titel, type: string}
+          - {name: intro, label: Eerste alinea, type: text}
+          - {name: text, label: Tweede alinea, type: text}
+
       - name: giftCard
         label: Cadeaubon
         type: object
