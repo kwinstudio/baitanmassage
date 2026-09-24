@@ -404,3 +404,107 @@
   }
   .choice-card .choice-result-actions .btn{width:100%}
 }
+
+
+/* Full-screen immersive hero */
+.hero.hero-immersive{
+  position:relative;
+  display:block;
+  min-height:calc(100svh - 74px);
+  background:#262a21;
+  color:#fff;
+  overflow:hidden;
+}
+.hero-immersive .hero-bg{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  max-width:none;
+  object-fit:cover;
+  object-position:center 46%;
+  filter:none;
+}
+.hero-immersive .hero-shade{
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(90deg,rgba(24,25,20,.72) 0%,rgba(24,25,20,.44) 46%,rgba(24,25,20,.14) 76%,rgba(24,25,20,.08) 100%),
+    linear-gradient(0deg,rgba(24,25,20,.42) 0%,rgba(24,25,20,0) 46%);
+}
+.hero-immersive-inner{
+  position:relative;
+  z-index:2;
+  min-height:calc(100svh - 74px);
+  display:flex;
+  align-items:flex-end;
+  padding-top:88px;
+  padding-bottom:72px;
+}
+.hero-immersive .hero-copy{
+  display:block;
+  padding:0;
+  max-width:790px;
+  min-height:0;
+  color:#fff;
+}
+.hero-immersive .eyebrow{color:#e6ddc8}
+.hero-immersive .hero-copy h1{
+  color:#fff;
+  max-width:760px;
+  margin:14px 0 20px;
+  font-size:clamp(3.8rem,7.2vw,7.3rem);
+  line-height:.93;
+  text-wrap:balance;
+}
+.hero-immersive .hero-copy .lead{
+  color:rgba(255,255,255,.88);
+  max-width:610px;
+  font-size:1.08rem;
+}
+.hero-immersive .hero-actions{margin-top:30px}
+.hero-immersive .hero-actions .btn{
+  background:#fff;
+  color:var(--ink);
+  border-color:#fff;
+}
+.hero-immersive .hero-actions .btn:hover{background:#f4efe5;color:var(--ink)}
+.hero-immersive .hero-actions .btn-outline{
+  background:rgba(255,255,255,.08);
+  color:#fff;
+  border-color:rgba(255,255,255,.8);
+  backdrop-filter:blur(8px);
+}
+.hero-immersive .hero-actions .btn-outline:hover{background:#fff;color:var(--ink)}
+.hero-scroll{
+  position:absolute;
+  right:0;
+  bottom:74px;
+  color:rgba(255,255,255,.86);
+  font-size:.78rem;
+  font-weight:750;
+  letter-spacing:.04em;
+}
+@media(max-width:720px){
+  .hero.hero-immersive{min-height:calc(100svh - 64px)}
+  .hero-immersive .hero-bg{object-position:center center}
+  .hero-immersive .hero-shade{
+    background:
+      linear-gradient(0deg,rgba(24,25,20,.82) 0%,rgba(24,25,20,.52) 50%,rgba(24,25,20,.14) 100%);
+  }
+  .hero-immersive-inner{
+    min-height:calc(100svh - 64px);
+    align-items:flex-end;
+    padding-top:84px;
+    padding-bottom:54px;
+  }
+  .hero-immersive .hero-copy h1{
+    font-size:clamp(2.75rem,13vw,4.15rem);
+    line-height:.95;
+    margin:12px 0 18px;
+  }
+  .hero-immersive .hero-copy .lead{font-size:.97rem;line-height:1.55}
+  .hero-immersive .hero-actions{display:grid;grid-template-columns:1fr;gap:10px;margin-top:24px}
+  .hero-immersive .hero-actions .btn{min-height:54px;width:100%}
+  .hero-scroll{display:none}
+}
