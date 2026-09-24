@@ -43,3 +43,11 @@ jobs:
           grep -q "Thaise Massage Capelle aan den IJssel" dist/index.html
           grep -q "sitemap.xml" dist/robots.txt
           grep -q "thaise-massage-capelle-aan-den-ijssel" dist/sitemap.xml
+          grep -q "FAQPage" dist/index.html
+          grep -q "HealthAndBeautyBusiness" dist/index.html
+          grep -q "max-image-preview:large" dist/index.html
+          grep -q 'hreflang="nl-NL"' dist/index.html
+          grep -q "image:image" dist/sitemap.xml
+          grep -q "Thaise massage in Capelle" dist/index.html
+          grep -q 'name="robots" content="noindex,follow"' dist/privacy.html
+          grep -q 'name="robots" content="noindex,follow"' dist/voorwaarden.html
