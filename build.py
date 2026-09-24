@@ -24,7 +24,7 @@ def active_treatments(treatments):
 
 def hero(site):
     h = site["hero"]
-    return f'''<section class="hero" id="home"><div class="hero-copy"><span class="eyebrow">{esc(h.get('eyebrow'))}</span><h1>{esc(h.get('title'))}</h1><p class="lead">{esc(h.get('text'))}</p><div class="hero-actions"><a class="btn" href="#boeken">{esc(h.get('primaryButton'))}</a><a class="btn btn-outline" href="#massagekeuze">{esc(h.get('secondaryButton'))}</a></div></div><div class="hero-photo"><img src="{esc(h.get('image'))}" alt="{esc(h.get('imageAlt'))}" fetchpriority="high"><span class="photo-badge">{esc(h.get('badge'))}</span></div></section>'''
+    return f'''<section class="hero hero-immersive" id="home"><img class="hero-bg" src="{esc(h.get('image'))}" alt="{esc(h.get('imageAlt'))}" fetchpriority="high"><div class="hero-shade" aria-hidden="true"></div><div class="container hero-immersive-inner"><div class="hero-copy"><span class="eyebrow">{esc(h.get('eyebrow'))}</span><h1>{esc(h.get('title'))}</h1><p class="lead">{esc(h.get('text'))}</p><div class="hero-actions"><a class="btn" href="#boeken">{esc(h.get('primaryButton'))}</a><a class="btn btn-outline" href="#massagekeuze">{esc(h.get('secondaryButton'))}</a></div></div><a class="hero-scroll" href="#boeken" aria-label="Scroll naar online boeken">Bekijk mogelijkheden <span aria-hidden="true">↓</span></a></div></section>'''
 
 
 def trustbar(site):
