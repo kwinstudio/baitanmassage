@@ -77,9 +77,6 @@ def treatments_section(site, treatments):
     return '<section class="section section-soft" id="massages"><div class="container"><div class="section-head"><div><div class="eyebrow">Behandelingen</div><h2>Onze massages</h2></div><a class="btn btn-outline" href="/massages">Alle behandelingen</a></div><div class="treatments visual-treatments">'+''.join(cards)+'</div></div></section>'+modal
 
 def massage_choice_section(site):
-    mood=(site.get('gallery') or [{}])[2] if len(site.get('gallery') or [])>2 else {}
-    image=mood.get('image') or site.get('hero',{}).get('image')
-    label=mood.get('label') or 'Sfeerbeeld'
     questions = [
       ("Waar heb je vandaag vooral behoefte aan?", [("Ontspannen","aroma"),("Traditionele technieken","thai"),("Steviger gericht op spieren","sport"),("Samen ontspannen","duo")]),
       ("Wat spreekt je het meest aan?", [("Warme olie","thai"),("Geur naar keuze","aroma"),("Warme stenen","hotstone"),("Geen voorkeur","neutral")]),
@@ -91,8 +88,8 @@ def massage_choice_section(site):
     for i,(question,answers) in enumerate(questions,1):
         opts=''.join(f'<button type="button" class="choice-option" data-score="{esc(score)}">{esc(label)}</button>' for label,score in answers)
         hidden=' hidden' if i>1 else ''
-        blocks.append(f'<fieldset class="choice-question" data-question="{i}"{hidden}><legend><span>0{i}</span>{esc(question)}</legend><div class="choice-options">{opts}</div></fieldset>')
-    return f'''<section class="section" id="massagekeuze"><div class="container"><div class="section-head"><div><div class="eyebrow">Massagekeuze</div><h2>Welke massage past bij mij?</h2></div><p>Beantwoord vijf korte vragen. De uitkomst is een praktische keuzehulp, geen medische diagnose.</p></div><div class="choice-layout"><figure class="choice-photo"><img src="{esc(image)}" alt="Algemeen sfeerbeeld bij de massagekeuze" loading="lazy"><figcaption>{esc(label)}</figcaption></figure><div class="choice-shell"><div class="choice-progress"><span id="choiceProgressText">Vraag 1 van 5</span><div class="choice-progress-track"><span id="choiceProgressBar"></span></div></div>'''+''.join(blocks)+'''<div class="choice-result" id="choiceResult" hidden><div class="eyebrow">Beste match</div><h3 id="choiceResultTitle"></h3><p id="choiceResultText"></p><div class="choice-result-actions"><a class="btn" id="choiceResultBook" href="#boeken">Afspraak maken</a><a class="btn btn-outline" id="choiceResultDetail" href="#massages">Bekijk behandeling</a></div><button type="button" class="text-button choice-restart" id="choiceRestart">Opnieuw kiezen</button></div></div></div></div></section>'''
+        blocks.append(f'<fieldset class="choice-question" data-question="{i}"{hidden}><legend>{esc(question)}</legend><div class="choice-options">{opts}</div></fieldset>')
+    return f'''<section class="choice-section" id="massagekeuze"><div class="container choice-section-inner"><div class="choice-copy"><div class="eyebrow">Persoonlijke massagekeuze</div><h2>In vijf vragen naar jouw beste match.</h2><p>Beantwoord vijf korte vragen. Je krijgt daarna direct de behandeling die het beste bij jouw voorkeur past.</p></div><div class="choice-card"><div class="choice-progress"><span id="choiceProgressText">Vraag 1 van 5</span><div class="choice-progress-track"><span id="choiceProgressBar"></span></div></div>'''+''.join(blocks)+'''<div class="choice-result" id="choiceResult" hidden><div class="eyebrow">Beste match</div><h3 id="choiceResultTitle"></h3><p id="choiceResultText"></p><div class="choice-result-actions"><a class="btn" id="choiceResultBook" href="#boeken">Afspraak maken</a><a class="btn btn-outline" id="choiceResultDetail" href="#massages">Bekijk behandeling</a></div><button type="button" class="text-button choice-restart" id="choiceRestart">Opnieuw kiezen</button></div></div></div></section>'''
 
 
 def prices_section(treatments):
