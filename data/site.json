@@ -26,15 +26,14 @@
   "booking": {
     "kicker": "Online boeken",
     "title": "Boek je massage",
-    "text": "Bekijk de behandeling en boek via de actuele Treatwell-agenda.",
-    "panelTitle": "Boek direct via Treatwell.",
+    "text": "Online reserveren verloopt via Salonized.",
+    "panelTitle": "Boek je afspraak via Salonized.",
     "apiBase": "",
-    "provider": "treatwell",
-    "treatwellWidgetUrl": "",
-    "treatwellBookingUrl": "https://www.treatwell.nl/salon/baitan-massage/",
+    "provider": "salonized",
     "image": "https://images.unsplash.com/photo-1757689314932-bec6e9c39e51?auto=format&fit=crop&fm=jpg&q=82&w=1600",
     "imageAlt": "Sfeerbeeld van een professionele massagebehandeling",
-    "imageLabel": "Sfeerbeeld"
+    "imageLabel": "Sfeerbeeld",
+    "salonizedBookingUrl": ""
   },
   "about": {
     "kicker": "Over Baitan",
@@ -102,7 +101,7 @@
     },
     {
       "question": "Kan ik online een massage bij Baitan boeken?",
-      "answer": "Ja. Via de website kun je de actuele beschikbaarheid bekijken en een afspraak boeken via de officiële Treatwell-agenda van Baitan."
+      "answer": "Ja. Via de website kun je de actuele beschikbaarheid bekijken en een afspraak boeken via de officiële Salonized-agenda van Baitan."
     }
   ],
   "opening": {
@@ -130,7 +129,7 @@
   "whatsappUrl": "https://wa.me/31683936366",
   "gallery": [
     {
-      "image": "https://cdn1.treatwell.net/images/view/v2.i16219452.w1080.h720.x9EB67FE1/",
+      "image": "/assets/images/baitan-hero-atmospheric.webp",
       "alt": "Baitan Thai Massage in Capelle aan den IJssel",
       "label": "Baitan"
     },
