@@ -19,8 +19,8 @@
   --olive-900:#252c20;
   --olive-800:#2f3829;
   --olive-700:#46533c;
-  --gold:#ad8b52;
-  --gold-soft:#dcc89f;
+  --gold:#b08a3a;
+  --gold-soft:#dcbe72;
   --on-dark:#f6f1e6;
   --on-dark-2:#cfc8b8;
 
@@ -86,8 +86,7 @@ p,li{text-wrap:pretty}
 .site-header.is-scrolled{border-bottom-color:var(--line);background:rgba(248,244,236,.96)}
 .header-inner{height:100%;display:flex;align-items:center;gap:24px}
 .brand{display:inline-flex;align-items:center;gap:12px;min-height:44px;text-decoration:none;color:var(--ink)}
-.brand-mark{width:30px;height:30px;display:grid;place-items:center;border:1px solid var(--gold);transform:rotate(45deg);flex:none}
-.brand-mark span{transform:rotate(-45deg);font:400 1rem/1 var(--display);color:var(--olive-800)}
+.brand-emblem{width:40px;height:44px;flex:none;object-fit:contain}
 .brand-text{display:flex;flex-direction:column;font:500 1.3rem/1 var(--display);letter-spacing:.02em}
 .brand-text small{font:600 .62rem/1 var(--text);letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-top:5px}
 .site-nav{margin-left:auto}
@@ -343,7 +342,6 @@ p,li{text-wrap:pretty}
 /* ---------- Footer */
 .site-footer{background:var(--olive-950);color:var(--on-dark-2);padding:clamp(56px,7vw,88px) 0 32px;font-size:.95rem}
 .brand-light{color:var(--on-dark)}
-.brand-light .brand-mark span{color:var(--on-dark)}
 .brand-light .brand-text small{color:var(--on-dark-2)}
 .footer-top{display:grid;gap:36px}
 .footer-brand p{margin:16px 0 20px;max-width:32ch}
@@ -405,3 +403,8 @@ p,li{text-wrap:pretty}
   .quiz-step:not([hidden]),.quiz-result:not([hidden]){animation:fade .2s ease both!important}
 }
 @keyframes fade{from{opacity:0}to{opacity:1}}
+
+/* ---------- Logo */
+.footer-logo{display:inline-block}
+.footer-logo img{width:132px;height:auto}
+@media (max-width:420px){.brand-emblem{width:36px;height:40px}}

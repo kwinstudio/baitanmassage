@@ -259,7 +259,7 @@ def header(current=""):
 <header class="site-header" data-header>
   <div class="wrap header-inner">
     <a class="brand" href="/" aria-label="Baitan Thai Massage, naar de homepage">
-      <span class="brand-mark" aria-hidden="true"><span>B</span></span>
+      <img class="brand-emblem" src="/logo/baitan-emblem-96.webp" srcset="/logo/baitan-emblem-48.webp 1x, /logo/baitan-emblem-96.webp 2x, /logo/baitan-emblem-144.webp 3x" width="40" height="44" alt="">
       <span class="brand-text">Baitan<small>Thai Massage</small></span>
     </a>
     <nav class="site-nav" aria-label="Hoofdmenu">
@@ -281,7 +281,7 @@ def footer():
   <div class="wrap">
     <div class="footer-top">
       <div class="footer-brand">
-        <a class="brand brand-light" href="/"><span class="brand-mark" aria-hidden="true"><span>B</span></span><span class="brand-text">Baitan<small>Thai Massage</small></span></a>
+        <a class="footer-logo" href="/" aria-label="Baitan Thai Massage, naar de homepage"><img src="/logo/baitan-logo-180.webp" srcset="/logo/baitan-logo-180.webp 1x, /logo/baitan-logo-360.webp 2x, /logo/baitan-logo-540.webp 3x" width="132" height="180" alt="Baitan Thai Massage logo" loading="lazy" decoding="async"></a>
         <p>{E(SITE['tagline'])}</p>
         <a class="btn btn-light btn-sm" {ext(SITE['booking_url'])}>Afspraak maken</a>
       </div>
@@ -562,7 +562,7 @@ def business_schema():
         "@id": BIZ_ID,
         "name": SITE["name"],
         "url": DOMAIN + "/",
-        "logo": f"{DOMAIN}/apple-touch-icon.png",
+        "logo": {"@type": "ImageObject", "url": f"{DOMAIN}/logo/baitan-logo.png", "width": 600, "height": 815},
         "image": [f"{DOMAIN}/og-image.jpg", f"{DOMAIN}/assets/images/thaise-massage-capelle-aan-den-ijssel.webp"],
         "description": "Thaise massagesalon aan het Hollandsch Diep in Capelle aan den IJssel. Thaise massage, aromatherapie, sportmassage, hot stone, body scrub en duo-massage.",
         "telephone": SITE["phone_href"],
