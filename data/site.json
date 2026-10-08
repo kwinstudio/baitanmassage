@@ -1,6 +1,6 @@
 {
   "businessName": "Baitan Thai Massage",
-  "tagline": "Thai Massage & Wellness in Capelle aan den IJssel.",
+  "tagline": "Thaise massage en wellness aan het Hollandsch Diep in Capelle aan den IJssel.",
   "phoneDisplay": "06 83 936 366",
   "phoneHref": "+31683936366",
   "email": "info@baitanmassage.nl",
@@ -10,101 +10,78 @@
   "kvk": "84338245",
   "btw": "NL003949907B52",
   "hero": {
-    "eyebrow": "Baitan Thai Massage · Capelle aan den IJssel",
-    "title": "Thaise massage in Capelle, met aandacht voor jou.",
-    "text": "Ontspan met Thaise massage, aromatherapie, sportmassage, hot stone of duo-massage aan het Hollandsch Diep.",
+    "title": "Thaise massage in Capelle aan den IJssel",
+    "text": "Even helemaal niets. Een rustig uur voor jezelf aan het Hollandsch Diep, met warme olie en aandachtige handen.",
     "primaryButton": "Afspraak maken",
-    "secondaryButton": "Vind mijn massage",
+    "secondaryButton": "Bekijk behandelingen",
     "image": "/assets/images/baitan-hero-atmospheric.webp",
-    "imageAlt": "Sfeervolle Thaise massage bij Baitan in Capelle aan den IJssel",
-    "badge": "Baitan · Capelle aan den IJssel"
-  },
-  "trust": {
-    "parking": "Gratis in de omgeving",
-    "location": "Capelle aan den IJssel"
+    "imageAlt": "Ontspannen gast tijdens een Thaise oliemassage bij kaarslicht"
   },
   "booking": {
-    "kicker": "Online boeken",
-    "title": "Boek je massage",
-    "text": "Bekijk de actuele beschikbaarheid en reserveer direct in de online agenda.",
-    "panelTitle": "Kies je behandeling en een moment dat bij je past.",
-    "apiBase": "",
-    "provider": "salonized",
-    "image": "/assets/images/thai-oil-massage.webp",
-    "imageAlt": "Sfeerbeeld van een professionele oliemassage bij Baitan",
-    "imageLabel": "Sfeerbeeld",
-    "salonizedBookingUrl": "https://baitan-thai-massage.salonized.com/services",
-    "salonizedCompanyId": "",
-    "salonizedWidgetColor": "#3f4932",
-    "salonizedWidgetPosition": "left"
+    "salonizedBookingUrl": "https://baitan-thai-massage.salonized.com/services"
   },
   "about": {
-    "kicker": "Over Baitan",
-    "title": "Een rustig moment voor jezelf.",
-    "text": "Baitan is een Thaise massagesalon aan het Hollandsch Diep in Capelle aan den IJssel. Kies de behandeling en duur die bij je past en reserveer eenvoudig online.",
-    "image": "/assets/images/thai-shoulder-massage.webp",
-    "imageAlt": "Sfeerbeeld van een rustige schoudermassage",
+    "title": "Een rustig moment voor jezelf",
+    "text": "Baitan is een Thaise massagesalon aan het Hollandsch Diep in Capelle aan den IJssel. Je komt binnen, laat de drukte achter je en krijgt alle aandacht. Je kiest zelf de behandeling en hoe lang je wilt blijven.",
+    "image": "/assets/images/thai-herbal-compress.webp",
+    "imageAlt": "Massage met Thaise kruidenstempels",
     "facts": [
       "Douchen mogelijk",
-      "Pin & contant",
-      "Gratis parkeren",
+      "Pin en contant",
+      "Gratis parkeren in de omgeving",
       "Geen erotische behandelingen"
-    ],
-    "imageLabel": "Sfeerbeeld"
+    ]
   },
   "giftCard": {
     "enabled": true,
     "title": "Cadeaubon",
-    "text": "Verkrijgbaar in de salon. Kom langs of stuur Baitan een WhatsApp-bericht.",
-    "button": "Bel voor een cadeaubon",
-    "image": "/assets/images/thai-hand-massage.webp",
-    "imageAlt": "Sfeerbeeld van ontspanning en wellness"
+    "text": "Geef iemand een massage cadeau. Cadeaubonnen zijn verkrijgbaar in de salon: kom langs of stuur een WhatsApp-bericht.",
+    "button": "Vraag via WhatsApp"
   },
   "loyalty": {
     "enabled": true,
     "title": "Spaarkaart",
-    "text": "Je ontvangt een spaarkaart. Per 60 minuten krijg je 1 stempel; bij 10 stempels ontvang je 60 minuten massage naar keuze.",
-    "button": "Contact"
+    "text": "Na je eerste bezoek krijg je een spaarkaart. Elke 60 minuten massage levert één stempel op. Bij 10 stempels krijg je 60 minuten massage naar keuze.",
+    "button": "Vragen? Neem contact op"
   },
   "reviews": {
     "rating": 4.9,
     "count": 101,
-    "button": "Bekijk reviews",
     "url": "https://www.google.com/maps/search/?api=1&query=Baitan+Thai+Massage+Hollandsch+Diep+71+Capelle+aan+den+IJssel",
     "writeUrl": "https://search.google.com/local/writereview?placeid=ChIJq_OXztzTxUcRKp8nM5EFAqw"
   },
   "faq": [
     {
-      "question": "Kan ik annuleren?",
-      "answer": "Kosteloos tot 24 uur vóór de afspraak. Binnen 24 uur vindt geen restitutie plaats."
+      "question": "Kan ik mijn afspraak annuleren?",
+      "answer": "Ja, kosteloos tot 24 uur vóór de afspraak. Binnen 24 uur vindt geen restitutie plaats. Een afspraak kun je één keer kosteloos verzetten."
     },
     {
-      "question": "Wat als ik te laat kom?",
-      "answer": "De behandeltijd wordt ingekort; de geboekte kosten blijven verschuldigd."
+      "question": "Wat gebeurt er als ik te laat kom?",
+      "answer": "Dan wordt de behandeltijd ingekort. De kosten van de geboekte behandeling blijven gelijk."
     },
     {
       "question": "Kan ik pinnen?",
-      "answer": "Ja, betalen kan contant of met pin."
+      "answer": "Ja, je kunt bij Baitan betalen met pin of contant."
     },
     {
       "question": "Waar kan ik parkeren?",
-      "answer": "Parkeren is gratis in de directe omgeving van de salon."
+      "answer": "Parkeren is gratis in de directe omgeving van de salon aan het Hollandsch Diep."
     },
     {
       "question": "Wat moet ik vooraf melden?",
-      "answer": "Meld relevante blessures, zwangerschap en medicatie vóór de behandeling."
+      "answer": "Meld blessures, zwangerschap en medicijngebruik vóór de behandeling. Dan kan je behandelaar daar rekening mee houden."
     },
     {
-      "question": "Welke massages biedt Baitan in Capelle aan den IJssel aan?",
-      "answer": "Baitan biedt Thaise massage, aromatherapie-massage, sportmassage, hot stone massage en duo-massage aan. De actuele duur en prijzen staan per behandeling op de website."
+      "question": "Welke massages biedt Baitan aan?",
+      "answer": "Thaise massage, aromatherapie-massage, sportmassage, hot stone massage en body scrub massage. Elke behandeling is ook als duo-massage te boeken, voor 60, 90 of 120 minuten."
     },
     {
-      "question": "Waar is Baitan Thai Massage gevestigd?",
-      "answer": "Baitan Thai Massage is gevestigd aan Hollandsch Diep 71–73, 2904 EP Capelle aan den IJssel. Parkeren is gratis in de directe omgeving."
+      "question": "Waar zit Baitan Thai Massage?",
+      "answer": "Aan het Hollandsch Diep 71–73, 2904 EP Capelle aan den IJssel."
     },
     {
-      "question": "Kan ik online een massage bij Baitan boeken?",
-      "answer": "Ja. Via de website kun je de actuele beschikbaarheid bekijken en een afspraak boeken via de officiële Salonized-agenda van Baitan."
+      "question": "Kan ik online boeken?",
+      "answer": "Ja. In de online agenda van Baitan (Salonized) zie je direct welke tijden vrij zijn en boek je je afspraak."
     }
   ],
   "opening": {
@@ -113,76 +90,18 @@
     "weekdayClose": "21:00",
     "weekendLabel": "Zaterdag — zondag",
     "weekendOpen": "11:00",
-    "weekendClose": "20:00",
-    "slotMinutes": 30
+    "weekendClose": "20:00"
   },
   "contact": {
-    "kicker": "Contact",
     "routeUrl": "https://www.google.com/maps/dir/?api=1&destination=Hollandsch+Diep+71-73%2C+2904+EP+Capelle+aan+den+IJssel",
     "mapEmbedUrl": "https://www.google.com/maps?q=Hollandsch%20Diep%2071-73%2C%202904%20EP%20Capelle%20aan%20den%20IJssel&output=embed"
   },
   "seo": {
-    "title": "Thaise Massage Capelle aan den IJssel | Baitan",
-    "description": "Thaise massage in Capelle aan den IJssel bij Baitan aan het Hollandsch Diep. Bekijk behandelingen, prijzen en openingstijden en boek online.",
-    "ogTitle": "Baitan Thai Massage | Capelle aan den IJssel",
-    "ogDescription": "Thaise massage, aromatherapie, sportmassage, hot stone en duo-massage in Capelle aan den IJssel. Bekijk prijzen en boek Baitan online.",
+    "title": "Thaise massage Capelle aan den IJssel | Baitan Thai Massage",
+    "description": "Baitan Thai Massage in Capelle aan den IJssel: Thaise massage, aromatherapie, sportmassage, hot stone en duo-massage. Vanaf €65, gratis parkeren. Boek online.",
     "canonical": "https://baitanmassage.nl/",
-    "ogImage": "https://baitanmassage.nl/assets/images/baitan-hero-atmospheric.webp",
     "googleSiteVerification": ""
   },
   "whatsappUrl": "https://wa.me/31683936366",
-  "gallery": [
-    {
-      "image": "/assets/images/baitan-hero-atmospheric.webp",
-      "alt": "Sfeervolle Thaise massage bij Baitan",
-      "label": "Baitan"
-    },
-    {
-      "image": "/assets/images/thai-oil-massage.webp",
-      "alt": "Sfeerbeeld van een oliemassage",
-      "label": "Sfeerbeeld"
-    },
-    {
-      "image": "/assets/images/thai-shoulder-massage.webp",
-      "alt": "Sfeerbeeld van een schoudermassage",
-      "label": "Sfeerbeeld"
-    },
-    {
-      "image": "/assets/images/hot-stone-massage.webp",
-      "alt": "Sfeerbeeld van een hot stone massage",
-      "label": "Sfeerbeeld"
-    },
-    {
-      "image": "/assets/images/thai-back-massage.webp",
-      "alt": "Sfeerbeeld van een rugmassage",
-      "label": "Sfeerbeeld"
-    },
-    {
-      "image": "/assets/images/thai-leg-massage.webp",
-      "alt": "Sfeerbeeld van een beenmassage",
-      "label": "Sfeerbeeld"
-    },
-    {
-      "image": "/assets/images/thai-hand-massage.webp",
-      "alt": "Sfeerbeeld van een handmassage",
-      "label": "Sfeerbeeld"
-    },
-    {
-      "image": "/assets/images/thai-herbal-compress.webp",
-      "alt": "Sfeerbeeld van een Thaise kruidenstempelmassage",
-      "label": "Sfeerbeeld"
-    },
-    {
-      "image": "/assets/images/thai-head-massage.webp",
-      "alt": "Sfeerbeeld van een hoofdmassage",
-      "label": "Sfeerbeeld"
-    }
-  ],
-  "localSeo": {
-    "kicker": "Thaise massage in Capelle",
-    "title": "Massage aan het Hollandsch Diep in Capelle aan den IJssel",
-    "intro": "Baitan Thai Massage is gevestigd aan het Hollandsch Diep 71–73 in Capelle aan den IJssel. Je kunt er terecht voor Thaise massage, aromatherapie, sportmassage, hot stone en duo-massage.",
-    "text": "De salon is maandag tot en met vrijdag geopend van 10:00 tot 21:00 en in het weekend van 11:00 tot 20:00. Parkeren is gratis in de directe omgeving. Bekijk per behandeling de actuele duur en prijs of boek rechtstreeks via de online agenda."
-  },
   "whatsappMessage": "Hallo Baitan, ik heb een vraag over een massage."
 }
