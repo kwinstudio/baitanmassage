@@ -5,6 +5,36 @@
   "trailingSlash": false,
   "redirects": [
     {
+      "source": "/tarieven",
+      "destination": "/prijzen",
+      "permanent": true
+    },
+    {
+      "source": "/tarieven/",
+      "destination": "/prijzen",
+      "permanent": true
+    },
+    {
+      "source": "/online-reserveren",
+      "destination": "https://baitan-thai-massage.salonized.com/services",
+      "permanent": true
+    },
+    {
+      "source": "/online-reserveren/",
+      "destination": "https://baitan-thai-massage.salonized.com/services",
+      "permanent": true
+    },
+    {
+      "source": "/privacy-policy",
+      "destination": "/privacy",
+      "permanent": true
+    },
+    {
+      "source": "/privacy-policy/",
+      "destination": "/privacy",
+      "permanent": true
+    },
+    {
       "source": "/algemene-voorwaarden",
       "destination": "/voorwaarden",
       "permanent": true
@@ -18,15 +48,79 @@
       "source": "/contact/",
       "destination": "/contact",
       "permanent": true
+    },
+    {
+      "source": "/home",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/home/",
+      "destination": "/",
+      "permanent": true
     }
   ],
   "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "SAMEORIGIN"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=()"
+        }
+      ]
+    },
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "(?<sub>.*)\\.vercel\\.app"
+        }
+      ],
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        }
+      ]
+    },
     {
       "source": "/admin/:path*",
       "headers": [
         {
           "key": "X-Robots-Tag",
           "value": "noindex, nofollow"
+        }
+      ]
+    },
+    {
+      "source": "/fonts/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/(styles.css|app.js)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
         }
       ]
     }

@@ -1,102 +1,40 @@
-# Baitan Thai Massage — Pages CMS → GitHub main → Vercel
+# Baitan Thai Massage: Pages CMS → GitHub `main` → Vercel
 
-Deze repository is voorbereid op dezelfde beheerflow als Thai Massage Gouda.
+Statische website voor Baitan Thai Massage in Capelle aan den IJssel. Er is geen framework en er zijn geen afhankelijkheden: alleen Python 3.
 
 ## Workflow
 
 1. De eigenaar past teksten, foto's, openingstijden of prijzen aan in **Pages CMS**.
 2. Pages CMS schrijft de wijziging als commit naar **GitHub `main`**.
-3. Vercel ziet de nieuwe commit en start automatisch een deployment.
-4. `build.py` leest `data/site.json` en `data/treatments.json` en genereert de website in `dist/`.
-5. Vercel publiceert `dist/`.
+3. Vercel bouwt automatisch: `python3 build.py` genereert de site in `dist/`.
 
-## Bestanden die de klant via Pages CMS beheert
+## Wat staat waar
 
-- `data/site.json` — algemene gegevens, homepage, reviews, FAQ, openingstijden, SEO en contact.
-- `data/treatments.json` — behandelingen, tijdsduren en prijzen.
-- `assets/images/` — nieuwe websitefoto's.
-- `.pages.yml` — bepaalt welke velden Pages CMS toont.
-
-Media-instellingen zijn bewust hetzelfde als bij Thai Massage Gouda:
-
-- uploadmap: `assets/images`
-- websitepad: `/assets/images`
-
-## Vercel
-
-`vercel.json` bevat al:
-
-- build command: `python3 build.py`
-- output directory: `dist`
-- clean URLs
-
-Na het importeren van de GitHub-repository in Vercel is normaal gesproken geen handmatige buildconfiguratie meer nodig.
-
-## Pages CMS
-
-Koppel in Pages CMS de Baitan-repository en gebruik branch `main`. De `.pages.yml` in de root wordt automatisch gebruikt.
-
-De klant kan daarna o.a. aanpassen:
-
-- hero-tekst en foto;
-- contactgegevens;
-- openingstijden;
-- massages;
-- tijdsduren;
-- prijzen;
-- Google-reviewscore/aantal;
-- FAQ;
-- cadeaubon en spaarkaart;
-- SEO-titel en omschrijving.
-
-## Eigen reserveringssysteem
-
-De website gebruikt **geen Treatwell voor reserveringen**.
-
-De browser stuurt reserveringen naar de eigen API via:
-
-- `/api/...` wanneer `booking.apiBase` leeg is;
-- een aparte backend-URL wanneer `booking.apiBase` in Pages CMS is ingevuld.
-
-De huidige `server.py` bevat de eigen reserveringslogica en SQLite-opslag voor een server met permanente schijfruimte.
-
-### Belangrijk bij Vercel
-
-Gebruik SQLite **niet** als productiedatabase in Vercel Functions. De lokale filesystem-opslag van serverless deployments is niet bedoeld als blijvende afspraken-database.
-
-Voor productie zijn er twee veilige opties:
-
-1. website op Vercel + `server.py` op een aparte server met permanente opslag; of
-2. de booking API migreren naar serverless functions met een persistente database zoals PostgreSQL.
-
-Wanneer de bookingbackend apart draait:
-
-- zet `booking.apiBase` in Pages CMS op de HTTPS-URL van de backend;
-- zet op de backend `BAITAN_SITE_ORIGIN` op het definitieve websitedomein;
-- stel `BAITAN_ADMIN_PASSWORD` server-side in.
-
-Geheimen horen nooit in `data/site.json`, JavaScript of `.pages.yml`.
+| Bestand | Inhoud |
+|---|---|
+| `data/site.json` | Bedrijfsgegevens, homepage, reviews, FAQ, openingstijden, SEO (via Pages CMS) |
+| `data/treatments.json` | Behandelingen, teksten, duur, prijs per persoon en duo-prijs (via Pages CMS) |
+| `assets/images/` | Foto's (upload via Pages CMS) |
+| `build.py` | Templates, structured data, sitemap en robots.txt |
+| `static/styles.css` | Vormgeving (Newsreader + Figtree, zelf gehost in `static/fonts/`) |
+| `static/app.js` | Menu, massagekeuze, kaart pas laden na klik, contactbalk |
+| `vercel.json` | Build, redirects van de oude WordPress-URL's, beveiligingsheaders |
 
 ## Lokaal testen
 
-Website bouwen:
+    python3 build.py
+    cd dist && python3 -m http.server 8000
 
-```bash
-python3 build.py
-```
+Clean URLs (`/prijzen` in plaats van `/prijzen.html`) werken alleen op Vercel of met `npx serve dist`.
 
-Website + eigen boekingsbackend starten:
+## SEO
 
-```bash
-BAITAN_ADMIN_PASSWORD='kies-een-sterk-wachtwoord' python3 server.py
-```
+- Elke behandeling heeft een eigen pagina met een unieke titel, meta-description, BreadcrumbList, Service- en FAQPage-schema.
+- Op de homepage staat het `HealthAndBeautyBusiness`-schema met adres, openingstijden en alle prijzen.
+- Canonical-URL's wijzen naar `seo.canonical` (https://baitanmassage.nl). Op `*.vercel.app` stuurt Vercel `X-Robots-Tag: noindex`, zodat Google alleen het echte domein indexeert.
+- Oude WordPress-URL's (`/tarieven`, `/contact/`, `/online-reserveren`, `/privacy-policy`, `/algemene-voorwaarden`) krijgen een 301-redirect.
+- Na het verhuizen van baitanmassage.nl naar Vercel: dien `https://baitanmassage.nl/sitemap.xml` in bij Google Search Console.
 
-Daarna draait de site standaard op `http://127.0.0.1:8080`.
+## Boeken
 
-## GitHub repository
-
-Aanbevolen repositorynaam:
-
-`kwinstudio/baitanmassage`
-
-Zodra die repository bestaat, moeten alle bestanden uit deze map in de root van branch `main` staan.
+Alle "Afspraak maken"-knoppen gaan naar de Salonized-agenda (`booking.salonizedBookingUrl`). Er is geen eigen reserveringssysteem meer op de site.

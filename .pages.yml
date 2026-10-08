@@ -19,79 +19,42 @@ content:
       delete: false
     fields:
       - {name: businessName, label: Bedrijfsnaam, type: string, required: true}
-      - {name: tagline, label: Korte omschrijving, type: string}
+      - {name: tagline, label: Korte omschrijving (onderaan de website), type: string}
       - {name: phoneDisplay, label: Telefoonnummer zichtbaar, type: string, required: true}
       - {name: phoneHref, label: Telefoonnummer technisch (+31...), type: string, required: true}
       - {name: email, label: E-mailadres, type: string, required: true}
-      - {name: whatsappUrl, label: WhatsApp-link, type: string}
+      - {name: whatsappUrl, label: WhatsApp-link, type: string, description: 'Bijvoorbeeld https://wa.me/31683936366'}
       - {name: whatsappMessage, label: Vooraf ingevuld WhatsApp-bericht, type: string}
       - {name: address, label: Volledig adres, type: string, required: true}
       - {name: addressLine1, label: Straat en huisnummer, type: string, required: true}
-      - {name: postalCity, label: Postcode en plaats, type: string, required: true}
+      - {name: postalCity, label: Postcode en plaats, type: string, required: true, description: 'Bijvoorbeeld 2904 EP Capelle aan den IJssel'}
       - {name: kvk, label: KvK-nummer, type: string}
       - {name: btw, label: BTW-nummer, type: string}
 
       - name: hero
-        label: Bovenkant website
+        label: Bovenkant homepage
         type: object
         fields:
-          - {name: eyebrow, label: Kleine tekst boven titel, type: string}
-          - {name: title, label: Hoofdtitel, type: string}
+          - {name: title, label: Hoofdtitel, type: string, description: 'Houd "Thaise massage" en "Capelle aan den IJssel" erin, dat is goed voor Google.'}
           - {name: text, label: Introductietekst, type: text}
-          - {name: primaryButton, label: Primaire knop, type: string}
-          - {name: secondaryButton, label: Tweede knop, type: string}
+          - {name: primaryButton, label: Knop online boeken, type: string}
+          - {name: secondaryButton, label: Knop behandelingen, type: string}
           - name: image
-            label: Grote hero-foto
+            label: Grote foto
             type: image
             options: {media: images}
-          - {name: imageAlt, label: Beschrijving hero-foto, type: string}
-          - {name: badge, label: Kleine tekst op foto, type: string}
-
-      - name: trust
-        label: Snelle informatie
-        type: object
-        fields:
-          - {name: parking, label: Parkeerinformatie, type: string}
-          - {name: location, label: Locatie, type: string}
+          - {name: imageAlt, label: Beschrijving foto (voor Google en schermlezers), type: string}
 
       - name: booking
-        label: Reserveringssectie
+        label: Online boeken
         type: object
         fields:
-          - {name: kicker, label: Kleine titel, type: string}
-          - {name: title, label: Titel, type: string}
-          - {name: text, label: Korte uitleg, type: text}
-          - {name: panelTitle, label: Titel in boekingspaneel, type: string}
-          - name: provider
-            label: Boekingssysteem
-            type: select
-            options:
-              values:
-                - {name: custom, label: Eigen reserveringssysteem}
-                - {name: salonized, label: Salonized}
-          - {name: salonizedBookingUrl, label: Salonized boekingslink, type: string, description: 'Plak hier de officiële online boekingslink uit het Salonized-account van de salon.'}
-          - {name: salonizedCompanyId, label: Salonized widget-ID, type: string, description: 'Unieke data-company ID uit de officiële Salonized widgetcode. Leeg = boekingslink als veilige fallback.'}
-          - {name: salonizedWidgetColor, label: Salonized widgetkleur, type: string, description: 'Hex-kleur, bijvoorbeeld #3f4932.'}
-          - name: salonizedWidgetPosition
-            label: Positie Salonized widgetknop
-            type: select
-            options:
-              values:
-                - {name: left, label: Links (aanbevolen naast WhatsApp rechts)}
-                - {name: right, label: Rechts}
-          - name: image
-            label: Foto bij boeken
-            type: image
-            options: {media: images}
-          - {name: imageAlt, label: Beschrijving boekingsfoto, type: string}
-          - {name: imageLabel, label: Foto-label, type: string}
-          - {name: apiBase, label: Reserverings-API URL, type: string, description: 'Alleen voor het eigen reserveringssysteem. Leeg laten wanneer de API op hetzelfde domein draait.'}
+          - {name: salonizedBookingUrl, label: Salonized boekingslink, type: string, description: 'Alle "Afspraak maken"-knoppen gaan naar deze link.'}
 
       - name: about
         label: Over Baitan
         type: object
         fields:
-          - {name: kicker, label: Kleine titel, type: string}
           - {name: title, label: Titel, type: string}
           - {name: text, label: Tekst, type: text}
           - name: image
@@ -99,20 +62,10 @@ content:
             type: image
             options: {media: images}
           - {name: imageAlt, label: Beschrijving foto, type: string}
-          - {name: imageLabel, label: Foto-label, type: string}
           - name: facts
             label: Korte kenmerken
             type: string
             list: true
-
-      - name: localSeo
-        label: Lokale SEO tekst
-        type: object
-        fields:
-          - {name: kicker, label: Kleine titel, type: string}
-          - {name: title, label: Titel, type: string}
-          - {name: intro, label: Eerste alinea, type: text}
-          - {name: text, label: Tweede alinea, type: text}
 
       - name: giftCard
         label: Cadeaubon
@@ -122,11 +75,6 @@ content:
           - {name: title, label: Titel, type: string}
           - {name: text, label: Tekst, type: text}
           - {name: button, label: Knoptekst, type: string}
-          - name: image
-            label: Cadeaubon sfeerfoto
-            type: image
-            options: {media: images}
-          - {name: imageAlt, label: Beschrijving sfeerfoto, type: string}
 
       - name: loyalty
         label: Spaarkaart
@@ -137,29 +85,12 @@ content:
           - {name: text, label: Tekst, type: text}
           - {name: button, label: Knoptekst, type: string}
 
-      - name: gallery
-        label: Galerij / sfeerbeelden
-        type: object
-        list:
-          collapsible:
-            collapsed: true
-            summary: "{label}"
-        fields:
-          - name: image
-            label: Afbeelding
-            type: image
-            options: {media: images}
-            required: true
-          - {name: alt, label: Alt-tekst, type: string, required: true}
-          - {name: label, label: Label (Baitan of Sfeerbeeld), type: string}
-
       - name: reviews
         label: Google reviews
         type: object
         fields:
           - {name: rating, label: Gemiddelde score, type: number}
           - {name: count, label: Aantal reviews, type: number}
-          - {name: button, label: Knoptekst, type: string}
           - {name: url, label: Google Reviews-link, type: string}
           - {name: writeUrl, label: Google review schrijven-link, type: string}
 
@@ -184,13 +115,11 @@ content:
           - {name: weekendLabel, label: Dagen weekend, type: string}
           - {name: weekendOpen, label: Openingstijd weekend, type: string}
           - {name: weekendClose, label: Sluitingstijd weekend, type: string}
-          - {name: slotMinutes, label: Interval reserveringstijden (minuten), type: number}
 
       - name: contact
         label: Contact & route
         type: object
         fields:
-          - {name: kicker, label: Kleine titel, type: string}
           - {name: routeUrl, label: Google Maps route-link, type: string}
           - {name: mapEmbedUrl, label: Google Maps embed-link, type: string}
 
@@ -198,12 +127,9 @@ content:
         label: Google / SEO
         type: object
         fields:
-          - {name: title, label: SEO-titel, type: string}
-          - {name: description, label: Meta description, type: text}
-          - {name: ogTitle, label: Titel bij delen, type: string}
-          - {name: ogDescription, label: Omschrijving bij delen, type: text}
-          - {name: ogImage, label: Social share afbeelding, type: string}
-          - {name: canonical, label: Definitieve website-URL, type: string}
+          - {name: title, label: SEO-titel homepage, type: string, description: 'Maximaal ± 60 tekens.'}
+          - {name: description, label: Meta description homepage, type: text, description: 'Maximaal ± 155 tekens.'}
+          - {name: canonical, label: Definitieve website-URL, type: string, description: 'Bijvoorbeeld https://baitanmassage.nl'}
           - {name: googleSiteVerification, label: Google Search Console verificatiecode, type: string, description: 'Alleen de content-waarde uit de google-site-verification meta-tag.'}
 
   - name: treatments
@@ -219,13 +145,20 @@ content:
     fields:
       - {name: id, label: Technische ID, type: string, required: true, readonly: true}
       - {name: name, label: Naam massage, type: string, required: true}
-      - {name: slug, label: SEO URL, type: string, required: true}
-      - {name: description, label: Korte omschrijving, type: text}
-      - {name: detailText, label: Uitgebreide behandeltekst, type: text}
-      - name: features
-        label: Kenmerken
-        type: string
+      - {name: slug, label: SEO URL, type: string, required: true, readonly: true}
+      - {name: active, label: Tonen op website, type: boolean}
+      - {name: showPage, label: Eigen pagina, type: boolean, description: 'Uit = alleen in de prijslijst, zonder eigen pagina.'}
+      - {name: description, label: Korte omschrijving (in de lijst), type: text}
+      - {name: h1, label: Titel op de eigen pagina, type: string}
+      - {name: lead, label: Introductie op de eigen pagina, type: text}
+      - {name: detailText, label: Uitgebreide behandeltekst, type: text, description: 'Laat een lege regel tussen alinea''s.'}
+      - name: steps
+        label: Zo verloopt je behandeling
+        type: object
         list: true
+        fields:
+          - {name: title, label: Stap, type: string}
+          - {name: text, label: Uitleg, type: string}
       - {name: seoTitle, label: SEO-titel behandelpagina, type: string}
       - {name: seoDescription, label: Meta description behandelpagina, type: text}
       - name: image
@@ -233,8 +166,6 @@ content:
         type: image
         options: {media: images}
       - {name: imageAlt, label: Beschrijving foto, type: string}
-      - {name: imageLabel, label: Foto-label (Baitan of Sfeerbeeld), type: string}
-      - {name: active, label: Tonen op website, type: boolean}
       - name: durations
         label: Duur en prijs
         type: object
@@ -244,7 +175,8 @@ content:
             summary: "{minutes} min — €{price}"
         fields:
           - {name: minutes, label: Minuten, type: number, required: true}
-          - {name: price, label: Prijs in euro, type: number, required: true}
+          - {name: price, label: Prijs per persoon in euro, type: number, required: true}
+          - {name: duoPrice, label: Prijs duo (twee personen) in euro, type: number}
 
 settings:
   commit:
