@@ -238,6 +238,9 @@ def stars():
 # ---------------------------------------------------------------- shared parts
 def head(title, description, path, og_image="og-image.jpg", schema=None, robots="index,follow,max-image-preview:large", preload_img=None, preload_sizes="100vw"):
     canonical = DOMAIN + path
+    # Eigen deelafbeelding per pagina als er een passende foto is
+    if og_image == "og-image.jpg" and path != "/" and preload_img and (ROOT / "static" / "og" / f"{preload_img}.jpg").exists():
+        og_image = f"og/{preload_img}.jpg"
     ld = ""
     if schema:
         ld = f'<script type="application/ld+json">{json.dumps({"@context": "https://schema.org", "@graph": schema}, ensure_ascii=False, separators=(",", ":"))}</script>'
@@ -260,7 +263,7 @@ def head(title, description, path, og_image="og-image.jpg", schema=None, robots=
 <meta property="og:image" content="{DOMAIN}/{og_image}">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Baitan Thai Massage in Capelle aan den IJssel">
+<meta property="og:image:alt" content="{E(title.split(' | ')[0])}">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="alternate" hreflang="nl-NL" href="{canonical}">
 {f'<meta name="google-site-verification" content="{E(SITE["google_verification"])}">' if SITE["google_verification"] else ""}
@@ -333,7 +336,7 @@ def footer():
       <div>
         <h2 class="footer-title">Contact</h2>
         <address class="footer-list">
-          <span>{SITE['street']}</span><span>{SITE['postal']} {SITE['city']}</span>
+          <span>{SITE['street']}</span><span class="nowrap">{SITE['postal']} {SITE['city']}</span>
           <a href="tel:{SITE['phone_href']}">{SITE['phone_display']}</a>
           <a href="mailto:{SITE['email']}">{SITE['email']}</a>
           <a {ext(SITE['whatsapp_question_url'])}>WhatsApp</a>
@@ -345,7 +348,7 @@ def footer():
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© {datetime.date.today().year} {SITE['name']} · KVK {SITE['kvk']} · BTW {SITE['btw']}</span>
+      <span><span>© {datetime.date.today().year} {SITE['name']}</span> · <span>KVK {SITE['kvk']}</span> · <span>BTW {SITE['btw']}</span></span>
       <span class="footer-legal"><a href="/voorwaarden">Huisregels &amp; voorwaarden</a><a href="/privacy">Privacy &amp; cookies</a></span>
     </div>
     <p class="footer-note">De foto's op deze website zijn sfeerbeelden.</p>
@@ -440,7 +443,7 @@ def duo_table():
         if not t["duo"] or not all(t["duo"]):
             continue
         cells = "".join(f'<td><span class="solo">{euro(p)}</span></td>' for p in t["duo"])
-        body.append(f'<tr><th scope="row">{t["name"]} duo</th>{cells}</tr>')
+        body.append(f'<tr><th scope="row">{t["name"]}</th>{cells}</tr>')
     return f"""<div class="table-scroll"><table class="price-table">
 <caption class="sr-only">Prijzen duo-massage voor twee personen</caption>
 <thead><tr><th scope="col">Duo-behandeling</th>{head_cells}</tr></thead>
@@ -500,7 +503,7 @@ def hours_short():
     def h(x):
         return x.split(":")[0].lstrip("0") if x.endswith(":00") else x
     a, b = HOURS
-    return f"Ma–vr {h(a['opens'])}–{h(a['closes'])} uur · za–zo {h(b['opens'])}–{h(b['closes'])} uur"
+    return f"Ma–vr {h(a['opens'])}–{h(a['closes'])}\u00a0uur · za–zo {h(b['opens'])}–{h(b['closes'])}\u00a0uur"
 
 
 def perks_section():
@@ -531,6 +534,29 @@ def perks_section():
   </section>"""
 
 
+DUO_CTA = ("Samen even helemaal tot rust komen?", "Kies in de online agenda een duo-behandeling en een tijd die jullie uitkomt.")
+
+
+def side_card(gift=False):
+    """Compacte boekkaart naast lopende tekst: wat het kost, wanneer en waar."""
+    low = min(p for t in TREATMENTS for p in (t["solo"] or []) if p)
+    second = (f'<a class="btn btn-outline btn-block" {ext(SITE["whatsapp_gift_url"])}>{WHATSAPP} Cadeaubon via WhatsApp</a>' if gift
+              else '<a class="btn btn-outline btn-block" href="/prijzen">Alle prijzen</a>')
+    return f"""<aside class="price-card side-card" aria-labelledby="side-title">
+        <h2 id="side-title" class="price-card-title">{'Cadeaubon regelen' if gift else 'Direct een afspraak'}</h2>
+        <ul class="side-facts">
+          <li>{icon('clock')}<span>{hours_short()}</span></li>
+          <li>{icon('pin')}<span>{SITE['street']}, <span class="nowrap">{SITE['city']}</span></span></li>
+          <li>{icon('card')}<span>Massage vanaf €{low} voor 60 minuten</span></li>
+        </ul>
+        <div class="side-actions">
+          <a class="btn btn-primary btn-block" {ext(SITE['booking_url'])}>Afspraak maken</a>
+          {second}
+        </div>
+        <p class="price-card-meta">{icon('phone')} Liever bellen? <a href="tel:{SITE['phone_href']}">{SITE['phone_display']}</a></p>
+      </aside>"""
+
+
 def cta_band(title="Zin in een moment voor jezelf?", text="Kies in de online agenda een behandeling en een tijd die jou uitkomt."):
     return f"""<section class="cta-band">
   <div class="wrap cta-inner">
@@ -539,7 +565,7 @@ def cta_band(title="Zin in een moment voor jezelf?", text="Kies in de online age
       <p>{text}</p>
     </div>
     <div class="cta-actions">
-      <a class="btn btn-light" {ext(SITE['booking_url'])}>Bekijk vrije tijden {icon('arrow')}</a>
+      <a class="btn btn-light" {ext(SITE['booking_url'])}>Afspraak maken {icon('arrow')}</a>
       <a class="btn btn-ghost-light" href="tel:{SITE['phone_href']}">{icon('phone')} {SITE['phone_display']}</a>
     </div>
   </div>
@@ -670,6 +696,7 @@ def page_home():
     if thai:
         home_faq.insert(0, price_faq(thai))
     home_faq.insert(1, ("Hoe lang duurt een massage bij Baitan?", "Je kiest zelf: elke behandeling is te boeken voor 60, 90 of 120 minuten. Kom een paar minuten van tevoren, zodat je rustig kunt beginnen."))
+    home_faq = home_faq[:6]  # de rest staat op /veelgestelde-vragen
     schema = [business_schema(), website_schema(), webpage_schema("/", title, desc), faq_schema(home_faq)]
     quiz = []
     for qi, step in enumerate(QUIZ):
@@ -767,7 +794,7 @@ def page_home():
 
   <section class="section section-tint" id="over" aria-labelledby="over-title">
     <div class="wrap about-grid">
-      <figure class="about-media">{picture(Path(ABOUT.get('image', 'thaise-kruidenstempel-massage')).stem, ABOUT.get('imageAlt', ''), sizes="(min-width: 900px) 45vw, 100vw")}</figure>
+      <figure class="about-media">{picture(Path(ABOUT.get('image', 'thaise-kruidenstempel-massage')).stem, ABOUT.get('imageAlt', ''), sizes="(min-width: 900px) 84vw, 100vw")}</figure>
       <div class="about-copy">
         <h2 id="over-title">{E(ABOUT.get('title', 'Over Baitan'))}</h2>
         <p>{E(ABOUT.get('text', ''))}</p>
@@ -890,7 +917,7 @@ def page_treatment(t):
         <h2 id="prijs-title" class="price-card-title">Duur en prijs</h2>
         {prices_html}
         <p class="price-card-note">{price_note}</p>
-        <a class="btn btn-primary btn-block" {ext(SITE['booking_url'])}>Kies een tijd</a>
+        <a class="btn btn-primary btn-block" {ext(SITE['booking_url'])}>Afspraak maken</a>
         <p class="price-card-meta">{icon('phone')} Liever bellen? <a href="tel:{SITE['phone_href']}">{SITE['phone_display']}</a></p>
       </aside>
     </div>
@@ -916,7 +943,7 @@ def page_treatment(t):
       {treatment_rows(others)}
     </div>
   </section>
-  {cta_band()}
+  {cta_band(*DUO_CTA) if is_duo else cta_band()}
 </main>
 {footer()}"""
 
@@ -949,7 +976,7 @@ def page_massages():
   </section>
   <section class="section section-flush-top" aria-labelledby="voorwie-title">
     <div class="wrap">
-      <div class="section-head"><h2 id="voorwie-title">Welke massage past bij jou?</h2><p>Lees verder per situatie of doe de <a class="link" href="/#massagekeuze">massagekeuze</a>.</p></div>
+      <div class="section-head"><h2 id="voorwie-title">Welke massage past bij jou?</h2><a class="btn btn-outline" href="/#massagekeuze">Doe de massagekeuze {icon('arrow')}</a></div>
       <ul class="pill-links">{"".join(f'<li><a href="/{lp["slug"]}">{E(lp["h1"].replace(" in Capelle aan den IJssel", ""))} {icon("arrow")}</a></li>' for lp in LANDINGS if lp.get("kind") != "basis")}<li><a href="/cadeaubon">Massage cadeau geven {icon("arrow")}</a></li></ul>
     </div>
   </section>
@@ -972,7 +999,12 @@ def page_prijzen():
     title = "Prijzen massage Capelle aan den IJssel | Baitan Thai Massage"
     desc = "Bekijk alle prijzen van Baitan Thai Massage in Capelle aan den IJssel. Massages van 60, 90 en 120 minuten vanaf €65, duo-massage vanaf €125 voor twee."
     crumbs = [("Home", "/"), ("Prijzen", path)]
-    schema = [business_schema(), website_schema(), webpage_schema(path, title, desc), crumb_schema(crumbs)]
+    price_faqs = [price_faq(t) for t in TREATMENTS if t["solo"] or t["id"] == "duo"]
+    price_faqs += [
+        ("Welke duur kies ik: 60, 90 of 120 minuten?", "Met 60 minuten heb je een fijne, complete massage. Met 90 of 120 minuten is er meer tijd voor je hele lichaam en voor plekken waar je veel spanning voelt. Lees meer in het artikel over de duur van een massage."),
+        ("Kan ik een massage cadeau geven?", "Ja. Cadeaubonnen zijn verkrijgbaar in de salon of te regelen via WhatsApp. Je kunt elke behandeling cadeau geven."),
+    ]
+    schema = [business_schema(), website_schema(), webpage_schema(path, title, desc), crumb_schema(crumbs), faq_schema(price_faqs)]
     notes = [
         ("Duo-massage", "Met z'n tweeën tegelijk een massage. De duo-prijs geldt voor twee personen samen."),
         ("Betalen", "Met pin of contant in de salon."),
@@ -997,8 +1029,14 @@ def page_prijzen():
       <ul class="notes">{notes_html}</ul>
       <div class="price-foot">
         <p>De online agenda toont altijd de actuele prijzen en vrije tijden.</p>
-        <a class="btn btn-primary" {ext(SITE['booking_url'])}>Bekijk vrije tijden {icon('arrow')}</a>
+        <a class="btn btn-primary" {ext(SITE['booking_url'])}>Afspraak maken {icon('arrow')}</a>
       </div>
+    </div>
+  </section>
+  <section class="section section-tint" aria-labelledby="faq-title">
+    <div class="wrap faq-grid">
+      <div><h2 id="faq-title">Vragen over prijzen</h2><p>Twijfel je over de duur? Lees <a href="/kennisbank/hoe-lang-moet-een-massage-duren">hoe lang een massage moet duren</a> of bekijk <a href="/veelgestelde-vragen">alle vragen</a>.</p></div>
+      {faq_block(price_faqs)}
     </div>
   </section>
   {cta_band()}
@@ -1008,7 +1046,7 @@ def page_prijzen():
 
 def page_contact():
     path = "/contact"
-    title = "Contact en route | Baitan Thai Massage Capelle aan den IJssel"
+    title = "Contact en route | Baitan Thai Massage Capelle"
     desc = "Baitan Thai Massage, Hollandsch Diep 71–73 in Capelle aan den IJssel. Bel 06 83 936 366, stuur een WhatsApp of plan je route. Gratis parkeren."
     crumbs = [("Home", "/"), ("Contact", path)]
     schema = [business_schema(), website_schema(), webpage_schema(path, title, desc, "ContactPage"), crumb_schema(crumbs)]
@@ -1082,7 +1120,7 @@ def page_legal(kind):
     <div class="wrap">
       {breadcrumbs(crumbs)}
       <h1 id="page-title">{h1}</h1>
-      <p class="page-lead">Laatst bijgewerkt op {datetime.date.today().strftime('%d-%m-%Y')}.</p>
+      <p class="legal-updated">Laatst bijgewerkt op {nl_date(TODAY)}</p>
     </div>
   </section>
   <section class="section section-flush-top"><div class="wrap"><div class="prose legal">{"".join(secs)}{contact}</div></div></section>
@@ -1124,7 +1162,7 @@ def tokens(text):
     def h(x):
         return x.split(":")[0].lstrip("0") if x.endswith(":00") else x
     repl = {
-        "openingstijden": f"maandag tot en met vrijdag {h(a['opens'])}–{h(a['closes'])} uur, zaterdag en zondag {h(b['opens'])}–{h(b['closes'])} uur",
+        "openingstijden": f"maandag tot en met vrijdag {h(a['opens'])}–{h(a['closes'])}\u00a0uur, zaterdag en zondag {h(b['opens'])}–{h(b['closes'])}\u00a0uur",
         "adres": f"{SITE['street']}, {SITE['postal']} {SITE['city']}",
         "telefoon": SITE["phone_display"],
     }
@@ -1172,7 +1210,7 @@ def md(text):
             head, body = rows[0], rows[1:]
             th = "".join(f'<th scope="col">{_inline(c)}</th>' for c in head)
             trs = "".join("<tr>" + "".join((f'<th scope="row">{_inline(c)}</th>' if j == 0 else f"<td>{_inline(c)}</td>") for j, c in enumerate(r)) + "</tr>" for r in body)
-            out.append(f'<div class="table-scroll"><table class="compare-table"><thead><tr>{th}</tr></thead><tbody>{trs}</tbody></table></div>')
+            out.append(f'<div class="table-scroll" tabindex="0" role="region" aria-label="Vergelijkingstabel"><table class="compare-table"><thead><tr>{th}</tr></thead><tbody>{trs}</tbody></table></div>')
         elif _re.match(r"^(- |\d+\. )", ln):
             ordered = bool(_re.match(r"^\d+\. ", ln))
             items = []
@@ -1237,11 +1275,11 @@ def article_cards(items, heading="h3"):
         cards.append(f"""<li class="card">
   <a class="card-link" href="/kennisbank/{a['slug']}">
     <span class="card-media">{picture(a['image'], a.get('imageAlt', ''), sizes="(min-width: 900px) 30vw, (min-width: 600px) 45vw, 100vw")}</span>
-    <span class="card-body">
+    <div class="card-body">
       <{heading} class="card-title">{E(a['h1'])}</{heading}>
-      <span class="card-text">{E(a['lead'])}</span>
-      <span class="card-meta">{a['minutes']} min lezen</span>
-    </span>
+      <p class="card-text">{E(a['lead'])}</p>
+      <p class="card-meta">{a['minutes']} min lezen</p>
+    </div>
   </a>
 </li>""")
     return f'<ul class="card-grid">{"".join(cards)}</ul>'
@@ -1289,7 +1327,7 @@ def page_article(a):
         {breadcrumbs(crumbs)}
         <h1 id="page-title">{E(a['h1'])}</h1>
         <p class="page-lead">{E(a['lead'])}</p>
-        <p class="article-meta"><span>Door {SITE['name']}</span><span aria-hidden="true">·</span><time datetime="{a.get('updated', a.get('date'))}">{nl_date(a.get('updated', a.get('date')))}</time><span aria-hidden="true">·</span><span>{a['minutes']} min lezen</span></p>
+        <p class="article-meta"><span>Door {SITE['name']}</span><time datetime="{a.get('updated', a.get('date'))}">{nl_date(a.get('updated', a.get('date')))}</time><span>{a['minutes']} min lezen</span></p>
       </div>
       <figure class="wrap wrap-medium article-media">{picture(a['image'], a.get('imageAlt', ''), eager=True, sizes="(min-width: 900px) 960px, 100vw")}</figure>
     </header>
@@ -1381,11 +1419,14 @@ def page_landing(p):
     </div>
   </section>
   <section class="section">
-    <div class="wrap wrap-narrow prose">{p['html']}</div>
+    <div class="wrap detail-grid">
+      <div class="prose">{p['html']}</div>
+      {side_card(gift=p['slug'] == 'cadeaubon')}
+    </div>
   </section>
   {f'<section class="section section-flush-top" aria-labelledby="rel-title"><div class="wrap"><div class="section-head"><h2 id="rel-title">Behandelingen</h2><p><a class="link" href="/massages">Alle behandelingen {icon("arrow")}</a></p></div>{rel}</div></section>' if rel else ''}
   {faq_html}
-  {cta_band()}
+  {cta_band(*DUO_CTA) if p['slug'] == 'massage-voor-stellen' else cta_band()}
 </main>
 {footer()}"""
 
