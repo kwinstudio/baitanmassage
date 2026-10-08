@@ -58,6 +58,41 @@
       "source": "/home/",
       "destination": "/",
       "permanent": true
+    },
+    {
+      "source": "/assets/images/baitan-hero-atmospheric.webp",
+      "destination": "/assets/images/thaise-massage-capelle-aan-den-ijssel.webp",
+      "permanent": true
+    },
+    {
+      "source": "/assets/images/thai-oil-massage.webp",
+      "destination": "/assets/images/aromatherapie-oliemassage.webp",
+      "permanent": true
+    },
+    {
+      "source": "/assets/images/thai-leg-massage.webp",
+      "destination": "/assets/images/sportmassage-kuiten.webp",
+      "permanent": true
+    },
+    {
+      "source": "/assets/images/hot-stone-massage.webp",
+      "destination": "/assets/images/hot-stone-massage-warme-stenen.webp",
+      "permanent": true
+    },
+    {
+      "source": "/assets/images/thai-back-massage.webp",
+      "destination": "/assets/images/duo-massage-rug-schouders.webp",
+      "permanent": true
+    },
+    {
+      "source": "/assets/images/thai-hand-massage.webp",
+      "destination": "/assets/images/body-scrub-massage-handen.webp",
+      "permanent": true
+    },
+    {
+      "source": "/assets/images/thai-herbal-compress.webp",
+      "destination": "/assets/images/thaise-kruidenstempel-massage.webp",
+      "permanent": true
     }
   ],
   "headers": [
@@ -107,7 +142,7 @@
       ]
     },
     {
-      "source": "/fonts/(.*)",
+      "source": "/(fonts|assets/images/r)/(.*)",
       "headers": [
         {
           "key": "Cache-Control",

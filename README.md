@@ -18,6 +18,7 @@ Statische website voor Baitan Thai Massage in Capelle aan den IJssel. Er is geen
 | `build.py` | Templates, structured data, sitemap en robots.txt |
 | `static/styles.css` | Vormgeving (Newsreader + Figtree, zelf gehost in `static/fonts/`) |
 | `static/app.js` | Menu, massagekeuze, kaart pas laden na klik, contactbalk |
+| `tools/optimize_images.py` | Maakt AVIF/WebP-varianten in `assets/images/r/` voor scherpe, snelle foto's (lokaal draaien na nieuwe foto's) |
 | `vercel.json` | Build, redirects van de oude WordPress-URL's, beveiligingsheaders |
 
 ## Lokaal testen
@@ -38,3 +39,9 @@ Clean URLs (`/prijzen` in plaats van `/prijzen.html`) werken alleen op Vercel of
 ## Boeken
 
 Alle "Afspraak maken"-knoppen gaan naar de Salonized-agenda (`booking.salonizedBookingUrl`). Er is geen eigen reserveringssysteem meer op de site.
+
+## Foto's
+
+De foto's zijn opgeschaald met Real-ESRGAN (2x, met ruisonderdrukking) en staan als master in `assets/images/`.
+Na het toevoegen of vervangen van een foto: `python3 tools/optimize_images.py` (vereist Pillow met AVIF), dan committen.
+Zonder varianten valt de site automatisch terug op het originele bestand.

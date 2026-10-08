@@ -68,7 +68,7 @@ for _t in _treat:
         "slug": _t["slug"],
         "page": _t.get("showPage", True),
         "short": _t.get("description", ""),
-        "image": Path(_t.get("image", "/assets/images/baitan-hero-atmospheric.webp")).stem,
+        "image": Path(_t.get("image", "/assets/images/thaise-massage-capelle-aan-den-ijssel.webp")).stem,
         "alt": _t.get("imageAlt", _t["name"]),
         "durations": [d["minutes"] for d in _d],
         "solo": None if _is_duo else [d["price"] for d in _d],
@@ -86,6 +86,35 @@ ABOUT = _site.get("about", {})
 GIFT = _site.get("giftCard", {})
 LOYALTY = _site.get("loyalty", {})
 SEO = _site.get("seo", {})
+
+# Locatie volgens PDOK/Kadaster (Hollandsch Diep 71, Diepenbuurt, wijk Oostgaarde Zuid)
+GEO = (51.9365043, 4.6012847)
+NEIGHBOURHOOD = "Oostgaarde"
+NEARBY = ["Rotterdam", "Krimpen aan den IJssel", "Nieuwerkerk aan den IJssel", "Ouderkerk aan den IJssel"]
+
+
+def _euro_list(prices):
+    vals = [f"€{p}" for p in prices]
+    return ", ".join(vals[:-1]) + " en " + vals[-1] if len(vals) > 1 else vals[0]
+
+
+def lname(name):
+    """Naam midden in een zin: 'Sportmassage' -> 'sportmassage', 'Thaise massage' blijft."""
+    return name if name.split()[0] in ("Thaise",) else name[0].lower() + name[1:]
+
+
+def price_faq(t):
+    """Vraag + antwoord over de prijs van één behandeling, altijd gelijk aan de data."""
+    if t["id"] == "duo":
+        lowest = min(x["duo"][0] for x in TREATMENTS if x["duo"] and x["duo"][0])
+        return (f"Wat kost een duo-massage in {SITE['city']}?",
+                f"Een duo-massage bij Baitan is voor twee personen samen en begint bij €{lowest} voor 60 minuten. De precieze prijs hangt af van de behandeling die jullie kiezen; je ziet alle duo-prijzen in de tabel op deze pagina.")
+    durs = _euro_list(DURATIONS).replace("€", "") + " minuten"
+    ans = f"Een {lname(t['name'])} bij Baitan kost {_euro_list(t['solo'])} voor respectievelijk {durs}."
+    if t["duo"] and all(t["duo"]):
+        ans += f" Samen als duo-massage betaal je {_euro_list(t['duo'])} voor twee personen."
+    return (f"Wat kost een {lname(t['name'])} in {SITE['city']}?", ans)
+
 
 QUIZ = [
     ("Waar heb je vandaag vooral behoefte aan?", [("Ontspannen", "aroma"), ("Traditionele technieken", "thai"), ("Steviger, gericht op spieren", "sport"), ("Samen ontspannen", "duo")]),
@@ -178,7 +207,7 @@ def stars():
 
 
 # ---------------------------------------------------------------- shared parts
-def head(title, description, path, og_image="og-image.jpg", schema=None, robots="index,follow,max-image-preview:large"):
+def head(title, description, path, og_image="og-image.jpg", schema=None, robots="index,follow,max-image-preview:large", preload_img=None, preload_sizes="100vw"):
     canonical = DOMAIN + path
     ld = ""
     if schema:
@@ -210,6 +239,7 @@ def head(title, description, path, og_image="og-image.jpg", schema=None, robots=
 <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
+{f'<link rel="preload" as="image" type="image/avif" imagesrcset="{srcset(preload_img, "avif")}" imagesizes="{preload_sizes}" fetchpriority="high">' if preload_img and variants(preload_img) else ""}
 <link rel="preload" href="/fonts/newsreader.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/figtree.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/styles.css?v={VERSION}">
@@ -293,10 +323,27 @@ def footer():
 </html>"""
 
 
-def picture(name, alt, cls="", eager=False, sizes=None):
+RESP_WIDTHS = [320, 480, 720, 1080, 1440, 1920, 2560]
+
+
+def variants(name):
+    """Beschikbare responsive breedtes (gemaakt met tools/optimize_images.py)."""
+    d = ROOT / "assets" / "images" / "r"
+    return [w for w in RESP_WIDTHS if (d / f"{name}-{w}.avif").exists() and (d / f"{name}-{w}.webp").exists()]
+
+
+def srcset(name, ext):
+    return ", ".join(f"/assets/images/r/{name}-{w}.{ext} {w}w" for w in variants(name))
+
+
+def picture(name, alt, cls="", eager=False, sizes="100vw"):
     w, h = img_size(name)
-    load = 'fetchpriority="high"' if eager else 'loading="lazy"'
-    return f'<img class="{cls}" src="/assets/images/{name}.webp" alt="{E(alt)}" width="{w}" height="{h}" {load} decoding="async">'
+    load = 'loading="eager" fetchpriority="high"' if eager else 'loading="lazy"'
+    img = f'<img class="{cls}" src="/assets/images/{name}.webp" alt="{E(alt)}" width="{w}" height="{h}" {load} decoding="async">'
+    if not variants(name):
+        return img
+    return (f'<picture><source type="image/avif" srcset="{srcset(name, "avif")}" sizes="{sizes}">'
+            f'<source type="image/webp" srcset="{srcset(name, "webp")}" sizes="{sizes}">{img}</picture>')
 
 
 def breadcrumbs(items):
@@ -367,7 +414,7 @@ def treatment_rows(items, heading_level="h3"):
         prefix = "voor twee, vanaf" if t["id"] == "duo" else "vanaf"
         out.append(f"""<li class="treatment">
   <a class="treatment-link" href="{href}">
-    <span class="treatment-media">{picture(t['image'], t['alt'])}</span>
+    <span class="treatment-media">{picture(t['image'], t['alt'], sizes="(min-width: 760px) 150px, 88px")}</span>
     <span class="treatment-body">
       <{heading_level} class="treatment-name">{t['name']}</{heading_level}>
       <span class="treatment-text">{t['short']}</span>
@@ -516,7 +563,7 @@ def business_schema():
         "name": SITE["name"],
         "url": DOMAIN + "/",
         "logo": f"{DOMAIN}/apple-touch-icon.png",
-        "image": [f"{DOMAIN}/og-image.jpg", f"{DOMAIN}/assets/images/baitan-hero-atmospheric.webp"],
+        "image": [f"{DOMAIN}/og-image.jpg", f"{DOMAIN}/assets/images/thaise-massage-capelle-aan-den-ijssel.webp"],
         "description": "Thaise massagesalon aan het Hollandsch Diep in Capelle aan den IJssel. Thaise massage, aromatherapie, sportmassage, hot stone, body scrub en duo-massage.",
         "telephone": SITE["phone_href"],
         "email": SITE["email"],
@@ -532,6 +579,9 @@ def business_schema():
             "addressCountry": "NL",
         },
         "hasMap": SITE["maps_url"],
+        "geo": {"@type": "GeoCoordinates", "latitude": GEO[0], "longitude": GEO[1]},
+        "sameAs": [SITE["booking_url"]],
+        "containedInPlace": {"@type": "Place", "name": f"{NEIGHBOURHOOD}, {SITE['city']}"},
         "areaServed": [{"@type": "City", "name": c} for c in ["Capelle aan den IJssel", "Rotterdam", "Krimpen aan den IJssel", "Nieuwerkerk aan den IJssel"]],
         "openingHoursSpecification": [
             {"@type": "OpeningHoursSpecification", "dayOfWeek": h["days"], "opens": h["opens"], "closes": h["closes"]} for h in HOURS
@@ -574,19 +624,24 @@ def faq_schema(items):
 def page_home():
     title = SEO.get("title") or "Thaise massage Capelle aan den IJssel | Baitan Thai Massage"
     desc = SEO.get("description") or ""
-    schema = [business_schema(), website_schema(), webpage_schema("/", title, desc), faq_schema(FAQ)]
+    thai = next((x for x in TREATMENTS if x["id"] == "thai"), None)
+    home_faq = list(FAQ)
+    if thai:
+        home_faq.insert(0, price_faq(thai))
+    home_faq.insert(1, ("Hoe lang duurt een massage bij Baitan?", "Je kiest zelf: elke behandeling is te boeken voor 60, 90 of 120 minuten. Kom een paar minuten van tevoren, zodat je rustig kunt beginnen."))
+    schema = [business_schema(), website_schema(), webpage_schema("/", title, desc), faq_schema(home_faq)]
     quiz = []
     for qi, (q, opts) in enumerate(QUIZ):
         buttons = "".join(f'<button type="button" class="quiz-option" data-score="{s}">{E(label)}</button>' for label, s in opts)
         quiz.append(f'<fieldset class="quiz-step" data-step="{qi}"{"" if qi == 0 else " hidden"}><legend>{E(q)}</legend><div class="quiz-options">{buttons}</div></fieldset>')
     quiz_data = {t["id"]: {"name": t["name"], "text": t["short"], "url": f'/{t["slug"]}' if t["page"] else "/prijzen"} for t in TREATMENTS}
     gift_btn = f'<a class="btn btn-outline btn-sm" {ext(SITE["whatsapp_gift_url"])}>{WHATSAPP} Vraag via WhatsApp</a>'
-    body = f"""{head(title, desc, "/", schema=schema)}
+    body = f"""{head(title, desc, "/", schema=schema, preload_img=Path(HERO.get('image', 'thaise-massage-capelle-aan-den-ijssel')).stem)}
 <body class="page-home">
 {header()}
 <main id="main">
   <section class="hero" aria-labelledby="hero-title">
-    <div class="hero-media">{picture(Path(HERO.get('image', 'baitan-hero-atmospheric')).stem, HERO.get('imageAlt', ''), 'hero-img', eager=True)}</div>
+    <div class="hero-media">{picture(Path(HERO.get('image', 'thaise-massage-capelle-aan-den-ijssel')).stem, HERO.get('imageAlt', ''), 'hero-img', eager=True, sizes="100vw")}</div>
     <div class="wrap hero-inner">
       <div class="hero-copy">
         <h1 id="hero-title">{E(HERO.get('title', ''))}</h1>
@@ -653,7 +708,7 @@ def page_home():
 
   <section class="section section-tint" id="over" aria-labelledby="over-title">
     <div class="wrap about-grid">
-      <figure class="about-media">{picture(Path(ABOUT.get('image', 'thai-herbal-compress')).stem, ABOUT.get('imageAlt', ''))}</figure>
+      <figure class="about-media">{picture(Path(ABOUT.get('image', 'thaise-kruidenstempel-massage')).stem, ABOUT.get('imageAlt', ''), sizes="(min-width: 900px) 45vw, 100vw")}</figure>
       <div class="about-copy">
         <h2 id="over-title">{E(ABOUT.get('title', 'Over Baitan'))}</h2>
         <p>{E(ABOUT.get('text', ''))}</p>
@@ -681,17 +736,28 @@ def page_home():
     </div>
   </section>
 
-  <section class="section" id="faq" aria-labelledby="faq-title">
+  <section class="section local" id="locatie" aria-labelledby="locatie-title">
+    <div class="wrap local-grid">
+      <h2 id="locatie-title">Massage in {SITE['city']}</h2>
+      <div class="local-copy">
+        <p>Baitan Thai Massage zit aan het {SITE['street']} in de wijk {NEIGHBOURHOOD}, {SITE['city']}. Je parkeert gratis in de directe omgeving en loopt zo naar binnen.</p>
+        <p>Ook vanuit {", ".join(NEARBY[:-1])} en {NEARBY[-1]} ben je snel in de salon. We zijn zeven dagen per week open: {hours_short().replace("Ma–vr", "maandag tot en met vrijdag").replace("za–zo", "zaterdag en zondag").replace(" · ", ", ")}.</p>
+        <p class="local-links"><a class="link" href="/thaise-massage-capelle-aan-den-ijssel">Thaise massage {icon('arrow')}</a><a class="link" href="/prijzen">Prijzen {icon('arrow')}</a><a class="link" {ext(SITE['route_url'])}>Route plannen {icon('arrow')}</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-tint" id="faq" aria-labelledby="faq-title">
     <div class="wrap faq-grid">
       <div>
         <h2 id="faq-title">Veelgestelde vragen</h2>
         <p>Staat je vraag er niet bij? Bel <a href="tel:{SITE['phone_href']}">{SITE['phone_display']}</a> of stuur een <a {ext(SITE['whatsapp_question_url'])}>WhatsApp-bericht</a>.</p>
       </div>
-      {faq_block(FAQ)}
+      {faq_block(home_faq)}
     </div>
   </section>
 
-  <section class="section section-tint" id="contact" aria-labelledby="contact-title">
+  <section class="section" id="contact" aria-labelledby="contact-title">
     <div class="wrap">
       {contact_block().replace('<h2>', '<h2 id="contact-title">', 1)}
     </div>
@@ -708,7 +774,7 @@ def page_treatment(t):
     is_duo = t["id"] == "duo"
     prices_html = duo_table() if is_duo else price_table([t], caption=f'Prijzen {t["name"]}', link=False)
     price_note = "Prijs voor twee personen samen." if is_duo else "Prijs per persoon. Onder elke prijs staat de prijs voor twee personen samen (duo)."
-    faq_items = [FAQ[0], FAQ[1], FAQ[4], FAQ[2]]
+    faq_items = [price_faq(t), (f"Hoe lang duurt een {lname(t['name'])}?", "Je kiest zelf voor 60, 90 of 120 minuten. Twijfel je? Begin met 60 minuten en kies de volgende keer langer.")] + [FAQ[i] for i in (0, 4, 2) if i < len(FAQ)]
     service = {
         "@type": "Service",
         "@id": f"{DOMAIN}{path}#service",
@@ -727,7 +793,7 @@ def page_treatment(t):
     schema = [business_schema(), website_schema(), webpage_schema(path, t["seo_title"], t["seo_description"]), service, crumb_schema(crumbs), faq_schema(faq_items)]
     steps = "".join(f'<li><span class="step-n" aria-hidden="true">{i + 1}</span><span><strong>{a}</strong>{b}</span></li>' for i, (a, b) in enumerate(t["steps"]))
     body_p = "".join(f"<p>{p}</p>" for p in t["body"])
-    return f"""{head(t['seo_title'], t['seo_description'], path, schema=schema)}
+    return f"""{head(t['seo_title'], t['seo_description'], path, schema=schema, preload_img=t['image'], preload_sizes="(min-width: 900px) 42vw, 100vw")}
 <body>
 {header('/massages')}
 <main id="main">
@@ -742,7 +808,7 @@ def page_treatment(t):
           <a class="btn btn-outline" href="#prijs">Prijzen bekijken</a>
         </div>
       </div>
-      <figure class="page-hero-media">{picture(t['image'], t['alt'], eager=True)}</figure>
+      <figure class="page-hero-media">{picture(t['image'], t['alt'], eager=True, sizes="(min-width: 900px) 42vw, 100vw")}</figure>
     </div>
   </section>
 
@@ -993,7 +1059,7 @@ def main():
     for name, content in pages.items():
         write(name, content)
 
-    hero_img = Path(HERO.get("image", "baitan-hero-atmospheric")).stem
+    hero_img = Path(HERO.get("image", "thaise-massage-capelle-aan-den-ijssel")).stem
     urls = [("/", "1.0", hero_img), ("/massages", "0.9", None), ("/prijzen", "0.9", None)] + [(f'/{t["slug"]}', "0.8", t["image"]) for t in PAGES] + [("/contact", "0.8", None)]
     sm = "".join(
         f"<url><loc>{DOMAIN}{u}</loc><lastmod>{TODAY}</lastmod><priority>{p}</priority>"

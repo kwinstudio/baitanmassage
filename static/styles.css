@@ -32,7 +32,7 @@
   --radius:18px;
   --radius-sm:12px;
   --header-h:72px;
-  --ease-out:cubic-bezier(.16,1,.3,1);
+  --ease-out:cubic-bezier(.23,1,.32,1);
   --shadow:0 1px 2px rgba(34,37,29,.05),0 12px 32px -12px rgba(34,37,29,.16);
 }
 
@@ -65,10 +65,9 @@ p,li{text-wrap:pretty}
 .prose a,.faq-grid p a,.price-card-meta a{color:var(--olive-700);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
 
 /* ---------- Buttons */
-.btn{--btn-bg:var(--olive-800);--btn-fg:var(--on-dark);--btn-bd:transparent;display:inline-flex;align-items:center;justify-content:center;gap:.55em;min-height:50px;padding:0 24px;border-radius:999px;border:1px solid var(--btn-bd);background:var(--btn-bg);color:var(--btn-fg);font:600 .975rem/1 var(--text);text-decoration:none;cursor:pointer;white-space:nowrap;transition:background-color .2s ease,color .2s ease,border-color .2s ease,transform .2s var(--ease-out)}
+.btn{--btn-bg:var(--olive-800);--btn-fg:var(--on-dark);--btn-bd:transparent;display:inline-flex;align-items:center;justify-content:center;gap:.55em;min-height:50px;padding:0 24px;border-radius:999px;border:1px solid var(--btn-bd);background:var(--btn-bg);color:var(--btn-fg);font:600 .975rem/1 var(--text);text-decoration:none;cursor:pointer;white-space:nowrap;transition:background-color .2s ease,color .2s ease,border-color .2s ease,transform .16s var(--ease-out)}
 .btn .icon{transition:transform .25s var(--ease-out)}
-.btn:hover .icon{transform:translateX(3px)}
-.btn:active{transform:scale(.98)}
+.btn:active{transform:scale(.97);transition-duration:.1s}
 .btn-primary:hover{--btn-bg:var(--olive-900)}
 .btn-outline{--btn-bg:transparent;--btn-fg:var(--ink);--btn-bd:var(--line-strong)}
 .btn-outline:hover{--btn-bd:var(--ink);--btn-bg:var(--surface)}
@@ -165,7 +164,6 @@ p,li{text-wrap:pretty}
 .treatment-price{grid-area:price;font:500 1.15rem/1.2 var(--display);color:var(--olive-800);display:flex;gap:6px;align-items:baseline}
 .treatment-price small{font:500 .78rem/1 var(--text);color:var(--muted)}
 .treatment-go{display:none}
-.treatment-link:hover .treatment-media img{transform:scale(1.05)}
 .treatment-link:hover .treatment-name{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:5px;text-decoration-color:var(--gold)}
 @media (min-width:760px){
   .treatment-link{grid-template-columns:150px minmax(0,1fr) auto 48px;grid-template-areas:"media body price go";align-items:center;gap:32px;padding:22px 0}
@@ -174,7 +172,6 @@ p,li{text-wrap:pretty}
   .treatment-meta{display:block;margin-top:4px}
   .treatment-price{flex-direction:column;align-items:flex-end;gap:2px;font-size:1.6rem;text-align:right}
   .treatment-go{grid-area:go;display:grid;place-items:center;width:46px;height:46px;border:1px solid var(--line-strong);border-radius:999px;transition:background-color .25s ease,border-color .25s ease,color .25s ease,transform .35s var(--ease-out)}
-  .treatment-link:hover .treatment-go{background:var(--olive-800);border-color:var(--olive-800);color:var(--on-dark);transform:translateX(4px)}
 }
 
 /* ---------- Quiz */
@@ -183,23 +180,23 @@ p,li{text-wrap:pretty}
 .quiz{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:clamp(22px,4vw,40px);min-height:420px}
 .quiz-progress{display:flex;align-items:center;gap:16px;font-size:.88rem;color:var(--muted);margin-bottom:28px;font-variant-numeric:tabular-nums}
 .quiz-track{flex:1;height:3px;background:var(--tint);border-radius:9px;overflow:hidden}
-.quiz-track span{display:block;height:100%;width:100%;background:var(--olive-700);border-radius:inherit;transform:scaleX(.2);transform-origin:left;transition:transform .45s var(--ease-out)}
+.quiz-track span{display:block;height:100%;width:100%;background:var(--olive-700);border-radius:inherit;transform:scaleX(.2);transform-origin:left;transition:transform .3s var(--ease-out)}
 .quiz-step{border:0;margin:0;padding:0;min-width:0}
 .quiz-step legend{padding:0;margin-bottom:22px;font:400 clamp(1.6rem,1.3rem + 1.1vw,2.1rem)/1.15 var(--display);letter-spacing:-.015em}
 .quiz-options{display:grid;gap:10px}
 .quiz-option{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;min-height:56px;padding:14px 18px;border:1px solid var(--line);border-radius:var(--radius-sm);background:var(--paper);text-align:left;font-weight:500;cursor:pointer;transition:border-color .2s ease,background-color .2s ease,transform .2s var(--ease-out)}
 .quiz-option::after{content:"";width:8px;height:8px;border-top:1.5px solid currentColor;border-right:1.5px solid currentColor;transform:rotate(45deg);opacity:.35;transition:opacity .2s ease,transform .25s var(--ease-out)}
 .quiz-option:hover{border-color:var(--olive-700);background:var(--surface)}
-.quiz-option:hover::after{opacity:1;transform:translateX(3px) rotate(45deg)}
-.quiz-option:active{transform:scale(.99)}
-.quiz-step:not([hidden]){animation:step-in .45s var(--ease-out)}
+.quiz-option:active{transform:scale(.97);transition-duration:.1s}
+.mobile-bar-icon:active,.menu-toggle:active,.treatment-go:active{transform:scale(.95)}
+.quiz-step:not([hidden]){animation:step-in .26s var(--ease-out)}
 .quiz-result h3{font-size:clamp(2rem,1.6rem + 1.5vw,2.75rem);margin:6px 0 10px}
 .quiz-result p{color:var(--muted)}
 .quiz-result .btn-row{margin:24px 0 10px}
 .quiz-result-label{font-size:.9rem;font-weight:600;color:var(--olive-700)!important}
 .quiz-result:focus{outline:none}
-.quiz-result:not([hidden]){animation:step-in .5s var(--ease-out)}
-@keyframes step-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.quiz-result:not([hidden]){animation:step-in .32s var(--ease-out)}
+@keyframes step-in{from{opacity:0;transform:translateY(6px);filter:blur(2px)}to{opacity:1;transform:none;filter:none}}
 @media (min-width:900px){.quiz-grid{grid-template-columns:.85fr 1.15fr;gap:72px;align-items:start}.quiz-intro{position:sticky;top:calc(var(--header-h) + 40px)}.quiz-options{grid-template-columns:1fr 1fr}}
 
 /* ---------- Price table */
@@ -371,7 +368,6 @@ p,li{text-wrap:pretty}
 @media (min-width:900px){
   .mobile-bar{display:none}
   .whatsapp-float{display:grid;place-items:center;position:fixed;right:24px;bottom:24px;z-index:90;width:54px;height:54px;border-radius:999px;background:#1f7a4a;color:#fff;box-shadow:0 14px 30px -10px rgba(20,40,25,.5);transition:transform .25s var(--ease-out),background-color .2s ease}
-  .whatsapp-float:hover{transform:translateY(-2px);background:#18663d}
   .whatsapp-float .icon{width:26px;height:26px}
 }
 
@@ -380,3 +376,32 @@ p,li{text-wrap:pretty}
   html{scroll-behavior:auto}
   *,*::before,*::after{animation:none!important;transition-duration:.01ms!important}
 }
+
+/* ---------- Lokale sectie */
+.local-grid{display:grid;gap:20px}
+.local-copy p{color:var(--ink-2);max-width:62ch}
+.local-copy p+p{margin-top:14px}
+.local-links{display:flex;flex-wrap:wrap;gap:12px 28px;margin-top:22px!important}
+@media (min-width:900px){.local-grid{grid-template-columns:.8fr 1.2fr;gap:72px}}
+
+/* ---------- Beweging alleen bij echte muis (geen 'plakkende' hover op touch) */
+@media (hover:hover) and (pointer:fine){
+  .btn:hover .icon{transform:translateX(3px)}
+  .treatment-link:hover .treatment-media img{transform:scale(1.05)}
+  .quiz-option:hover::after{opacity:1;transform:translateX(3px) rotate(45deg)}
+  .treatment-link:hover .treatment-go{background:var(--olive-800);border-color:var(--olive-800);color:var(--on-dark);transform:translateX(4px)}
+  .whatsapp-float:hover{transform:translateY(-2px);background:#18663d}
+}
+
+/* ---------- FAQ: zacht openklappen waar de browser het ondersteunt */
+@supports (interpolate-size:allow-keywords){
+  :root{interpolate-size:allow-keywords}
+  .faq-item::details-content{block-size:0;overflow:hidden;transition:block-size .25s var(--ease-out),content-visibility .25s allow-discrete}
+  .faq-item[open]::details-content{block-size:auto}
+}
+
+/* Minder beweging: wel rustige overgangen in opacity, geen verplaatsing */
+@media (prefers-reduced-motion:reduce){
+  .quiz-step:not([hidden]),.quiz-result:not([hidden]){animation:fade .2s ease both!important}
+}
+@keyframes fade{from{opacity:0}to{opacity:1}}
