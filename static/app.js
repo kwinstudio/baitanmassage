@@ -2,7 +2,7 @@
 (() => {
   const $ = (s, el = document) => el.querySelector(s);
   const $$ = (s, el = document) => [...el.querySelectorAll(s)];
-  const mqDesktop = window.matchMedia('(min-width: 981px)');
+  const mqDesktop = window.matchMedia('(min-width: 1081px)');
 
   /* Header-rand bij scrollen + mobiele contactbalk */
   const header = $('[data-header]');

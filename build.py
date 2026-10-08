@@ -247,7 +247,7 @@ def head(title, description, path, og_image="og-image.jpg", schema=None, robots=
 </head>"""
 
 
-NAV = [("/massages", "Behandelingen"), ("/prijzen", "Prijzen"), ("/#massagekeuze", "Massagekeuze"), ("/#reviews", "Reviews"), ("/contact", "Contact")]
+NAV = [("/massages", "Behandelingen"), ("/prijzen", "Prijzen"), ("/cadeaubon", "Cadeaubon"), ("/kennisbank", "Kennisbank"), ("/over-baitan", "Over Baitan"), ("/contact", "Contact")]
 
 
 def header(current=""):
@@ -288,6 +288,18 @@ def footer():
       <div>
         <h2 class="footer-title">Behandelingen</h2>
         <ul class="footer-list">{treat}<li><a href="/prijzen">Alle prijzen</a></li></ul>
+      </div>
+      <div>
+        <h2 class="footer-title">Informatie</h2>
+        <ul class="footer-list">
+          <li><a href="/over-baitan">Over Baitan</a></li>
+          <li><a href="/cadeaubon">Cadeaubon &amp; spaarkaart</a></li>
+          <li><a href="/veelgestelde-vragen">Veelgestelde vragen</a></li>
+          <li><a href="/kennisbank">Kennisbank</a></li>
+          <li><a href="/massage-voor-stellen">Massage voor stellen</a></li>
+          <li><a href="/massage-na-het-sporten">Massage na het sporten</a></li>
+          <li><a href="/ontspanningsmassage-capelle">Ontspanningsmassage</a></li>
+        </ul>
       </div>
       <div>
         <h2 class="footer-title">Contact</h2>
@@ -747,17 +759,25 @@ def page_home():
     </div>
   </section>
 
-  <section class="section section-tint" id="faq" aria-labelledby="faq-title">
+  <section class="section section-tint" id="kennisbank" aria-labelledby="kb-title">
+    <div class="wrap">
+      <div class="section-head"><h2 id="kb-title">Meer weten over massage</h2><p><a class="link" href="/kennisbank">Naar de kennisbank {icon('arrow')}</a></p></div>
+      {article_cards(ARTICLES[:3])}
+    </div>
+  </section>
+
+  <section class="section" id="faq" aria-labelledby="faq-title">
     <div class="wrap faq-grid">
       <div>
         <h2 id="faq-title">Veelgestelde vragen</h2>
         <p>Staat je vraag er niet bij? Bel <a href="tel:{SITE['phone_href']}">{SITE['phone_display']}</a> of stuur een <a {ext(SITE['whatsapp_question_url'])}>WhatsApp-bericht</a>.</p>
+        <p><a class="link" href="/veelgestelde-vragen">Alle veelgestelde vragen {icon('arrow')}</a></p>
       </div>
       {faq_block(home_faq)}
     </div>
   </section>
 
-  <section class="section" id="contact" aria-labelledby="contact-title">
+  <section class="section section-tint" id="contact" aria-labelledby="contact-title">
     <div class="wrap">
       {contact_block().replace('<h2>', '<h2 id="contact-title">', 1)}
     </div>
@@ -879,6 +899,12 @@ def page_massages():
   </section>
   <section class="section section-flush-top" aria-label="Alle behandelingen">
     <div class="wrap">{treatment_rows(TREATMENTS, 'h2')}</div>
+  </section>
+  <section class="section section-flush-top" aria-labelledby="voorwie-title">
+    <div class="wrap">
+      <div class="section-head"><h2 id="voorwie-title">Welke massage past bij jou?</h2><p>Lees verder per situatie of doe de <a class="link" href="/#massagekeuze">massagekeuze</a>.</p></div>
+      <ul class="pill-links">{"".join(f'<li><a href="/{lp["slug"]}">{E(lp["h1"].replace(" in Capelle aan den IJssel", ""))} {icon("arrow")}</a></li>' for lp in LANDINGS if lp.get("kind") != "basis")}<li><a href="/cadeaubon">Massage cadeau geven {icon("arrow")}</a></li></ul>
+    </div>
   </section>
   <section class="section section-tint" aria-labelledby="prijzen-title">
     <div class="wrap">
@@ -1039,6 +1065,332 @@ def page_404():
 {footer()}"""
 
 
+# ---------------------------------------------------------------- markdown-content
+import re as _re
+
+CONTENT = ROOT / "content"
+
+
+def tokens(text):
+    """Vervangt {{...}} door actuele gegevens uit de data, zodat teksten nooit verouderen."""
+    a, b = HOURS
+    def h(x):
+        return x.split(":")[0].lstrip("0") if x.endswith(":00") else x
+    repl = {
+        "openingstijden": f"maandag tot en met vrijdag {h(a['opens'])}–{h(a['closes'])} uur, zaterdag en zondag {h(b['opens'])}–{h(b['closes'])} uur",
+        "adres": f"{SITE['street']}, {SITE['postal']} {SITE['city']}",
+        "telefoon": SITE["phone_display"],
+    }
+    return _re.sub(r"\{\{(\w+)\}\}", lambda m: repl.get(m.group(1), m.group(0)), text)
+
+
+def _inline(s):
+    s = E(s, quote=False)
+    s = _re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", s)
+    s = _re.sub(r"(?<![\w*])\*(?!\s)(.+?)(?<!\s)\*(?![\w*])", r"<em>\1</em>", s)
+
+    def link(m):
+        label, href = m.group(1), m.group(2)
+        if href.startswith("http"):
+            return f'<a href="{href}" target="_blank" rel="noopener">{label}</a>'
+        return f'<a href="{href}">{label}</a>'
+    return _re.sub(r"\[([^\]]+)\]\(([^)\s]+)\)", link, s)
+
+
+def md(text):
+    """Kleine, voorspelbare Markdown-renderer: koppen, alinea's, lijsten, tabellen, vet, cursief, links."""
+    out, lines, i = [], tokens(text).strip().split("\n"), 0
+    toc = []
+    while i < len(lines):
+        ln = lines[i].rstrip()
+        if not ln.strip():
+            i += 1
+            continue
+        if ln.startswith("### "):
+            out.append(f"<h3>{_inline(ln[4:])}</h3>")
+            i += 1
+        elif ln.startswith("## "):
+            title = ln[3:].strip()
+            anchor = _re.sub(r"[^a-z0-9]+", "-", title.lower()).strip("-")
+            toc.append((anchor, title))
+            out.append(f'<h2 id="{anchor}">{_inline(title)}</h2>')
+            i += 1
+        elif ln.startswith("|"):
+            rows = []
+            while i < len(lines) and lines[i].startswith("|"):
+                cells = [c.strip() for c in lines[i].strip().strip("|").split("|")]
+                if not all(_re.fullmatch(r":?-{3,}:?", c) for c in cells):
+                    rows.append(cells)
+                i += 1
+            head, body = rows[0], rows[1:]
+            th = "".join(f'<th scope="col">{_inline(c)}</th>' for c in head)
+            trs = "".join("<tr>" + "".join((f'<th scope="row">{_inline(c)}</th>' if j == 0 else f"<td>{_inline(c)}</td>") for j, c in enumerate(r)) + "</tr>" for r in body)
+            out.append(f'<div class="table-scroll"><table class="compare-table"><thead><tr>{th}</tr></thead><tbody>{trs}</tbody></table></div>')
+        elif _re.match(r"^(- |\d+\. )", ln):
+            ordered = bool(_re.match(r"^\d+\. ", ln))
+            items = []
+            while i < len(lines) and _re.match(r"^(- |\d+\. )", lines[i]):
+                items.append(_re.sub(r"^(- |\d+\. )", "", lines[i]).strip())
+                i += 1
+            tag = "ol" if ordered else "ul"
+            out.append(f"<{tag}>" + "".join(f"<li>{_inline(x)}</li>" for x in items) + f"</{tag}>")
+        else:
+            para = [ln.strip()]
+            i += 1
+            while i < len(lines) and lines[i].strip() and not _re.match(r"^(#{2,3} |- |\d+\. |\|)", lines[i]):
+                para.append(lines[i].strip())
+                i += 1
+            out.append(f"<p>{_inline(' '.join(para))}</p>")
+    return "\n".join(out), toc
+
+
+def load_md(folder):
+    items = []
+    for f in sorted((CONTENT / folder).glob("*.md")):
+        raw = f.read_text(encoding="utf-8")
+        _, front, body = raw.split("---", 2)
+        meta, faqs = {}, []
+        for line in front.strip().split("\n"):
+            k, _, v = line.partition(":")
+            k, v = k.strip(), v.strip()
+            if k == "faq":
+                q, _, a = v.partition("|")
+                faqs.append((tokens(q.strip()), tokens(a.strip())))
+            else:
+                meta[k] = v
+        meta["faq"] = faqs
+        meta["related"] = [x.strip() for x in meta.get("related", "").split(",") if x.strip()]
+        meta["order"] = int(meta.get("order", 99))
+        meta["html"], meta["toc"] = md(body)
+        words = len(_re.sub(r"<[^>]+>", " ", meta["html"]).split())
+        meta["minutes"] = max(2, round(words / 200))
+        meta["words"] = words
+        items.append(meta)
+    return sorted(items, key=lambda x: x["order"])
+
+
+ARTICLES = load_md("kennisbank")
+LANDINGS = load_md("paginas")
+
+
+def nl_date(iso):
+    maanden = ["januari", "februari", "maart", "april", "mei", "juni", "juli", "augustus", "september", "oktober", "november", "december"]
+    y, m, d = iso.split("-")
+    return f"{int(d)} {maanden[int(m) - 1]} {y}"
+
+
+def related_rows(ids):
+    items = [BY_ID[i] for i in ids if i in BY_ID]
+    return treatment_rows(items) if items else ""
+
+
+def article_cards(items, heading="h3"):
+    cards = []
+    for a in items:
+        cards.append(f"""<li class="card">
+  <a class="card-link" href="/kennisbank/{a['slug']}">
+    <span class="card-media">{picture(a['image'], a.get('imageAlt', ''), sizes="(min-width: 900px) 30vw, (min-width: 600px) 45vw, 100vw")}</span>
+    <span class="card-body">
+      <{heading} class="card-title">{E(a['h1'])}</{heading}>
+      <span class="card-text">{E(a['lead'])}</span>
+      <span class="card-meta">{a['minutes']} min lezen</span>
+    </span>
+  </a>
+</li>""")
+    return f'<ul class="card-grid">{"".join(cards)}</ul>'
+
+
+def article_schema(a, path):
+    return {
+        "@type": "BlogPosting",
+        "@id": f"{DOMAIN}{path}#article",
+        "headline": a["h1"],
+        "description": a["description"],
+        "image": f"{DOMAIN}/assets/images/{a['image']}.webp",
+        "datePublished": a.get("date", TODAY),
+        "dateModified": a.get("updated", a.get("date", TODAY)),
+        "inLanguage": "nl-NL",
+        "wordCount": a["words"],
+        "author": {"@type": "Organization", "name": SITE["name"], "url": DOMAIN + "/"},
+        "publisher": {"@id": BIZ_ID},
+        "mainEntityOfPage": {"@id": f"{DOMAIN}{path}#webpage"},
+        "isPartOf": {"@id": f"{DOMAIN}/kennisbank#webpage"},
+    }
+
+
+def page_article(a):
+    path = f"/kennisbank/{a['slug']}"
+    crumbs = [("Home", "/"), ("Kennisbank", "/kennisbank"), (a["h1"], path)]
+    schema = [business_schema(), website_schema(), webpage_schema(path, a["title"], a["description"]), article_schema(a, path), crumb_schema(crumbs)]
+    if a["faq"]:
+        schema.append(faq_schema(a["faq"]))
+    toc = "".join(f'<li><a href="#{an}">{E(ti)}</a></li>' for an, ti in a["toc"])
+    others = [x for x in ARTICLES if x["slug"] != a["slug"]][:3]
+    faq_html = f"""<section class="section section-tint" aria-labelledby="faq-title">
+    <div class="wrap faq-grid">
+      <div><h2 id="faq-title">Vragen over dit onderwerp</h2><p>Meer antwoorden vind je bij de <a href="/veelgestelde-vragen">veelgestelde vragen</a>.</p></div>
+      {faq_block(a['faq'])}
+    </div>
+  </section>""" if a["faq"] else ""
+    return f"""{head(a['title'], a['description'], path, schema=schema, preload_img=a['image'], preload_sizes="(min-width: 900px) 760px, 100vw")}
+<body>
+{header('/kennisbank')}
+<main id="main">
+  <article>
+    <header class="article-hero">
+      <div class="wrap wrap-narrow">
+        {breadcrumbs(crumbs)}
+        <h1 id="page-title">{E(a['h1'])}</h1>
+        <p class="page-lead">{E(a['lead'])}</p>
+        <p class="article-meta"><span>Door {SITE['name']}</span><span aria-hidden="true">·</span><time datetime="{a.get('updated', a.get('date'))}">{nl_date(a.get('updated', a.get('date')))}</time><span aria-hidden="true">·</span><span>{a['minutes']} min lezen</span></p>
+      </div>
+      <figure class="wrap wrap-medium article-media">{picture(a['image'], a.get('imageAlt', ''), eager=True, sizes="(min-width: 900px) 960px, 100vw")}</figure>
+    </header>
+    <div class="wrap article-layout">
+      <aside class="toc" aria-label="Inhoud van dit artikel">
+        <p class="toc-title">In dit artikel</p>
+        <ol>{toc}</ol>
+      </aside>
+      <div class="prose article-body">{a['html']}</div>
+    </div>
+  </article>
+  <section class="section" aria-labelledby="rel-title">
+    <div class="wrap">
+      <div class="section-head"><h2 id="rel-title">Passende behandelingen</h2><p><a class="link" href="/massages">Alle behandelingen {icon('arrow')}</a></p></div>
+      {related_rows(a['related'])}
+    </div>
+  </section>
+  {faq_html}
+  <section class="section" aria-labelledby="more-title">
+    <div class="wrap">
+      <div class="section-head"><h2 id="more-title">Verder lezen</h2><p><a class="link" href="/kennisbank">Naar de kennisbank {icon('arrow')}</a></p></div>
+      {article_cards(others)}
+    </div>
+  </section>
+  {cta_band()}
+</main>
+{footer()}"""
+
+
+def page_kennisbank():
+    path = "/kennisbank"
+    title = "Kennisbank over massage | Baitan Thai Massage Capelle"
+    desc = "Alles over Thaise massage, sportmassage, hot stone en aromatherapie. Uitleg, tips voor je eerste massage en hulp bij het kiezen van de juiste behandeling."
+    crumbs = [("Home", "/"), ("Kennisbank", path)]
+    itemlist = {"@type": "ItemList", "itemListElement": [
+        {"@type": "ListItem", "position": i + 1, "url": f"{DOMAIN}/kennisbank/{a['slug']}", "name": a["h1"]} for i, a in enumerate(ARTICLES)]}
+    schema = [business_schema(), website_schema(), webpage_schema(path, title, desc, "CollectionPage"), crumb_schema(crumbs), itemlist]
+    return f"""{head(title, desc, path, schema=schema)}
+<body>
+{header(path)}
+<main id="main">
+  <section class="page-hero page-hero-plain" aria-labelledby="page-title">
+    <div class="wrap">
+      {breadcrumbs(crumbs)}
+      <h1 id="page-title">Kennisbank</h1>
+      <p class="page-lead">Uitleg over massagevormen, tips voor je eerste bezoek en hulp bij het kiezen van de behandeling die bij je past.</p>
+    </div>
+  </section>
+  <section class="section section-flush-top" aria-label="Artikelen">
+    <div class="wrap">{article_cards(ARTICLES, 'h2')}</div>
+  </section>
+  {cta_band()}
+</main>
+{footer()}"""
+
+
+def page_landing(p):
+    path = f"/{p['slug']}"
+    crumbs = [("Home", "/"), (p["h1"] if p.get("kind") == "basis" else p["h1"].replace(" in Capelle aan den IJssel", ""), path)]
+    page_type = "AboutPage" if p["slug"] == "over-baitan" else "WebPage"
+    schema = [business_schema(), website_schema(), webpage_schema(path, p["title"], p["description"], page_type), crumb_schema(crumbs)]
+    if p["faq"]:
+        schema.append(faq_schema(p["faq"]))
+    faq_html = f"""<section class="section section-tint" aria-labelledby="faq-title">
+    <div class="wrap faq-grid">
+      <div><h2 id="faq-title">Veelgestelde vragen</h2><p>Staat je vraag er niet bij? Bekijk <a href="/veelgestelde-vragen">alle vragen</a> of bel <a href="tel:{SITE['phone_href']}">{SITE['phone_display']}</a>.</p></div>
+      {faq_block(p['faq'])}
+    </div>
+  </section>""" if p["faq"] else ""
+    extra_btn = (f'<a class="btn btn-outline" {ext(SITE["whatsapp_gift_url"])}>{WHATSAPP} Cadeaubon via WhatsApp</a>' if p["slug"] == "cadeaubon"
+                 else '<a class="btn btn-outline" href="/prijzen">Prijzen bekijken</a>')
+    rel = related_rows(p["related"])
+    return f"""{head(p['title'], p['description'], path, schema=schema, preload_img=p['image'], preload_sizes="(min-width: 900px) 42vw, 100vw")}
+<body>
+{header(path)}
+<main id="main">
+  <section class="page-hero" aria-labelledby="page-title">
+    <div class="wrap page-hero-grid">
+      <div>
+        {breadcrumbs(crumbs)}
+        <h1 id="page-title">{E(p['h1'])}</h1>
+        <p class="page-lead">{E(p['lead'])}</p>
+        <div class="btn-row">
+          <a class="btn btn-primary" {ext(SITE['booking_url'])}>Afspraak maken {icon('arrow')}</a>
+          {extra_btn}
+        </div>
+      </div>
+      <figure class="page-hero-media">{picture(p['image'], p.get('imageAlt', ''), eager=True, sizes="(min-width: 900px) 42vw, 100vw")}</figure>
+    </div>
+  </section>
+  <section class="section">
+    <div class="wrap wrap-narrow prose">{p['html']}</div>
+  </section>
+  {f'<section class="section section-flush-top" aria-labelledby="rel-title"><div class="wrap"><div class="section-head"><h2 id="rel-title">Behandelingen</h2><p><a class="link" href="/massages">Alle behandelingen {icon("arrow")}</a></p></div>{rel}</div></section>' if rel else ''}
+  {faq_html}
+  {cta_band()}
+</main>
+{footer()}"""
+
+
+def page_faq():
+    path = "/veelgestelde-vragen"
+    title = "Veelgestelde vragen over massage | Baitan Thai Massage"
+    desc = "Antwoorden op veelgestelde vragen over Baitan: prijzen, annuleren, betalen, parkeren, cadeaubonnen en wat je kunt verwachten van je massage."
+    crumbs = [("Home", "/"), ("Veelgestelde vragen", path)]
+    groups = [
+        ("Afspraak en bezoek", list(FAQ)),
+        ("Prijzen", [price_faq(t) for t in TREATMENTS if t["solo"] or t["id"] == "duo"]),
+        ("Cadeaubon en spaarkaart", next((p["faq"] for p in LANDINGS if p["slug"] == "cadeaubon"), [])),
+        ("Over de behandelingen", [q for a in ARTICLES for q in a["faq"]][:8]),
+    ]
+    seen, allq = set(), []
+    for _, qs in groups:
+        for q in qs:
+            if q[0] not in seen:
+                seen.add(q[0])
+                allq.append(q)
+    schema = [business_schema(), website_schema(), webpage_schema(path, title, desc, "FAQPage") | {"mainEntity": faq_schema(allq)["mainEntity"]}, crumb_schema(crumbs)]
+    seen2, blocks = set(), []
+    for name, qs in groups:
+        qs = [q for q in qs if q[0] not in seen2]
+        seen2.update(q[0] for q in qs)
+        if qs:
+            anchor = _re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-")
+            blocks.append(f'<section class="faq-group" aria-labelledby="{anchor}"><h2 id="{anchor}">{name}</h2>{faq_block(qs)}</section>')
+    nav = "".join(f'<li><a href="#{_re.sub(r"[^a-z0-9]+", "-", n.lower()).strip("-")}">{n}</a></li>' for n, qs in groups if qs)
+    return f"""{head(title, desc, path, schema=schema)}
+<body>
+{header()}
+<main id="main">
+  <section class="page-hero page-hero-plain" aria-labelledby="page-title">
+    <div class="wrap">
+      {breadcrumbs(crumbs)}
+      <h1 id="page-title">Veelgestelde vragen</h1>
+      <p class="page-lead">Alles over afspraken, prijzen, cadeaubonnen en de behandelingen. Staat je vraag er niet bij? Bel <a href="tel:{SITE['phone_href']}">{SITE['phone_display']}</a> of stuur een <a {ext(SITE['whatsapp_question_url'])}>WhatsApp-bericht</a>.</p>
+    </div>
+  </section>
+  <section class="section section-flush-top">
+    <div class="wrap faq-page">
+      <nav class="toc" aria-label="Onderwerpen"><p class="toc-title">Onderwerpen</p><ol>{nav}</ol></nav>
+      <div class="faq-groups">{"".join(blocks)}</div>
+    </div>
+  </section>
+  {cta_band()}
+</main>
+{footer()}"""
+
+
 # ---------------------------------------------------------------- write
 def write(name, content):
     p = OUT / name
@@ -1056,11 +1408,19 @@ def main():
              "voorwaarden.html": page_legal("voorwaarden"), "privacy.html": page_legal("privacy"), "404.html": page_404()}
     for t in PAGES:
         pages[f'{t["slug"]}.html'] = page_treatment(t)
+    pages["kennisbank/index.html"] = page_kennisbank()
+    for a in ARTICLES:
+        pages[f"kennisbank/{a['slug']}.html"] = page_article(a)
+    for lp in LANDINGS:
+        pages[f"{lp['slug']}.html"] = page_landing(lp)
+    pages["veelgestelde-vragen.html"] = page_faq()
     for name, content in pages.items():
         write(name, content)
 
     hero_img = Path(HERO.get("image", "thaise-massage-capelle-aan-den-ijssel")).stem
-    urls = [("/", "1.0", hero_img), ("/massages", "0.9", None), ("/prijzen", "0.9", None)] + [(f'/{t["slug"]}', "0.8", t["image"]) for t in PAGES] + [("/contact", "0.8", None)]
+    urls = [("/", "1.0", hero_img), ("/massages", "0.9", None), ("/prijzen", "0.9", None)] + [(f'/{t["slug"]}', "0.8", t["image"]) for t in PAGES] + [("/contact", "0.8", None)] \
+        + [(f"/{lp['slug']}", "0.7", lp["image"]) for lp in LANDINGS] + [("/veelgestelde-vragen", "0.6", None), ("/kennisbank", "0.6", None)] \
+        + [(f"/kennisbank/{a['slug']}", "0.6", a["image"]) for a in ARTICLES]
     sm = "".join(
         f"<url><loc>{DOMAIN}{u}</loc><lastmod>{TODAY}</lastmod><priority>{p}</priority>"
         + (f"<image:image><image:loc>{DOMAIN}/assets/images/{img}.webp</image:loc></image:image>" if img else "")

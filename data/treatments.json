@@ -230,17 +230,30 @@
     "id": "scrub",
     "name": "Body scrub massage",
     "slug": "body-scrub-massage-capelle",
-    "description": "Massage in combinatie met een body scrub.",
-    "lead": "",
-    "detailText": "",
-    "steps": [],
-    "h1": "",
-    "seoTitle": "",
-    "seoDescription": "",
+    "description": "Een scrub voor een zachte huid, gecombineerd met massage.",
+    "lead": "Een behandeling voor je spieren én je huid: een body scrub gecombineerd met een ontspannende massage.",
+    "detailText": "Bij een body scrub massage wordt je huid behandeld met een scrub. Daarmee worden dode huidcellen verwijderd, waardoor je huid zachter en gladder aanvoelt.\n\nDe scrub wordt gecombineerd met een massage. Zo verzorg je in één behandeling je huid en ontspan je je spieren. Vraag in de salon gerust hoe de behandeling precies verloopt.",
+    "steps": [
+      {
+        "title": "Scrub",
+        "text": "Je huid wordt gescrubd voor een zacht en glad gevoel."
+      },
+      {
+        "title": "Massage",
+        "text": "Een ontspannende massage maakt de behandeling compleet."
+      },
+      {
+        "title": "60, 90 of 120 minuten",
+        "text": "Alleen of samen als duo te boeken."
+      }
+    ],
+    "h1": "Body scrub massage in Capelle aan den IJssel",
+    "seoTitle": "Body scrub massage Capelle aan den IJssel | Baitan",
+    "seoDescription": "Body scrub massage in Capelle aan den IJssel: scrub voor een zachte huid, gecombineerd met massage. 60, 90 of 120 minuten, vanaf €70. Boek online bij Baitan.",
     "image": "/assets/images/body-scrub-massage-handen.webp",
     "imageAlt": "Verzorgende behandeling van de handen",
     "active": true,
-    "showPage": false,
+    "showPage": true,
     "durations": [
       {
         "minutes": 60,
