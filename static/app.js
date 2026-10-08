@@ -53,56 +53,121 @@
     shell.replaceWith(iframe);
   }));
 
-  /* Massagekeuze: vijf vragen, één advies */
+  /* Massagekeuze: vijf vragen (voor wie, doel, druk, extra, duur) -> advies met uitleg */
   const quiz = $('[data-quiz]');
   if (quiz) {
-    const data = JSON.parse(quiz.dataset.quiz);
+    const cfg = JSON.parse(quiz.dataset.quiz);
     const steps = $$('.quiz-step', quiz);
     const label = $('[data-quiz-label]', quiz);
     const barEl = $('[data-quiz-bar]', quiz);
+    const back = $('[data-quiz-back]', quiz);
     const result = $('[data-quiz-result]', quiz);
     const progress = $('.quiz-progress', quiz);
-    const ids = ['thai', 'aroma', 'sport', 'hotstone', 'duo'];
-    let scores;
+    const q = (sel) => $(sel, quiz);
+    const euro = (n) => `€${n}`;
+    let answers = [];
+    let current = 0;
 
-    const show = (i) => {
-      steps.forEach((s, n) => { s.hidden = n !== i; });
+    const mode = () => (answers[0] != null ? cfg.steps[0].options[answers[0]].mode : 'self');
+
+    const show = (i, focus) => {
+      current = i;
+      const m = mode();
+      steps.forEach((s, n) => {
+        s.hidden = n !== i;
+        const legend = $('legend', s);
+        const texts = cfg.steps[n].q;
+        legend.textContent = texts[m] || texts.self;
+        $$('.quiz-option', s).forEach((b) => b.setAttribute('aria-pressed', String(answers[n] === +b.dataset.o)));
+      });
       label.textContent = `Vraag ${i + 1} van ${steps.length}`;
       barEl.style.transform = `scaleX(${(i + 1) / steps.length})`;
+      back.hidden = i === 0;
+      if (focus) $('.quiz-option', steps[i])?.focus({ preventScroll: true });
     };
+
+    const score = () => {
+      const pts = Object.fromEntries(cfg.order.map((id) => [id, 0]));
+      const goal = cfg.steps[1].options[answers[1]]?.w || {};
+      answers.forEach((o, i) => {
+        const w = cfg.steps[i].options[o]?.w || {};
+        Object.entries(w).forEach(([id, v]) => { if (id in pts) pts[id] += v; });
+      });
+      // Gelijke stand: eerst het doel (vraag 2), dan de vaste volgorde
+      const ranked = [...cfg.order].sort((a, b) =>
+        (pts[b] - pts[a]) || ((goal[b] || 0) - (goal[a] || 0)) || (cfg.order.indexOf(a) - cfg.order.indexOf(b)));
+      return { pts, ranked };
+    };
+
+    const finish = () => {
+      const m = mode();
+      const { pts, ranked } = score();
+      const best = ranked[0];
+      const alt = ranked.find((id) => id !== best && pts[id] > 0);
+      const t = cfg.t[best];
+      const dur = cfg.steps[4].options[answers[4]]?.dur;
+      const prices = (m === 'duo' ? t.duo : t.solo) || [];
+      const di = cfg.durations.indexOf(dur);
+
+      q('[data-quiz-kicker]').textContent = m === 'duo' ? 'Jullie beste match' : m === 'gift' ? 'Mooi cadeau-idee' : 'Jouw beste match';
+      q('[data-quiz-title]').textContent = m === 'duo' ? `${t.name}, samen als duo` : m === 'gift' ? `Cadeaubon voor een ${t.lname}` : t.name;
+
+      let meta;
+      if (di > -1 && prices[di]) meta = `${dur} minuten · ${euro(prices[di])}${m === 'duo' ? ' voor twee personen' : ''}`;
+      else meta = `${cfg.durations.join(', ').replace(/, (\d+)$/, ' of $1')} minuten · vanaf ${euro(Math.min(...prices.filter(Boolean)))}${m === 'duo' ? ' voor twee' : ''}`;
+      q('[data-quiz-meta]').textContent = meta;
+      q('[data-quiz-text]').textContent = t.text;
+
+      // Redenen: alleen antwoorden die echt punten gaven aan deze behandeling
+      const why = [];
+      answers.forEach((o, i) => {
+        const opt = cfg.steps[i].options[o];
+        if (opt?.why && (opt.w?.[best] || 0) > 0) why.push(opt.why);
+      });
+      if (m === 'duo') why.push('Jullie worden tegelijk behandeld');
+      if (m === 'gift') why.push('Een cadeaubon regel je in de salon of via WhatsApp');
+      if (!why.length) why.push('Een veelzijdige keuze als je nog geen duidelijke voorkeur hebt');
+      const list = q('[data-quiz-why]');
+      list.replaceChildren(...why.map((w) => Object.assign(document.createElement('li'), { textContent: w })));
+
+      q('[data-quiz-book]').hidden = m === 'gift';
+      q('[data-quiz-gift]').hidden = m !== 'gift';
+      const link = q('[data-quiz-link]');
+      link.href = m === 'duo' ? cfg.duoUrl : t.url;
+      link.textContent = m === 'duo' ? 'Meer over duo-massage' : `Meer over ${t.lname}`;
+
+      const altBox = q('[data-quiz-alt]');
+      altBox.hidden = !alt;
+      if (alt) {
+        const a = q('[data-quiz-alt-link]');
+        a.href = cfg.t[alt].url;
+        a.textContent = cfg.t[alt].name;
+      }
+
+      steps.forEach((s) => { s.hidden = true; });
+      progress.hidden = true;
+      result.hidden = false;
+      result.focus({ preventScroll: true });
+      if (!mqDesktop.matches) result.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+
     const reset = () => {
-      scores = Object.fromEntries(ids.map((id) => [id, 0]));
+      answers = [];
       result.hidden = true;
       progress.hidden = false;
       show(0);
     };
-    const finish = () => {
-      steps.forEach((s) => { s.hidden = true; });
-      progress.hidden = true;
-      // Bij gelijke stand wint de eerste in de lijst (Thaise massage)
-      const best = ids.reduce((a, b) => (scores[b] > scores[a] ? b : a), ids[0]);
-      const t = data[best];
-      $('[data-quiz-title]', quiz).textContent = t.name;
-      $('[data-quiz-text]', quiz).textContent = t.text;
-      $('[data-quiz-link]', quiz).href = t.url;
-      result.hidden = false;
-      result.focus({ preventScroll: true });
-      if (!mqDesktop.matches) result.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    };
 
     steps.forEach((step, i) => {
       $$('.quiz-option', step).forEach((btn) => btn.addEventListener('click', () => {
-        const s = btn.dataset.score;
-        if (s === 'neutral') ids.forEach((id) => { scores[id] += 0.25; });
-        else if (s in scores) scores[s] += 2;
+        answers[i] = +btn.dataset.o;
+        answers.length = i + 1;
         if (i === steps.length - 1) finish();
-        else { show(i + 1); $('.quiz-option', steps[i + 1])?.focus({ preventScroll: true }); }
+        else show(i + 1, true);
       }));
     });
-    $('[data-quiz-restart]', quiz)?.addEventListener('click', () => {
-      reset();
-      $('.quiz-option', steps[0])?.focus({ preventScroll: true });
-    });
+    back.addEventListener('click', () => { if (current > 0) show(current - 1, true); });
+    q('[data-quiz-restart]')?.addEventListener('click', () => { reset(); $('.quiz-option', steps[0])?.focus({ preventScroll: true }); });
     reset();
   }
 })();

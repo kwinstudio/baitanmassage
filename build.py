@@ -116,13 +116,42 @@ def price_faq(t):
     return (f"Wat kost een {lname(t['name'])} in {SITE['city']}?", ans)
 
 
+# Massagekeuze. Elke vraag meet één ding: voor wie, doel, druk, extra's, duur.
+# "w" = punten per behandeling, "why" = reden die in het advies verschijnt.
 QUIZ = [
-    ("Waar heb je vandaag vooral behoefte aan?", [("Ontspannen", "aroma"), ("Traditionele technieken", "thai"), ("Steviger, gericht op spieren", "sport"), ("Samen ontspannen", "duo")]),
-    ("Wat spreekt je het meest aan?", [("Warme olie", "thai"), ("Een geur naar keuze", "aroma"), ("Warme stenen", "hotstone"), ("Geen voorkeur", "neutral")]),
-    ("Hoe wil je de massage ervaren?", [("Rustig en comfortabel", "aroma"), ("Traditioneel", "thai"), ("Steviger", "sport"), ("Samen", "duo")]),
-    ("Welke setting past het best?", [("Alleen", "neutral"), ("Samen met iemand", "duo"), ("Met warme stenen", "hotstone"), ("Met olie", "aroma")]),
-    ("Waar neig je nu het meest naar?", [("Thaise massage", "thai"), ("Aromatherapie", "aroma"), ("Sportmassage", "sport"), ("Hot stone", "hotstone")]),
+    {"key": "mode", "q": {"self": "Voor wie is de massage?"}, "options": [
+        {"label": "Voor mezelf", "mode": "self"},
+        {"label": "Voor ons samen (duo)", "mode": "duo"},
+        {"label": "Als cadeau voor iemand", "mode": "gift"},
+    ]},
+    {"key": "goal", "q": {"self": "Wat wil je vooral bereiken?", "duo": "Wat willen jullie vooral bereiken?", "gift": "Wat gun je de ontvanger vooral?"}, "options": [
+        {"label": "Helemaal tot rust komen", "w": {"aroma": 3, "hotstone": 2, "thai": 1, "scrub": 1}, "why": "Tot rust komen staat voorop"},
+        {"label": "Soepeler en minder stijf worden", "w": {"thai": 3, "hotstone": 2, "sport": 1}, "why": "Soepeler en minder stijf worden"},
+        {"label": "Belaste spieren losmaken (sport, werk of lang zitten)", "w": {"sport": 3, "hotstone": 1, "thai": 1}, "why": "Aandacht voor belaste spieren"},
+        {"label": "Ook de huid verzorgen", "w": {"scrub": 6, "aroma": 1}, "why": "Ook verzorging voor de huid"},
+    ]},
+    {"key": "pressure", "q": {"self": "Hoe stevig mag de massage zijn?", "duo": "Hoe stevig mag de massage zijn?", "gift": "Hoe stevig zou de ontvanger het willen?"}, "options": [
+        {"label": "Zacht en rustig", "w": {"aroma": 2, "scrub": 2}, "why": "Zachte, rustige druk"},
+        {"label": "Gemiddeld", "w": {"thai": 2, "aroma": 1, "hotstone": 1}, "why": "Gemiddelde druk"},
+        {"label": "Stevig", "w": {"sport": 3, "hotstone": 2, "thai": 1}, "why": "Stevige druk"},
+        {"label": "Weet ik nog niet", "w": {}},
+    ]},
+    {"key": "extra", "q": {"self": "Wat maakt het voor jou extra fijn?", "duo": "Wat maakt het voor jullie extra fijn?", "gift": "Wat zou de ontvanger extra fijn vinden?"}, "options": [
+        {"label": "Warmte", "w": {"hotstone": 4}, "why": "Warmte als extra"},
+        {"label": "Een geur naar keuze", "w": {"aroma": 4}, "why": "Een geur naar keuze"},
+        {"label": "Rustige rekbewegingen", "w": {"thai": 4, "aroma": 1, "hotstone": 1}, "why": "Rustige rekbewegingen"},
+        {"label": "Geen voorkeur", "w": {}},
+    ]},
+    {"key": "duration", "q": {"self": "Hoeveel tijd wil je nemen?", "duo": "Hoeveel tijd willen jullie nemen?", "gift": "Hoe lang mag de massage duren?"}, "options": [
+        {"label": "60 minuten", "dur": 60},
+        {"label": "90 minuten", "dur": 90},
+        {"label": "120 minuten", "dur": 120},
+        {"label": "Weet ik nog niet", "dur": None},
+    ]},
 ]
+# Volgorde bij gelijke stand (na het doel van vraag 2)
+QUIZ_ORDER = ["thai", "aroma", "hotstone", "sport", "scrub"]
+
 
 TODAY = datetime.date.today().isoformat()
 VERSION = TODAY.replace("-", "")
@@ -643,10 +672,17 @@ def page_home():
     home_faq.insert(1, ("Hoe lang duurt een massage bij Baitan?", "Je kiest zelf: elke behandeling is te boeken voor 60, 90 of 120 minuten. Kom een paar minuten van tevoren, zodat je rustig kunt beginnen."))
     schema = [business_schema(), website_schema(), webpage_schema("/", title, desc), faq_schema(home_faq)]
     quiz = []
-    for qi, (q, opts) in enumerate(QUIZ):
-        buttons = "".join(f'<button type="button" class="quiz-option" data-score="{s}">{E(label)}</button>' for label, s in opts)
-        quiz.append(f'<fieldset class="quiz-step" data-step="{qi}"{"" if qi == 0 else " hidden"}><legend>{E(q)}</legend><div class="quiz-options">{buttons}</div></fieldset>')
-    quiz_data = {t["id"]: {"name": t["name"], "text": t["short"], "url": f'/{t["slug"]}' if t["page"] else "/prijzen"} for t in TREATMENTS}
+    for qi, step in enumerate(QUIZ):
+        buttons = "".join(f'<button type="button" class="quiz-option" data-o="{oi}" aria-pressed="false">{E(o["label"])}</button>' for oi, o in enumerate(step["options"]))
+        quiz.append(f'<fieldset class="quiz-step" data-step="{qi}"{"" if qi == 0 else " hidden"}><legend>{E(step["q"]["self"])}</legend><div class="quiz-options">{buttons}</div></fieldset>')
+    duo_t = BY_ID.get("duo")
+    quiz_data = {
+        "steps": [{"q": st["q"], "options": [{k: v for k, v in o.items() if k != "label"} for o in st["options"]]} for st in QUIZ],
+        "order": QUIZ_ORDER,
+        "durations": DURATIONS,
+        "duoUrl": f'/{duo_t["slug"]}' if duo_t and duo_t["page"] else "/prijzen",
+        "t": {t["id"]: {"name": t["name"], "lname": lname(t["name"]), "text": t["short"], "url": f'/{t["slug"]}' if t["page"] else "/prijzen", "solo": t["solo"], "duo": t["duo"]} for t in TREATMENTS if t["id"] in QUIZ_ORDER},
+    }
     gift_btn = f'<a class="btn btn-outline btn-sm" {ext(SITE["whatsapp_gift_url"])}>{WHATSAPP} Vraag via WhatsApp</a>'
     body = f"""{head(title, desc, "/", schema=schema, preload_img=Path(HERO.get('image', 'thaise-massage-capelle-aan-den-ijssel')).stem)}
 <body class="page-home">
@@ -685,19 +721,30 @@ def page_home():
     <div class="wrap quiz-grid">
       <div class="quiz-intro">
         <h2 id="quiz-title">Twijfel je welke massage bij je past?</h2>
-        <p>Beantwoord vijf korte vragen. Daarna zie je meteen welke behandeling het best aansluit bij je wensen.</p>
+        <p>Vijf korte vragen over wat je zoekt. Je krijgt direct een advies met uitleg, de duur en de prijs.</p>
+        <p class="quiz-note">Twijfel je daarna nog? Bij Baitan bespreek je vooraf altijd de druk en waar de nadruk mag liggen.</p>
       </div>
       <div class="quiz" data-quiz='{E(json.dumps(quiz_data, ensure_ascii=False))}'>
-        <div class="quiz-progress"><span data-quiz-label>Vraag 1 van 5</span><span class="quiz-track"><span data-quiz-bar></span></span></div>
+        <div class="quiz-progress">
+          <button class="quiz-back" type="button" data-quiz-back hidden>{icon('arrow')}<span>Vorige</span></button>
+          <span data-quiz-label aria-live="polite">Vraag 1 van {len(QUIZ)}</span><span class="quiz-track" aria-hidden="true"><span data-quiz-bar></span></span>
+        </div>
         {"".join(quiz)}
-        <div class="quiz-result" data-quiz-result hidden tabindex="-1">
-          <p class="quiz-result-label">Jouw beste match</p>
-          <h3 data-quiz-title></h3>
+        <div class="quiz-result" data-quiz-result hidden tabindex="-1" aria-labelledby="quiz-result-title">
+          <p class="quiz-result-label" data-quiz-kicker>Jouw beste match</p>
+          <h3 id="quiz-result-title" data-quiz-title></h3>
+          <p class="quiz-meta" data-quiz-meta></p>
           <p data-quiz-text></p>
+          <div class="quiz-why">
+            <p class="quiz-why-title">Waarom dit past</p>
+            <ul data-quiz-why></ul>
+          </div>
           <div class="btn-row">
-            <a class="btn btn-primary" {ext(SITE['booking_url'])}>Afspraak maken</a>
+            <a class="btn btn-primary" {ext(SITE['booking_url'])} data-quiz-book>Afspraak maken</a>
+            <a class="btn btn-primary" {ext(SITE['whatsapp_gift_url'])} data-quiz-gift hidden>Cadeaubon via WhatsApp</a>
             <a class="btn btn-outline" href="/massages" data-quiz-link>Bekijk behandeling</a>
           </div>
+          <p class="quiz-alt" data-quiz-alt hidden>Ook een goede keuze: <a href="/massages" data-quiz-alt-link></a></p>
           <button class="text-btn" type="button" data-quiz-restart>Opnieuw beginnen</button>
         </div>
       </div>
