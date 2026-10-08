@@ -1,7 +1,7 @@
 ---
 slug: hoe-lang-moet-een-massage-duren
 order: 5
-title: 60, 90 of 120 minuten: hoe lang moet een massage duren? | Baitan
+title: Hoe lang moet een massage duren? 60, 90 of 120 min | Baitan
 description: Kies je voor 60, 90 of 120 minuten massage? Zo verschillen de duren en zo kies je wat bij jou, je wensen en je budget past.
 h1: 60, 90 of 120 minuten: welke duur kies je?
 lead: Bij Baitan kies je zelf hoe lang je massage duurt. Maar wat is het verschil, en wanneer is langer echt beter?

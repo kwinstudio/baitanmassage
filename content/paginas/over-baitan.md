@@ -2,7 +2,7 @@
 slug: over-baitan
 order: 10
 kind: basis
-title: Over Baitan Thai Massage | Massagesalon in Capelle aan den IJssel
+title: Over Baitan | Thaise massagesalon in Capelle aan den IJssel
 description: Maak kennis met Baitan Thai Massage, een Thaise massagesalon aan het Hollandsch Diep in Capelle aan den IJssel. Lees wat je bij ons kunt verwachten.
 h1: Over Baitan Thai Massage
 lead: Een Thaise massagesalon aan het Hollandsch Diep in Capelle aan den IJssel. Een plek om even helemaal tot rust te komen.
