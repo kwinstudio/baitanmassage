@@ -15,6 +15,7 @@ Statische website voor Baitan Thai Massage in Capelle aan den IJssel. Er is geen
 | `data/site.json` | Bedrijfsgegevens, homepage, reviews, FAQ, openingstijden, SEO (via Pages CMS) |
 | `data/treatments.json` | Behandelingen, teksten, duur, prijs per persoon en duo-prijs (via Pages CMS) |
 | `assets/images/` | Foto's (upload via Pages CMS) |
+| `content/kennisbank/*.md`, `content/paginas/*.md` | Artikelen en losse pagina's in Markdown (zie `content/README.md`) |
 | `build.py` | Templates, structured data, sitemap en robots.txt |
 | `static/styles.css` | Vormgeving (Newsreader + Figtree, zelf gehost in `static/fonts/`) |
 | `static/app.js` | Menu, massagekeuze, kaart pas laden na klik, contactbalk |
