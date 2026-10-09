@@ -85,9 +85,9 @@ p,li{text-wrap:pretty}
 .site-header{position:sticky;top:0;z-index:100;height:var(--header-h);background:rgba(248,244,236,.9);backdrop-filter:saturate(1.4) blur(14px);-webkit-backdrop-filter:saturate(1.4) blur(14px);border-bottom:1px solid transparent;transition:border-color .25s ease,background-color .25s ease}
 .site-header.is-scrolled{border-bottom-color:var(--line);background:rgba(248,244,236,.96)}
 .header-inner{height:100%;display:flex;align-items:center;gap:24px}
-.brand{display:inline-flex;align-items:center;gap:12px;min-height:44px;text-decoration:none;color:var(--ink)}
+.brand{display:inline-flex;align-items:center;gap:10px;min-height:44px;text-decoration:none;color:var(--ink)}
 .brand-emblem{width:40px;height:44px;flex:none;object-fit:contain}
-.brand-wordmark{width:96px;height:34px;flex:none}
+.brand-wordmark{width:79px;height:28px;flex:none}
 .site-nav{margin-left:auto}
 .nav-list{display:flex;gap:4px}
 .nav-link{display:block;padding:10px 12px;border-radius:999px;font-size:.94rem;font-weight:500;color:var(--ink-2);text-decoration:none;transition:background-color .2s ease,color .2s ease}
@@ -112,7 +112,7 @@ p,li{text-wrap:pretty}
   .nav-list .nav-link{padding:16px 4px;border-radius:0;border-bottom:1px solid var(--line);font:400 1.5rem/1.2 var(--display)}
   .nav-list .nav-link:hover{background:none}
 }
-@media (max-width:420px){.brand-wordmark{width:85px;height:30px}}
+@media (max-width:420px){.brand-wordmark{width:73px;height:26px}}
 
 /* ---------- Sections */
 .section{padding-block:clamp(64px,8vw,112px)}
