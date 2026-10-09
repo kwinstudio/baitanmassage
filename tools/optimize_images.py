@@ -7,7 +7,7 @@ build.py gebruikt deze varianten automatisch in <picture>/srcset als ze bestaan;
 ontbreken ze (bijv. een nieuwe CMS-upload), dan valt de site terug op het origineel.
 """
 from pathlib import Path
-from PIL import Image
+from PIL import Image, ImageFilter
 
 ROOT = Path(__file__).resolve().parent.parent
 SRC = ROOT / "assets" / "images"
@@ -24,8 +24,10 @@ def main():
                 continue
             h = round(im.height * w / im.width)
             v = im.resize((w, h), Image.LANCZOS)
-            v.save(OUT / f"{f.stem}-{w}.webp", "WEBP", quality=80, method=6)
-            v.save(OUT / f"{f.stem}-{w}.avif", "AVIF", quality=60, speed=4)
+            # Verkleinen maakt iets zachter: licht naslijpen, sterker bij kleine varianten
+            v = v.filter(ImageFilter.UnsharpMask(radius=0.8 if w >= 1440 else 0.6, percent=55, threshold=2))
+            v.save(OUT / f"{f.stem}-{w}.webp", "WEBP", quality=86, method=6)
+            v.save(OUT / f"{f.stem}-{w}.avif", "AVIF", quality=70, speed=4)
         print("ok", f.name, im.size)
 
 
