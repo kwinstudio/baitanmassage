@@ -157,12 +157,12 @@
       {
         "minutes": 90,
         "price": 105,
-        "duoPrice": 200
+        "duoPrice": 205
       },
       {
         "minutes": 120,
-        "price": 130,
-        "duoPrice": 250
+        "price": 140,
+        "duoPrice": 270
       }
     ],
     "lead": "Hot stone massage: traditionele technieken met warme stenen. Intens, ontspannend en verwarmend.",
@@ -263,12 +263,12 @@
       {
         "minutes": 90,
         "price": 105,
-        "duoPrice": 200
+        "duoPrice": 205
       },
       {
         "minutes": 120,
-        "price": 130,
-        "duoPrice": 250
+        "price": 140,
+        "duoPrice": 270
       }
     ]
   }
