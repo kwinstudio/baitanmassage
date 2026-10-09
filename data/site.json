@@ -11,7 +11,7 @@
   "btw": "NL003949907B52",
   "hero": {
     "title": "Thaise massage in Capelle aan den IJssel",
-    "text": "Even helemaal niets. Een rustig uur voor jezelf aan het Hollandsch Diep, met warme olie en aandachtige handen.",
+    "text": "Even helemaal niets. Een rustig uur voor jezelf, met warme olie en aandachtige handen.",
     "primaryButton": "Afspraak maken",
     "secondaryButton": "Bekijk behandelingen",
     "image": "/assets/images/thaise-massage-capelle-aan-den-ijssel.webp",
@@ -22,7 +22,7 @@
   },
   "about": {
     "title": "Een rustig moment voor jezelf",
-    "text": "Baitan is een Thaise massagesalon aan het Hollandsch Diep in Capelle aan den IJssel. Je komt binnen, laat de drukte achter je en krijgt alle aandacht. Je kiest zelf de behandeling en hoe lang je wilt blijven.",
+    "text": "Thaise massagesalon Baitan zit aan het Hollandsch Diep in Capelle aan den IJssel. Laat de drukte achter je: jij krijgt alle aandacht en kiest zelf behandeling en duur.",
     "image": "/assets/images/thaise-begroeting-wai.webp",
     "imageAlt": "Massagetherapeut in Thais uniform groet met gevouwen handen (wai)",
     "facts": [
@@ -35,13 +35,13 @@
   "giftCard": {
     "enabled": true,
     "title": "Cadeaubon",
-    "text": "Geef iemand een massage cadeau. Cadeaubonnen zijn verkrijgbaar in de salon: kom langs of stuur een WhatsApp-bericht.",
+    "text": "Geef iemand een massage cadeau. Cadeaubonnen zijn verkrijgbaar in de salon of via WhatsApp.",
     "button": "Vraag via WhatsApp"
   },
   "loyalty": {
     "enabled": true,
     "title": "Spaarkaart",
-    "text": "Na je eerste bezoek krijg je een spaarkaart. Elke 60 minuten massage levert één stempel op. Bij 10 stempels krijg je 60 minuten massage naar keuze.",
+    "text": "Na je eerste bezoek krijg je een spaarkaart: één stempel per 60 minuten massage. Bij 10 stempels krijg je 60 minuten massage naar keuze.",
     "button": "Vragen? Neem contact op"
   },
   "reviews": {
@@ -54,27 +54,27 @@
   "faq": [
     {
       "question": "Kan ik mijn afspraak annuleren?",
-      "answer": "Ja, kosteloos tot 24 uur vóór de afspraak. Binnen 24 uur vindt geen restitutie plaats. Een afspraak kun je één keer kosteloos verzetten."
+      "answer": "Ja, kosteloos tot 24 uur vooraf; daarna is er geen restitutie. Eén keer kosteloos verzetten kan ook."
     },
     {
-      "question": "Wat gebeurt er als ik te laat kom?",
-      "answer": "Dan wordt de behandeltijd ingekort. De kosten van de geboekte behandeling blijven gelijk."
+      "question": "Wat als ik te laat kom?",
+      "answer": "Dan wordt je behandeling korter, voor dezelfde prijs."
     },
     {
       "question": "Kan ik pinnen?",
-      "answer": "Ja, je kunt bij Baitan betalen met pin of contant."
+      "answer": "Ja, in de salon met pin of contant."
     },
     {
       "question": "Waar kan ik parkeren?",
-      "answer": "Parkeren is gratis in de directe omgeving van de salon aan het Hollandsch Diep."
+      "answer": "Gratis, vlak bij de salon aan het Hollandsch Diep."
     },
     {
       "question": "Wat moet ik vooraf melden?",
-      "answer": "Meld blessures, zwangerschap en medicijngebruik vóór de behandeling. Dan kan je behandelaar daar rekening mee houden."
+      "answer": "Blessures, zwangerschap en medicijngebruik, zodat je behandelaar er rekening mee kan houden."
     },
     {
       "question": "Welke massages biedt Baitan aan?",
-      "answer": "Thaise massage, aromatherapie-massage, sportmassage, hot stone massage en body scrub massage. Elke behandeling is ook als duo-massage te boeken, voor 60, 90 of 120 minuten."
+      "answer": "Thaise massage, aromatherapie-massage, sportmassage, hot stone massage en body scrub massage. Alles ook als duo-massage, in 60, 90 of 120 minuten."
     },
     {
       "question": "Waar zit Baitan Thai Massage?",
@@ -82,7 +82,7 @@
     },
     {
       "question": "Kan ik online boeken?",
-      "answer": "Ja. In de online agenda van Baitan (Salonized) zie je direct welke tijden vrij zijn en boek je je afspraak."
+      "answer": "Ja, in de online agenda (Salonized) zie je de vrije tijden en boek je direct."
     }
   ],
   "opening": {

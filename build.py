@@ -109,11 +109,12 @@ def price_faq(t):
     if t["id"] == "duo":
         lowest = min(x["duo"][0] for x in TREATMENTS if x["duo"] and x["duo"][0])
         return (f"Wat kost een duo-massage in {SITE['city']}?",
-                f"Een duo-massage bij Baitan is voor twee personen samen en begint bij €{lowest} voor 60 minuten. De precieze prijs hangt af van de behandeling die jullie kiezen; je ziet alle duo-prijzen in de tabel op deze pagina.")
+                f"Een duo-massage is voor twee personen samen, vanaf €{lowest} voor 60 minuten. De prijs hangt af van de gekozen behandeling.")
     durs = _euro_list(DURATIONS).replace("€", "") + " minuten"
-    ans = f"Een {lname(t['name'])} bij Baitan kost {_euro_list(t['solo'])} voor respectievelijk {durs}."
+    ans = f"{_euro_list(t['solo'])} voor {durs}."
+    ans = ans[0].upper() + ans[1:]
     if t["duo"] and all(t["duo"]):
-        ans += f" Samen als duo-massage betaal je {_euro_list(t['duo'])} voor twee personen."
+        ans += f" Als duo: {_euro_list(t['duo'])} voor twee personen."
     return (f"Wat kost een {lname(t['name'])} in {SITE['city']}?", ans)
 
 
@@ -495,7 +496,6 @@ def treatment_rows(items, heading_level="h3"):
     <span class="treatment-body">
       <{heading_level} class="treatment-name">{t['name']}</{heading_level}>
       <span class="treatment-text">{t['short']}</span>
-      <span class="treatment-meta">60, 90 of 120 minuten</span>
     </span>
     <span class="treatment-price"><small>{prefix}</small>{euro(price_from(t))}</span>
     <span class="treatment-go" aria-hidden="true">{icon('arrow')}</span>
@@ -599,7 +599,7 @@ def side_card(gift=False):
       </aside>"""
 
 
-def cta_band(title="Zin in een moment voor jezelf?", text="Kies in de online agenda een behandeling en een tijd die jou uitkomt."):
+def cta_band(title="Zin in een moment voor jezelf?", text="Kies je behandeling en tijd in de online agenda."):
     return f"""<section class="cta-band">
   <div class="wrap cta-inner">
     <div>
@@ -738,7 +738,7 @@ def page_home():
     if thai:
         home_faq.insert(0, price_faq(thai))
     home_faq.insert(1, ("Hoe lang duurt een massage bij Baitan?", "Je kiest zelf: elke behandeling is te boeken voor 60, 90 of 120 minuten. Kom een paar minuten van tevoren, zodat je rustig kunt beginnen."))
-    home_faq = home_faq[:6]  # de rest staat op /veelgestelde-vragen
+    home_faq = home_faq[:5]  # de rest staat op /veelgestelde-vragen
     schema = [business_schema(), website_schema(), webpage_schema("/", title, desc), faq_schema(home_faq)]
     quiz = []
     for qi, step in enumerate(QUIZ):
@@ -780,7 +780,7 @@ def page_home():
     <div class="wrap">
       <div class="section-head">
         <h2 id="behandelingen-title">Kies je massage</h2>
-        <p>Elke behandeling boek je voor 60, 90 of 120 minuten. Alleen, of samen als duo-massage.</p>
+        <p>Elke behandeling duurt 60, 90 of 120 minuten, alleen of als duo-massage.</p>
       </div>
       {treatment_rows(TREATMENTS)}
     </div>
@@ -790,8 +790,8 @@ def page_home():
     <div class="wrap quiz-grid">
       <div class="quiz-intro">
         <h2 id="quiz-title">Twijfel je welke massage bij je past?</h2>
-        <p>Vijf korte vragen over wat je zoekt. Je krijgt direct een advies met uitleg, de duur en de prijs.</p>
-        <p class="quiz-note">Twijfel je daarna nog? Bij Baitan bespreek je vooraf altijd de druk en waar de nadruk mag liggen.</p>
+        <p>Vijf korte vragen, direct advies met duur en prijs.</p>
+        <p class="quiz-note">De druk stem je vooraf altijd samen af.</p>
         <button class="btn btn-primary quiz-start" type="button" data-quiz-open aria-controls="quiz-panel" aria-expanded="false" hidden>Start de massagekeuze {icon('arrow')}</button>
       </div>
       <div class="quiz" id="quiz-panel" data-quiz='{E(json.dumps(quiz_data, ensure_ascii=False))}'>
@@ -825,7 +825,7 @@ def page_home():
     <div class="wrap">
       <div class="section-head">
         <h2 id="prijzen-title">Prijzen</h2>
-        <p>Prijs per persoon. Onder elke prijs zie je wat dezelfde massage samen (duo, twee personen) kost.</p>
+        <p>Prijs per persoon, met daaronder de duo-prijs voor twee.</p>
       </div>
       {price_table()}
       <div class="price-foot">
@@ -869,8 +869,8 @@ def page_home():
     <div class="wrap local-grid">
       <h2 id="locatie-title">Massage in {SITE['city']}</h2>
       <div class="local-copy">
-        <p>Baitan Thai Massage zit aan het {SITE['street']} in de wijk {NEIGHBOURHOOD}, {SITE['city']}. Je parkeert gratis in de directe omgeving en loopt zo naar binnen.</p>
-        <p>Ook vanuit {", ".join(NEARBY[:-1])} en {NEARBY[-1]} ben je snel in de salon. We zijn zeven dagen per week open: {hours_short().replace("Ma–vr", "maandag tot en met vrijdag").replace("za–zo", "zaterdag en zondag").replace(" · ", ", ")}.</p>
+        <p>Baitan Thai Massage zit aan het {SITE['street']} in {NEIGHBOURHOOD}, {SITE['city']}, met gratis parkeren in de buurt. Ook vanuit {", ".join(NEARBY[:-1])} en {NEARBY[-1]} ben je er snel.</p>
+        <p>Zeven dagen per week open: {hours_short().replace("Ma–vr", "maandag tot en met vrijdag").replace("za–zo", "zaterdag en zondag").replace(" · ", ", ")}.</p>
         <p class="local-links"><a class="link" href="/thaise-massage-capelle-aan-den-ijssel">Thaise massage {icon('arrow')}</a><a class="link" href="/prijzen">Prijzen {icon('arrow')}</a><a class="link" {ext(SITE['route_url'])}>Route plannen {icon('arrow')}</a></p>
       </div>
     </div>
@@ -879,7 +879,7 @@ def page_home():
   <section class="section section-tint" id="massagegids" aria-labelledby="kb-title">
     <div class="wrap">
       <div class="section-head"><h2 id="kb-title">Meer weten over massage</h2><p><a class="link" href="/massagegids">Naar de massagegids {icon('arrow')}</a></p></div>
-      {article_cards(ARTICLES[:3])}
+      {article_cards(ARTICLES[:3], lead=False)}
     </div>
   </section>
 
@@ -921,7 +921,7 @@ def page_treatment(t):
     is_duo = t["id"] == "duo"
     prices_html = duo_table() if is_duo else price_table([t], caption=f'Prijzen {t["name"]}', link=False)
     price_note = "Prijs voor twee personen samen." if is_duo else "Prijs per persoon. Onder elke prijs staat de prijs voor twee personen samen (duo)."
-    faq_items = [price_faq(t), (f"Hoe lang duurt een {lname(t['name'])}?", "Je kiest zelf voor 60, 90 of 120 minuten. Twijfel je? Begin met 60 minuten en kies de volgende keer langer.")] + [FAQ[i] for i in (0, 4, 2) if i < len(FAQ)]
+    faq_items = [price_faq(t), (f"Hoe lang duurt een {lname(t['name'])}?", "Je kiest 60, 90 of 120 minuten. Twijfel je? Begin met 60 minuten.")] + [FAQ[i] for i in (0, 4) if i < len(FAQ)]
     service = {
         "@type": "Service",
         "@id": f"{DOMAIN}{path}#service",
@@ -981,7 +981,7 @@ def page_treatment(t):
     <div class="wrap faq-grid">
       <div>
         <h2 id="goed-title">Goed om te weten</h2>
-        <p>Baitan zit aan het Hollandsch Diep 71–73 in Capelle aan den IJssel. Parkeren is gratis in de directe omgeving.</p>
+        <p>Baitan zit aan het Hollandsch Diep 71–73 in Capelle aan den IJssel, met gratis parkeren in de buurt.</p>
         {facilities_list()}
       </div>
       {faq_block(faq_items)}
@@ -1022,7 +1022,7 @@ def page_massages():
     <div class="wrap">
       {breadcrumbs(crumbs)}
       <h1 id="page-title">Massages in Capelle aan den IJssel</h1>
-      <p class="page-lead">Van traditioneel Thais tot warme stenen. Elke behandeling boek je voor 60, 90 of 120 minuten, alleen of samen met iemand.</p>
+      <p class="page-lead">Van traditioneel Thais tot warme stenen, voor 60, 90 of 120 minuten, alleen of samen.</p>
     </div>
   </section>
   <section class="section section-flush-top" aria-label="Alle behandelingen">
@@ -1055,16 +1055,16 @@ def page_prijzen():
     crumbs = [("Home", "/"), ("Prijzen", path)]
     price_faqs = [price_faq(t) for t in TREATMENTS if t["solo"] or t["id"] == "duo"]
     price_faqs += [
-        ("Welke duur kies ik: 60, 90 of 120 minuten?", "Met 60 minuten heb je een fijne, complete massage. Met 90 of 120 minuten is er meer tijd voor je hele lichaam en voor plekken waar je veel spanning voelt. Lees meer in het artikel over de duur van een massage."),
-        ("Kan ik een massage cadeau geven?", "Ja. Cadeaubonnen zijn verkrijgbaar in de salon of te regelen via WhatsApp. Je kunt elke behandeling cadeau geven."),
+        ("Welke duur kies ik: 60, 90 of 120 minuten?", "60 minuten is een complete massage. Met 90 of 120 minuten is er meer tijd voor je hele lichaam en plekken met veel spanning."),
+        ("Kan ik een massage cadeau geven?", "Ja, elke behandeling. Een cadeaubon koop je in de salon of via WhatsApp."),
     ]
     schema = [business_schema(), website_schema(), webpage_schema(path, title, desc), crumb_schema(crumbs), faq_schema(price_faqs)]
     notes = [
-        ("Duo-massage", "Met z'n tweeën tegelijk een massage. De duo-prijs geldt voor twee personen samen."),
+        ("Duo-massage", "De duo-prijs geldt voor twee personen samen."),
         ("Betalen", "Met pin of contant in de salon."),
         ("Btw", "Alle prijzen zijn inclusief btw."),
-        ("Annuleren", "Kosteloos tot 24 uur vooraf. Daarna vindt geen restitutie plaats."),
-        ("Spaarkaart", "Per 60 minuten één stempel. Bij 10 stempels krijg je 60 minuten massage naar keuze."),
+        ("Annuleren", "Kosteloos tot 24 uur vooraf."),
+        ("Spaarkaart", "Per 60 minuten één stempel; bij 10 stempels 60 minuten massage naar keuze."),
     ]
     notes_html = "".join(f"<li><strong>{a}</strong><span>{b}</span></li>" for a, b in notes)
     return f"""{head(title, desc, path, schema=schema)}
@@ -1075,7 +1075,7 @@ def page_prijzen():
     <div class="wrap">
       {breadcrumbs(crumbs)}
       <h1 id="page-title">Prijzen</h1>
-      <p class="page-lead">Alle massages zijn te boeken voor 60, 90 of 120 minuten. Je ziet de prijs per persoon en daaronder de prijs voor een duo-massage.</p>
+      <p class="page-lead">Alle massages boek je voor 60, 90 of 120 minuten. Per persoon, met daaronder de duo-prijs.</p>
     </div>
   </section>
   <section class="section section-flush-top" aria-label="Prijslijst">
@@ -1083,7 +1083,7 @@ def page_prijzen():
       {price_table()}
       <ul class="notes">{notes_html}</ul>
       <div class="price-foot">
-        <p>De online agenda toont altijd de actuele prijzen en vrije tijden.</p>
+        <p>Vrije tijden zie je in de online agenda.</p>
         <a class="btn btn-primary" {ext(SITE['booking_url'])}>Afspraak maken {icon('arrow')}</a>
       </div>
     </div>
@@ -1350,7 +1350,7 @@ def related_rows(ids):
     return treatment_rows(items) if items else ""
 
 
-def article_cards(items, heading="h3"):
+def article_cards(items, heading="h3", lead=True):
     cards = []
     for a in items:
         cards.append(f"""<li class="card">
@@ -1358,7 +1358,7 @@ def article_cards(items, heading="h3"):
     <span class="card-media">{picture(a['image'], a.get('imageAlt', ''), sizes="(min-width: 900px) 30vw, (min-width: 600px) 45vw, 100vw")}</span>
     <div class="card-body">
       <{heading} class="card-title">{E(a['h1'])}</{heading}>
-      <p class="card-text">{E(a['lead'])}</p>
+      {f'<p class="card-text">{E(a["lead"])}</p>' if lead else ''}
       <p class="card-meta">{a['minutes']} min lezen</p>
     </div>
   </a>
@@ -1430,7 +1430,7 @@ def page_article(a):
   <section class="section" aria-labelledby="more-title">
     <div class="wrap">
       <div class="section-head"><h2 id="more-title">Verder lezen</h2><p><a class="link" href="/massagegids">Naar de massagegids {icon('arrow')}</a></p></div>
-      {article_cards(others)}
+      {article_cards(others, lead=False)}
     </div>
   </section>
   {cta_band()}
@@ -1521,7 +1521,7 @@ def page_faq():
         ("Afspraak en bezoek", list(FAQ)),
         ("Prijzen", [price_faq(t) for t in TREATMENTS if t["solo"] or t["id"] == "duo"]),
         ("Cadeaubon en spaarkaart", next((p["faq"] for p in LANDINGS if p["slug"] == "cadeaubon"), [])),
-        ("Over de behandelingen", [q for a in ARTICLES for q in a["faq"]][:8]),
+        ("Over de behandelingen", [q for a in ARTICLES for q in a["faq"]][:6]),
     ]
     seen, allq = set(), []
     for _, qs in groups:
