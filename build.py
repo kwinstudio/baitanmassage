@@ -154,7 +154,16 @@ QUIZ_ORDER = ["thai", "aroma", "hotstone", "sport", "scrub"]
 
 
 TODAY = datetime.date.today().isoformat()
-VERSION = TODAY.replace("-", "")
+def fhash(path):
+    """Korte inhoudshash: verandert alleen als het bestand verandert (voor cache-busting)."""
+    import hashlib
+    return hashlib.sha1(Path(path).read_bytes()).hexdigest()[:10]
+
+
+# styles.css, app.js en assets/images/r/ worden een jaar 'immutable' gecachet (vercel.json).
+# Daarom hangt de ?v= af van de inhoud, niet van de datum: elke wijziging krijgt een nieuwe URL.
+CSS_V = fhash(ROOT / "static" / "styles.css")
+JS_V = fhash(ROOT / "static" / "app.js")
 
 E = html.escape
 BIZ_ID = f"{DOMAIN}/#business"
@@ -285,7 +294,7 @@ def head(title, description, path, og_image="og-image.jpg", schema=None, robots=
 {preload_tags(preload_img, preload_sizes)}
 <link rel="preload" href="/fonts/newsreader.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/figtree.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/styles.css?v={VERSION}">
+<link rel="stylesheet" href="/styles.css?v={CSS_V}">
 {ld}
 </head>"""
 
@@ -373,7 +382,7 @@ def footer():
 </div>
 <a class="whatsapp-float" {ext(SITE['whatsapp_question_url'])} aria-label="Stuur Baitan een WhatsApp-bericht">{WHATSAPP}</a>
 </aside>
-<script src="/app.js?v={VERSION}" defer></script>
+<script src="/app.js?v={JS_V}" defer></script>
 </body>
 </html>"""
 
@@ -389,7 +398,8 @@ def variants(name):
 
 
 def srcset(name, ext):
-    return ", ".join(f"/assets/images/r/{name}-{w}.{ext} {w}w" for w in variants(name))
+    d = ROOT / "assets" / "images" / "r"
+    return ", ".join(f"/assets/images/r/{name}-{w}.{ext}?v={fhash(d / f'{name}-{w}.{ext}')} {w}w" for w in variants(name))
 
 
 def picture(name, alt, cls="", eager=False, sizes="100vw"):
