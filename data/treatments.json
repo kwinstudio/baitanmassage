@@ -4,7 +4,7 @@
     "name": "Thaise massage",
     "slug": "thaise-massage-capelle-aan-den-ijssel",
     "description": "Traditionele Thaise technieken met warme, geurloze olie.",
-    "detailText": "Bij een Thaise oliemassage combineert Baitan traditionele Thaise methodes. Eerst wordt je lichaam rustig gerekt. Daarna worden je spieren diep en aandachtig bewerkt met warme, geurloze olie.\n\nLiever geen rekbewegingen? Zeg het gerust. Dan laten we het rekken weg en ligt de nadruk volledig op de massage van je spieren.",
+    "detailText": "Baitan combineert traditionele Thaise technieken. Eerst word je rustig gerekt, daarna worden je spieren diep gemasseerd met warme olie.\n\nLiever niet rekken? Zeg het gerust, dan ligt de nadruk volledig op je spieren.",
     "seoTitle": "Thaise massage Capelle aan den IJssel | Baitan",
     "seoDescription": "Authentieke Thaise oliemassage in Capelle aan den IJssel: rustig rekken en diepe spierbewerking met warme olie. 60, 90 of 120 minuten, vanaf €65.",
     "image": "/assets/images/thaise-oliemassage-rug.webp",
@@ -27,19 +27,19 @@
         "duoPrice": 230
       }
     ],
-    "lead": "De authentieke Thaise oliemassage van Baitan: rustig rekken en daarna diepe spierbewerking met warme, geurloze olie.",
+    "lead": "Authentieke Thaise oliemassage: rustig rekken en diepe spierbewerking met warme, geurloze olie.",
     "steps": [
       {
         "title": "Rustig beginnen",
-        "text": "Je lichaam wordt eerst zacht gerekt. Op verzoek slaan we dit over."
+        "text": "Eerst zacht rekken. Op verzoek slaan we dit over."
       },
       {
         "title": "Diepe spierbewerking",
-        "text": "Met warme, geurloze olie worden je spieren grondig gemasseerd."
+        "text": "Je spieren worden grondig gemasseerd met warme olie."
       },
       {
         "title": "In jouw tempo",
-        "text": "Kies voor 60, 90 of 120 minuten, alleen of samen met iemand."
+        "text": "60, 90 of 120 minuten, alleen of samen."
       }
     ],
     "h1": "Thaise massage in Capelle aan den IJssel",
@@ -50,7 +50,7 @@
     "name": "Aromatherapie-massage",
     "slug": "aromatherapie-massage-capelle",
     "description": "Thaise oliemassage met een geur naar keuze.",
-    "detailText": "De aromatherapie-massage volgt dezelfde principes als de traditionele Thaise oliemassage. Het verschil: er wordt een geur naar keuze aan de olie toegevoegd.\n\nZo verwen je niet alleen je lichaam, maar ook je zintuigen. De technieken zijn gericht op balans en een diep gevoel van ontspanning.",
+    "detailText": "De aromatherapie-massage volgt de traditionele Thaise oliemassage, met een geur naar keuze in de olie.\n\nZo verwen je lichaam én zintuigen, met technieken gericht op balans en diepe ontspanning.",
     "seoTitle": "Aromatherapie massage Capelle aan den IJssel | Baitan",
     "seoDescription": "Aromatherapie-massage in Capelle aan den IJssel: een Thaise oliemassage met een geur naar keuze. 60, 90 of 120 minuten, vanaf €65. Boek online.",
     "image": "/assets/images/aromatherapie-oliemassage.webp",
@@ -73,15 +73,15 @@
         "duoPrice": 230
       }
     ],
-    "lead": "Een Thaise oliemassage met een geur die jij kiest. Je ontspant je lichaam én je zintuigen.",
+    "lead": "Een aromatherapie-massage: Thaise oliemassage met een geur die jij kiest, voor lichaam én zintuigen.",
     "steps": [
       {
         "title": "Kies je geur",
-        "text": "Voor de behandeling kies je de geur die je het prettigst vindt."
+        "text": "Vooraf kies je de geur die jij het prettigst vindt."
       },
       {
         "title": "Thaise oliemassage",
-        "text": "Dezelfde vakkundige technieken als bij de Thaise massage."
+        "text": "Met de technieken van de Thaise massage."
       },
       {
         "title": "60, 90 of 120 minuten",
@@ -95,8 +95,8 @@
     "id": "sport",
     "name": "Sportmassage",
     "slug": "sportmassage-capelle",
-    "description": "Stevige massage voor spieren die veel worden belast.",
-    "detailText": "Een sportmassage is steviger dan een ontspanningsmassage. De behandeling richt zich op spieren die veel worden belast en voelt daardoor intensiever aan.\n\nVertel vooraf waar je spanning voelt of welke spieren je veel gebruikt. Dan houdt je behandelaar daar rekening mee. Een sportmassage bij Baitan is een wellnessbehandeling en vervangt geen medische zorg.",
+    "description": "Stevige massage voor zwaar belaste spieren.",
+    "detailText": "Een sportmassage is steviger dan een ontspanningsmassage en richt zich op zwaar belaste spieren.\n\nVertel vooraf waar je spanning voelt, dan houdt je behandelaar daar rekening mee. Deze wellnessbehandeling vervangt geen medische zorg.",
     "seoTitle": "Sportmassage Capelle aan den IJssel | Baitan",
     "seoDescription": "Sportmassage in Capelle aan den IJssel bij Baitan. Stevige massage voor belaste spieren, 60, 90 of 120 minuten, vanaf €70. Bekijk prijzen en boek online.",
     "image": "/assets/images/sportmassage-kuiten.webp",
@@ -119,15 +119,15 @@
         "duoPrice": 270
       }
     ],
-    "lead": "Een stevigere massage voor spieren die veel te verduren krijgen, door sport, werk of lang zitten.",
+    "lead": "Een stevige sportmassage voor spieren die veel te verduren krijgen door sport, werk of lang zitten.",
     "steps": [
       {
         "title": "Even afstemmen",
-        "text": "Je geeft aan waar de nadruk mag liggen."
+        "text": "Jij zegt waar de nadruk mag liggen."
       },
       {
         "title": "Gerichte, stevige massage",
-        "text": "Aandacht voor de spieren die het meest worden belast."
+        "text": "Aandacht voor je meest belaste spieren."
       },
       {
         "title": "60, 90 of 120 minuten",
@@ -142,7 +142,7 @@
     "name": "Hot stone massage",
     "slug": "hot-stone-massage-capelle",
     "description": "Massage met warme stenen voor diepe ontspanning.",
-    "detailText": "De hot stone massage lijkt op de traditionele Thaise massage, met één belangrijk verschil: er worden warme stenen op je lichaam gelegd en tijdens de massage gebruikt.\n\nDe warmte maakt de spieren soepel, waardoor dieper kan worden gewerkt. Het resultaat is een intensere behandeling die je ontspant en nieuwe energie geeft.",
+    "detailText": "De hot stone massage lijkt op de traditionele Thaise massage, maar met warme stenen op je lichaam en in de massage.\n\nDe warmte maakt je spieren soepel, zodat er dieper gewerkt kan worden. Intens, ontspannend en goed voor nieuwe energie.",
     "seoTitle": "Hot stone massage Capelle aan den IJssel | Baitan",
     "seoDescription": "Hot stone massage in Capelle aan den IJssel: Thaise massagetechnieken met warme stenen. 60, 90 of 120 minuten, vanaf €70. Boek direct online bij Baitan.",
     "image": "/assets/images/hot-stone-massage-warme-stenen.webp",
@@ -165,15 +165,15 @@
         "duoPrice": 250
       }
     ],
-    "lead": "Traditionele massagetechnieken met warme stenen. Intens, ontspannend en verwarmend.",
+    "lead": "Hot stone massage: traditionele technieken met warme stenen. Intens, ontspannend en verwarmend.",
     "steps": [
       {
         "title": "Warme stenen",
-        "text": "De stenen worden verwarmd en op je lichaam gelegd."
+        "text": "Verwarmde stenen worden op je lichaam gelegd."
       },
       {
         "title": "Dieper werken",
-        "text": "Door de warmte kan de massage dieper in de spieren gaan."
+        "text": "Door de warmte gaat de massage dieper."
       },
       {
         "title": "60, 90 of 120 minuten",
@@ -188,7 +188,7 @@
     "name": "Duo-massage",
     "slug": "duo-massage-capelle",
     "description": "Samen tegelijk genieten van een massage naar keuze.",
-    "detailText": "Bij een duo-massage worden jullie tegelijk behandeld. Zo delen jullie het moment van rust.\n\nJe kiest samen een behandeling: Thaise massage, aromatherapie, sportmassage, hot stone of body scrub. Alle duo-prijzen in het overzicht zijn voor twee personen samen.",
+    "detailText": "Bij een duo-massage worden jullie tegelijk behandeld en delen jullie het moment van rust.\n\nKies samen een behandeling: Thaise massage, aromatherapie, sportmassage, hot stone of body scrub. Duo-prijzen gelden voor twee personen.",
     "seoTitle": "Duo massage Capelle aan den IJssel | Baitan",
     "seoDescription": "Duo-massage in Capelle aan den IJssel: samen met je partner, vriend of vriendin tegelijk een massage. Alle behandelingen als duo, vanaf €125 voor twee.",
     "image": "/assets/images/duo-massage-twee-behandeltafels.webp",
@@ -208,15 +208,15 @@
         "price": 230
       }
     ],
-    "lead": "Samen met je partner, vriend of vriendin tegelijk een massage. Elke behandeling van Baitan is als duo te boeken.",
+    "lead": "Met je partner, vriend of vriendin tegelijk een duo-massage. Elke behandeling is als duo te boeken.",
     "steps": [
       {
         "title": "Kies jullie massage",
-        "text": "Elke behandeling van Baitan is als duo te boeken."
+        "text": "Elke behandeling is als duo te boeken."
       },
       {
         "title": "Tegelijk behandeld",
-        "text": "Jullie genieten op hetzelfde moment van je massage."
+        "text": "Jullie genieten op hetzelfde moment."
       },
       {
         "title": "60, 90 of 120 minuten",
@@ -230,17 +230,17 @@
     "id": "scrub",
     "name": "Body scrub massage",
     "slug": "body-scrub-massage-capelle",
-    "description": "Een scrub voor een zachte huid, gecombineerd met massage.",
-    "lead": "Een behandeling voor je spieren én je huid: een body scrub gecombineerd met een ontspannende massage.",
-    "detailText": "Bij een body scrub massage wordt je huid behandeld met een scrub. Daarmee worden dode huidcellen verwijderd, waardoor je huid zachter en gladder aanvoelt.\n\nDe scrub wordt gecombineerd met een massage. Zo verzorg je in één behandeling je huid en ontspan je je spieren. Vraag in de salon gerust hoe de behandeling precies verloopt.",
+    "description": "Scrub voor een zachte huid, gecombineerd met massage.",
+    "lead": "Body scrub en ontspannende massage in één: voor je huid én je spieren.",
+    "detailText": "Bij een body scrub massage verwijdert de scrub dode huidcellen, zodat je huid zachter en gladder aanvoelt.\n\nDaarbij krijg je een ontspannende massage. Vraag in de salon gerust hoe het precies verloopt.",
     "steps": [
       {
         "title": "Scrub",
-        "text": "Je huid wordt gescrubd voor een zacht en glad gevoel."
+        "text": "Je huid wordt zacht en glad gescrubd."
       },
       {
         "title": "Massage",
-        "text": "Een ontspannende massage maakt de behandeling compleet."
+        "text": "Een ontspannende massage maakt het compleet."
       },
       {
         "title": "60, 90 of 120 minuten",

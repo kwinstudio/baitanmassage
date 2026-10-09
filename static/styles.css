@@ -586,7 +586,6 @@ h1,h2,h3{overflow-wrap:break-word;hyphens:auto;-webkit-hyphens:auto}
   /* Over Baitan: tekst en voorzieningen, zonder grote sfeerfoto */
   #over .about-media{display:none}
   /* Massagegids op de homepage: twee artikelen */
-  #massagegids .card-grid>:nth-child(n+3){display:none}
   /* Cadeaubon en spaarkaart compacter */
   .perk{padding:20px;gap:8px}
   .perk h3{font-size:1.45rem}
