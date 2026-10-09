@@ -316,7 +316,11 @@ def header(current=""):
       <img class="brand-wordmark" src="/logo/baitan-woordmerk-80.webp" srcset="/logo/baitan-woordmerk-40.webp 1x, /logo/baitan-woordmerk-80.webp 2x, /logo/baitan-woordmerk-120.webp 3x" width="79" height="28" alt="">
     </a>
     <nav class="site-nav" aria-label="Hoofdmenu">
-      <ul class="nav-list" id="nav-list">{links}</ul>
+      <ul class="nav-list" id="nav-list">{links}<li class="nav-extra">
+        <a class="btn btn-primary btn-block" {ext(SITE['booking_url'])}>Afspraak maken {icon('arrow')}</a>
+        <div class="nav-extra-row"><a class="btn btn-outline" href="tel:{SITE['phone_href']}">{icon('phone')} Bellen</a><a class="btn btn-outline" {ext(SITE['whatsapp_question_url'])}>{WHATSAPP} WhatsApp</a></div>
+        <p class="nav-extra-status" data-open-status data-week="{week_hours_json()}">{hours_short()}</p>
+      </li></ul>
     </nav>
     <div class="header-actions">
       <a class="header-phone" href="tel:{SITE['phone_href']}">{icon('phone')}<span>{SITE['phone_display']}</span></a>
@@ -338,12 +342,12 @@ def footer():
         <p>{E(SITE['tagline'])}</p>
         <a class="btn btn-light btn-sm" {ext(SITE['booking_url'])}>Afspraak maken</a>
       </div>
-      <div>
-        <h2 class="footer-title">Behandelingen</h2>
+      <details class="footer-group" open>
+        <summary class="footer-title"><h2>Behandelingen</h2></summary>
         <ul class="footer-list">{treat}<li><a href="/prijzen">Alle prijzen</a></li></ul>
-      </div>
-      <div>
-        <h2 class="footer-title">Informatie</h2>
+      </details>
+      <details class="footer-group" open>
+        <summary class="footer-title"><h2>Informatie</h2></summary>
         <ul class="footer-list">
           <li><a href="/over-baitan">Over Baitan</a></li>
           <li><a href="/cadeaubon">Cadeaubon &amp; spaarkaart</a></li>
@@ -353,7 +357,7 @@ def footer():
           <li><a href="/massage-na-het-sporten">Massage na het sporten</a></li>
           <li><a href="/ontspanningsmassage-capelle">Ontspanningsmassage</a></li>
         </ul>
-      </div>
+      </details>
       <div>
         <h2 class="footer-title">Contact</h2>
         <address class="footer-list">
@@ -528,6 +532,15 @@ def faq_block(items):
     ) + "</div>"
 
 
+def week_hours_json():
+    idx = {"Sunday": 0, "Monday": 1, "Tuesday": 2, "Wednesday": 3, "Thursday": 4, "Friday": 5, "Saturday": 6}
+    week = [None] * 7
+    for h in HOURS:
+        for d in h["days"]:
+            week[idx[d]] = [h["opens"], h["closes"]]
+    return E(json.dumps(week))
+
+
 def hours_short():
     def h(x):
         return x.split(":")[0].lstrip("0") if x.endswith(":00") else x
@@ -574,7 +587,7 @@ def side_card(gift=False):
     return f"""<aside class="price-card side-card" aria-labelledby="side-title">
         <h2 id="side-title" class="price-card-title">{'Cadeaubon regelen' if gift else 'Direct een afspraak'}</h2>
         <ul class="side-facts">
-          <li>{icon('clock')}<span>{hours_short()}</span></li>
+          <li>{icon('clock')}<span data-open-status data-week="{week_hours_json()}">{hours_short()}</span></li>
           <li>{icon('pin')}<span>{SITE['street']}, <span class="nowrap">{SITE['city']}</span></span></li>
           <li>{icon('card')}<span>Massage vanaf €{low} voor 60 minuten</span></li>
         </ul>
@@ -609,7 +622,7 @@ def contact_block(h_tag="h2", title="Bezoek Baitan"):
       <li>{icon('pin')}<span><strong>Adres</strong>{SITE['street']}<br>{SITE['postal']} {SITE['city']}</span></li>
       <li>{icon('phone')}<span><strong>Telefoon</strong><a href="tel:{SITE['phone_href']}">{SITE['phone_display']}</a></span></li>
       <li>{icon('mail')}<span><strong>E-mail</strong><a href="mailto:{SITE['email']}">{SITE['email']}</a></span></li>
-      <li>{icon('clock')}<span><strong>Openingstijden</strong>{hours_table()}</span></li>
+      <li>{icon('clock')}<span><strong>Openingstijden</strong><span class="open-now" data-open-status data-week="{week_hours_json()}" data-short hidden></span>{hours_table()}</span></li>
     </ul>
     <div class="btn-row">
       <a class="btn btn-primary" {ext(SITE['route_url'])}>Route plannen</a>
@@ -757,7 +770,7 @@ def page_home():
       </div>
       <ul class="hero-facts" aria-label="In het kort">
         <li><a {ext(SITE['maps_url'])}>{stars()}<span><strong>{SITE['rating']}</strong> uit {SITE['review_count']} Google-reviews</span></a></li>
-        <li>{icon('clock')}<span>{hours_short()}</span></li>
+        <li>{icon('clock')}<span data-open-status data-week="{week_hours_json()}">{hours_short()}</span></li>
         <li>{icon('car')}<span>Gratis parkeren in de buurt</span></li>
       </ul>
     </div>
@@ -779,8 +792,9 @@ def page_home():
         <h2 id="quiz-title">Twijfel je welke massage bij je past?</h2>
         <p>Vijf korte vragen over wat je zoekt. Je krijgt direct een advies met uitleg, de duur en de prijs.</p>
         <p class="quiz-note">Twijfel je daarna nog? Bij Baitan bespreek je vooraf altijd de druk en waar de nadruk mag liggen.</p>
+        <button class="btn btn-primary quiz-start" type="button" data-quiz-open aria-controls="quiz-panel" aria-expanded="false" hidden>Start de massagekeuze {icon('arrow')}</button>
       </div>
-      <div class="quiz" data-quiz='{E(json.dumps(quiz_data, ensure_ascii=False))}'>
+      <div class="quiz" id="quiz-panel" data-quiz='{E(json.dumps(quiz_data, ensure_ascii=False))}'>
         <div class="quiz-progress">
           <button class="quiz-back" type="button" data-quiz-back hidden>{icon('arrow')}<span>Vorige</span></button>
           <span data-quiz-label aria-live="polite">Vraag 1 van {len(QUIZ)}</span><span class="quiz-track" aria-hidden="true"><span data-quiz-bar></span></span>
@@ -890,6 +904,16 @@ def page_home():
     return body
 
 
+def hero_prices(t):
+    prices = t["duo"] if t["id"] == "duo" else t["solo"]
+    if not prices:
+        return ""
+    items = "".join(f"<li><span>{m} min</span><strong>€{p}</strong></li>" for m, p in zip(t["durations"], prices) if p)
+    if t["id"] == "duo":
+        return f'<p class="hero-prices-label">Voor twee personen samen, vanaf</p><ul class="hero-prices" aria-label="Prijs voor twee personen samen, vanaf">{items}</ul>'
+    return f'<ul class="hero-prices" aria-label="Prijs per persoon">{items}</ul>'
+
+
 def page_treatment(t):
     path = f'/{t["slug"]}'
     crumbs = [("Home", "/"), ("Behandelingen", "/massages"), (t["name"], path)]
@@ -926,9 +950,10 @@ def page_treatment(t):
         {breadcrumbs(crumbs)}
         <h1 id="page-title">{t['h1']}</h1>
         <p class="page-lead">{t['lead']}</p>
+        {hero_prices(t)}
         <div class="btn-row">
           <a class="btn btn-primary" {ext(SITE['booking_url'])}>Afspraak maken {icon('arrow')}</a>
-          <a class="btn btn-outline" href="#prijs">Prijzen bekijken</a>
+          <a class="btn btn-outline hide-mobile" href="#prijs">Prijzen bekijken</a>
         </div>
       </div>
       <figure class="page-hero-media">{picture(t['image'], t['alt'], eager=True, sizes="(min-width: 900px) 42vw, 100vw")}</figure>

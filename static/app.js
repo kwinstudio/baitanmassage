@@ -53,8 +53,64 @@
     shell.replaceWith(iframe);
   }));
 
+  /* Live openingsstatus (tijd in Nederland) */
+  const statusEls = $$('[data-open-status]');
+  if (statusEls.length) {
+    const parts = new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Amsterdam', weekday: 'short', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).formatToParts(new Date());
+    const get = (t) => parts.find((p) => p.type === t)?.value;
+    const day = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].indexOf(get('weekday'));
+    const now = Number(get('hour')) * 60 + Number(get('minute'));
+    const mins = (t) => { const [h, m] = t.split(':').map(Number); return h * 60 + m; };
+    const nice = (t) => t.endsWith(':00') ? String(Number(t.split(':')[0])) : t.replace(/^0/, '');
+    const names = ['zondag', 'maandag', 'dinsdag', 'woensdag', 'donderdag', 'vrijdag', 'zaterdag'];
+    statusEls.forEach((el) => {
+      let week;
+      try { week = JSON.parse(el.dataset.week); } catch { return; }
+      if (day < 0 || !week) return;
+      const today = week[day];
+      let open = false, text;
+      if (today && now >= mins(today[0]) && now < mins(today[1])) {
+        open = true;
+        text = `<strong>Nu open</strong> · tot ${nice(today[1])} uur`;
+      } else if (today && now < mins(today[0])) {
+        text = `<strong>Gesloten</strong> · vandaag open vanaf ${nice(today[0])} uur`;
+      } else {
+        let i = 1;
+        while (i < 7 && !week[(day + i) % 7]) i++;
+        const nxt = week[(day + i) % 7];
+        if (!nxt) return;
+        text = `<strong>Gesloten</strong> · ${i === 1 ? 'morgen' : names[(day + i) % 7]} open vanaf ${nice(nxt[0])} uur`;
+      }
+      if ('short' in el.dataset) el.textContent = text.replace(/<[^>]+>/g, '');
+      else el.innerHTML = text;
+      el.classList.toggle('is-closed', !open);
+      el.hidden = false;
+    });
+  }
+
+  /* Footer: linkgroepen op mobiel standaard dicht */
+  if (window.matchMedia('(max-width: 759px)').matches) {
+    $$('.footer-group[open]').forEach((d) => { d.open = false; });
+  }
+
   /* Massagekeuze: vijf vragen (voor wie, doel, druk, extra, duur) -> advies met uitleg */
   const quiz = $('[data-quiz]');
+  /* Massagekeuze op mobiel: pas tonen na 'Start' */
+  const quizOpen = $('[data-quiz-open]');
+  if (quiz && quizOpen && window.matchMedia('(max-width: 699px)').matches) {
+    const grid = quiz.closest('.quiz-grid');
+    quiz.hidden = true;
+    quizOpen.hidden = false;
+    grid?.classList.add('is-collapsed');
+    quizOpen.addEventListener('click', () => {
+      quiz.hidden = false;
+      quizOpen.hidden = true;
+      quizOpen.setAttribute('aria-expanded', 'true');
+      grid?.classList.remove('is-collapsed');
+      $('.quiz-option', quiz)?.focus({ preventScroll: true });
+      quiz.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+    });
+  }
   if (quiz) {
     const cfg = JSON.parse(quiz.dataset.quiz);
     const steps = $$('.quiz-step', quiz);

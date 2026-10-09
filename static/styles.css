@@ -561,3 +561,80 @@ a[href^="tel:"],.nowrap{white-space:nowrap}
 /* Mobiel: lange woorden (bijv. "Ontspanningsmassage") mogen grid-kolommen niet breder maken dan het scherm */
 .page-hero-grid>*,.detail-grid>*,.faq-grid>*{min-width:0}
 h1,h2,h3{overflow-wrap:break-word;hyphens:auto;-webkit-hyphens:auto}
+
+/* ---------- Mobiel overzichtelijk (PR: mobiel-overzicht) */
+/* Live 'nu open'-status */
+.open-now{display:block;margin:2px 0 6px;font-weight:600;color:var(--olive-700)}
+.open-now.is-closed{color:var(--muted)}
+.hero-facts [data-open-status] strong{color:#fff}
+/* Prijzen direct in de hero van een behandeling */
+.hero-prices{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.hero-prices li{display:inline-flex;align-items:baseline;gap:6px;padding:8px 14px;border:1px solid var(--line-strong);border-radius:999px;background:var(--surface);font-size:.92rem;color:var(--muted)}
+.hero-prices strong{font:500 1.15rem/1 var(--display);color:var(--ink)}
+/* Footer-groepen: op desktop gewone kolommen */
+.footer-group>summary{list-style:none;cursor:default}
+.footer-group>summary::-webkit-details-marker{display:none}
+.footer-group>summary h2{font:inherit;color:inherit;margin:0}
+@media (min-width:760px){.footer-group>summary{pointer-events:none}}
+.quiz-start{margin-top:20px}
+
+@media (max-width:699px){
+  /* Massagekeuze: eerst een korte uitnodiging, de vragen pas na een tik */
+  .quiz-grid{gap:0}
+  .quiz-grid.is-collapsed .quiz-note{display:none}
+  .quiz-grid:not(.is-collapsed) .quiz{margin-top:24px}
+  /* Over Baitan: tekst en voorzieningen, zonder grote sfeerfoto */
+  #over .about-media{display:none}
+  /* Massagegids op de homepage: twee artikelen */
+  #massagegids .card-grid>:nth-child(n+3){display:none}
+  /* Cadeaubon en spaarkaart compacter */
+  .perk{padding:20px;gap:8px}
+  .perk h3{font-size:1.45rem}
+  .perk>.icon{width:24px;height:24px}
+  /* Kaartknop compacter */
+  .map-consent{min-height:0}
+  .map-consent-inner{padding:24px 20px}
+  /* Footer: logo kleiner, linklijsten inklapbaar */
+  .footer-logo img{width:72px}
+  .footer-brand p{margin:12px 0 16px}
+  .footer-top{grid-template-columns:1fr;gap:0}
+  .footer-top>*{grid-column:1/-1}
+  .footer-brand{padding-bottom:24px}
+  .footer-group{border-top:1px solid rgba(246,241,230,.14)}
+  .footer-group>summary{display:flex;align-items:center;justify-content:space-between;min-height:52px;margin:0;cursor:pointer}
+  .footer-group>summary::after{content:"+";font:300 1.5rem/1 var(--text);color:var(--on-dark-2)}
+  .footer-group[open]>summary::after{content:"–"}
+  .footer-group .footer-list{padding-bottom:18px}
+  .footer-top>div:nth-child(4){border-top:1px solid rgba(246,241,230,.14);padding-top:24px}
+  .footer-top>div:nth-child(5){padding-top:28px}
+  .footer-bottom{margin-top:32px}
+}
+#quiz-panel{scroll-margin-top:calc(var(--header-h) + 16px)}
+@media (max-width:699px){
+  /* Minder lege ruimte tussen secties en in de footer */
+  .section{padding-block:52px}
+  .site-footer{padding-top:44px;padding-bottom:calc(28px + env(safe-area-inset-bottom))}
+  .footer-top address.footer-list{gap:4px}
+  .footer-top address.footer-list span,.footer-top address.footer-list a{line-height:1.6}
+  /* Locatietekst staat ook in 'Bezoek Baitan' verderop: op mobiel niet dubbel tonen */
+  #locatie{display:none}
+}
+.hero-prices-label{margin-top:20px;font-size:.9rem;color:var(--muted)}
+.hero-prices-label+.hero-prices{margin-top:8px}
+@media (max-width:699px){
+  .hide-mobile{display:none!important}
+  .hero-prices{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+  .hero-prices li{flex-direction:column;align-items:center;gap:4px;padding:10px 6px;border-radius:14px;font-size:.82rem}
+  .hero-prices strong{font-size:1.2rem}
+}
+/* Mobiel menu: direct boeken, bellen of WhatsAppen */
+.nav-extra{display:none}
+@media (max-width:1080px){
+  .nav-list{max-height:calc(100dvh - var(--header-h));overflow-y:auto;overscroll-behavior:contain}
+  .nav-extra{display:grid;gap:10px;padding-top:20px}
+  .nav-extra-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .nav-extra-row .btn{gap:8px}
+  .nav-extra-row .icon,.nav-extra-row svg{width:18px;height:18px}
+  .nav-extra-status{margin-top:4px;text-align:center;font-size:.9rem;color:var(--muted)}
+  .nav-extra-status strong{color:var(--olive-700)}
+}
