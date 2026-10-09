@@ -44,7 +44,7 @@ Bij Baitan in Capelle aan den IJssel krijg je een [Thaise oliemassage](/thaise-m
 
 Een Thaise massage voelt vaak steviger dan een ontspanningsmassage. De druk wordt afgestemd op wat jij prettig vindt. Veel mensen omschrijven het gevoel na afloop als ontspannen én fris.
 
-Twijfel je tussen een Thaise massage en iets anders? Lees dan ook [Thaise massage of sportmassage: welke past bij jou?](/kennisbank/thaise-massage-of-sportmassage) of bekijk [alle behandelingen](/massages).
+Twijfel je tussen een Thaise massage en iets anders? Lees dan ook [Thaise massage of sportmassage: welke past bij jou?](/massagegids/thaise-massage-of-sportmassage) of bekijk [alle behandelingen](/massages).
 
 ## Een Thaise massage boeken in Capelle aan den IJssel
 

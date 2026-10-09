@@ -45,4 +45,4 @@ Neem even de tijd om rustig op te staan. Bij Baitan kun je na je massage douchen
 
 ## Klaar om te boeken?
 
-Bekijk de [prijzen](/prijzen) of lees eerst [wat een Thaise massage precies is](/kennisbank/wat-is-een-thaise-massage).
+Bekijk de [prijzen](/prijzen) of lees eerst [wat een Thaise massage precies is](/massagegids/wat-is-een-thaise-massage).
