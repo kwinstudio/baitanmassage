@@ -812,7 +812,7 @@ def page_home():
 
   <section class="section section-tint" id="over" aria-labelledby="over-title">
     <div class="wrap about-grid">
-      <figure class="about-media">{picture(Path(ABOUT.get('image', 'massage-schouders-aandacht')).stem, ABOUT.get('imageAlt', ''), sizes="(min-width: 900px) 84vw, 100vw")}</figure>
+      <figure class="about-media">{picture(Path(ABOUT.get('image', 'thaise-begroeting-wai')).stem, ABOUT.get('imageAlt', ''), sizes="(min-width: 900px) 84vw, 100vw")}</figure>
       <div class="about-copy">
         <h2 id="over-title">{E(ABOUT.get('title', 'Over Baitan'))}</h2>
         <p>{E(ABOUT.get('text', ''))}</p>

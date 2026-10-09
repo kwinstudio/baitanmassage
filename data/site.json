@@ -15,7 +15,7 @@
     "primaryButton": "Afspraak maken",
     "secondaryButton": "Bekijk behandelingen",
     "image": "/assets/images/thaise-massage-capelle-aan-den-ijssel.webp",
-    "imageAlt": "Massagetherapeut geeft een Thaise oliemassage op de schouders"
+    "imageAlt": "Thaise oliemassage in een sfeervolle behandelruimte met Thaise zijde en goudkleurig behang"
   },
   "booking": {
     "salonizedBookingUrl": "https://baitan-thai-massage.salonized.com/services"
@@ -23,8 +23,8 @@
   "about": {
     "title": "Een rustig moment voor jezelf",
     "text": "Baitan is een Thaise massagesalon aan het Hollandsch Diep in Capelle aan den IJssel. Je komt binnen, laat de drukte achter je en krijgt alle aandacht. Je kiest zelf de behandeling en hoe lang je wilt blijven.",
-    "image": "/assets/images/massage-schouders-aandacht.webp",
-    "imageAlt": "Massagetherapeut werkt met aandacht aan schouder en nek",
+    "image": "/assets/images/thaise-begroeting-wai.webp",
+    "imageAlt": "Massagetherapeut in Thais uniform groet met gevouwen handen (wai)",
     "facts": [
       "Douchen mogelijk",
       "Pin en contant",
@@ -45,8 +45,8 @@
     "button": "Vragen? Neem contact op"
   },
   "reviews": {
-    "rating": 4.9,
-    "count": 101,
+    "rating": 4.8,
+    "count": 112,
     "url": "https://www.google.com/maps/search/?api=1&query=Baitan+Thai+Massage+Hollandsch+Diep+71+Capelle+aan+den+IJssel",
     "writeUrl": "https://search.google.com/local/writereview?placeid=ChIJq_OXztzTxUcRKp8nM5EFAqw"
   },

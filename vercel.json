@@ -91,7 +91,7 @@
     },
     {
       "source": "/assets/images/thai-herbal-compress.webp",
-      "destination": "/assets/images/massage-schouders-aandacht.webp",
+      "destination": "/assets/images/thaise-begroeting-wai.webp",
       "permanent": true
     },
     {
@@ -106,7 +106,17 @@
     },
     {
       "source": "/assets/images/thaise-kruidenstempel-massage.webp",
-      "destination": "/assets/images/massage-schouders-aandacht.webp",
+      "destination": "/assets/images/thaise-begroeting-wai.webp",
+      "permanent": true
+    },
+    {
+      "source": "/assets/images/massage-schouders-aandacht.webp",
+      "destination": "/assets/images/thaise-begroeting-wai.webp",
+      "permanent": true
+    },
+    {
+      "source": "/assets/images/schoudermassage-ontspannen.webp",
+      "destination": "/assets/images/massagetafel-thaise-zijde.webp",
       "permanent": true
     }
   ],

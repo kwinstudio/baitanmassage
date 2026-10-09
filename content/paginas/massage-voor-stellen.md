@@ -6,7 +6,7 @@ description: Samen ontspannen met je partner? Bij Baitan in Capelle aan den IJss
 h1: Massage voor stellen in Capelle aan den IJssel
 lead: Samen even helemaal niets. Met een duo-massage genieten jij en je partner tegelijk van een massage naar keuze.
 image: duo-massage-twee-behandeltafels
-imageAlt: Duo-massage: twee gasten worden tegelijk gemasseerd
+imageAlt: Twee behandeltafels klaar voor een duo-massage
 date: 2026-10-08
 related: duo, aroma, hotstone
 faq: Liggen we samen in één ruimte? | Vraag het bij het boeken of in de salon, dan weet je precies wat je kunt verwachten.
