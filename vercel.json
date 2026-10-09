@@ -81,17 +81,32 @@
     },
     {
       "source": "/assets/images/thai-back-massage.webp",
-      "destination": "/assets/images/duo-massage-rug-schouders.webp",
+      "destination": "/assets/images/duo-massage-twee-behandeltafels.webp",
       "permanent": true
     },
     {
       "source": "/assets/images/thai-hand-massage.webp",
-      "destination": "/assets/images/body-scrub-massage-handen.webp",
+      "destination": "/assets/images/body-scrub-massage-rug.webp",
       "permanent": true
     },
     {
       "source": "/assets/images/thai-herbal-compress.webp",
-      "destination": "/assets/images/thaise-kruidenstempel-massage.webp",
+      "destination": "/assets/images/massage-schouders-aandacht.webp",
+      "permanent": true
+    },
+    {
+      "source": "/assets/images/duo-massage-rug-schouders.webp",
+      "destination": "/assets/images/duo-massage-twee-behandeltafels.webp",
+      "permanent": true
+    },
+    {
+      "source": "/assets/images/body-scrub-massage-handen.webp",
+      "destination": "/assets/images/body-scrub-massage-rug.webp",
+      "permanent": true
+    },
+    {
+      "source": "/assets/images/thaise-kruidenstempel-massage.webp",
+      "destination": "/assets/images/massage-schouders-aandacht.webp",
       "permanent": true
     }
   ],

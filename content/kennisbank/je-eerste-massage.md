@@ -5,8 +5,8 @@ title: Je eerste massage: wat kun je verwachten? | Baitan
 description: Voor het eerst een massage? Lees wat je kunt verwachten, wat je aantrekt, wat je vooraf meldt en hoe je het meeste uit je behandeling haalt.
 h1: Je eerste massage: wat kun je verwachten?
 lead: Voor het eerst naar een massagesalon voelt soms spannend. Met deze tips weet je precies wat je kunt verwachten.
-image: duo-massage-rug-schouders
-imageAlt: Rustige oliemassage van nek en schouders
+image: schoudermassage-ontspannen
+imageAlt: Ontspannen massage van de schouders
 date: 2026-10-08
 related: thai, aroma
 faq: Moet ik me helemaal uitkleden? | Nee. Bij een oliemassage wordt op de huid gemasseerd, maar gebruikelijk is dat je je ondergoed aanhoudt en wordt toegedekt. Twijfel je, vraag het gerust in de salon.

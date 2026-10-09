@@ -5,8 +5,8 @@ title: Hoe lang moet een massage duren? 60, 90 of 120 min | Baitan
 description: Kies je voor 60, 90 of 120 minuten massage? Zo verschillen de duren en zo kies je wat bij jou, je wensen en je budget past.
 h1: 60, 90 of 120 minuten: welke duur kies je?
 lead: Bij Baitan kies je zelf hoe lang je massage duurt. Maar wat is het verschil, en wanneer is langer echt beter?
-image: thaise-kruidenstempel-massage
-imageAlt: Massage met Thaise kruidenstempels
+image: thaise-massage-handpalmdruk
+imageAlt: Rustige handpalmdruk op de rug tijdens een massage
 date: 2026-10-08
 related: thai, aroma, hotstone
 faq: Is 60 minuten genoeg voor een volledige massage? | Ja. In 60 minuten wordt je hele lichaam gemasseerd. Wil je meer rust en tijd voor specifieke plekken, kies dan 90 minuten.

@@ -6,8 +6,8 @@ title: Over Baitan | Thaise massagesalon in Capelle aan den IJssel
 description: Maak kennis met Baitan Thai Massage, een Thaise massagesalon aan het Hollandsch Diep in Capelle aan den IJssel. Lees wat je bij ons kunt verwachten.
 h1: Over Baitan Thai Massage
 lead: Een Thaise massagesalon aan het Hollandsch Diep in Capelle aan den IJssel. Een plek om even helemaal tot rust te komen.
-image: thaise-kruidenstempel-massage
-imageAlt: Massage met Thaise kruidenstempels bij Baitan
+image: massage-schouders-aandacht
+imageAlt: Massagetherapeut werkt met aandacht aan schouder en nek
 date: 2026-10-08
 related: thai, aroma, hotstone
 faq: Biedt Baitan erotische massages aan? | Nee. Baitan is een serieuze massagesalon en biedt uitsluitend ontspannings- en wellnessmassages aan. Erotische of seksuele verzoeken zijn niet toegestaan.

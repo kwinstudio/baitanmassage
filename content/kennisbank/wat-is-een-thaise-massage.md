@@ -5,8 +5,8 @@ title: Wat is een Thaise massage? Herkomst en technieken | Baitan
 description: Wat is een Thaise massage, waar komt het vandaan en wat gebeurt er tijdens een behandeling? Uitleg over technieken, olie en rekken.
 h1: Wat is een Thaise massage?
 lead: Een Thaise massage combineert druk, rekken en ritmische bewegingen. Hier lees je waar de massage vandaan komt, hoe hij werkt en wat je kunt verwachten.
-image: thaise-massage-capelle-aan-den-ijssel
-imageAlt: Thaise oliemassage in een rustige behandelruimte
+image: thaise-oliemassage-rug
+imageAlt: Handpalmdruk naast de wervelkolom tijdens een Thaise oliemassage
 date: 2026-10-08
 related: thai, aroma
 faq: Is een Thaise massage pijnlijk? | Een Thaise massage kan stevig aanvoelen, maar hoort niet pijnlijk te zijn. Geef tijdens de behandeling gerust aan als de druk te veel of te weinig is.

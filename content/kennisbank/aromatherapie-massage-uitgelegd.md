@@ -6,7 +6,7 @@ description: Wat is een aromatherapie-massage en hoe kies je een geur? Uitleg ov
 h1: Aromatherapie-massage: wat is het?
 lead: Een aromatherapie-massage voegt een geur naar keuze toe aan een oliemassage. Zo werkt het en zo kies je wat bij je past.
 image: aromatherapie-oliemassage
-imageAlt: Oliemassage met geurige olie
+imageAlt: Oliemassage van de bovenrug met etherische olie
 date: 2026-10-08
 related: aroma, thai
 faq: Kan ik zelf de geur kiezen? | Ja, bij een aromatherapie-massage bij Baitan kies je een geur naar keuze. Vraag in de salon welke geuren er zijn.

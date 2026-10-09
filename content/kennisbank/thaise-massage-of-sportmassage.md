@@ -6,7 +6,7 @@ description: Twijfel je tussen een Thaise massage en een sportmassage? Zo versch
 h1: Thaise massage of sportmassage: welke past bij jou?
 lead: Beide massages werken op je spieren, maar ze voelen heel anders. Met deze uitleg kies je makkelijker.
 image: sportmassage-kuiten
-imageAlt: Stevige massage van de kuitspieren
+imageAlt: Gerichte massage van de kuitspier
 date: 2026-10-08
 related: thai, sport
 faq: Is een sportmassage alleen voor sporters? | Nee. Een sportmassage is ook prettig als je spieren veel te verduren krijgen door werk, tillen of juist lang stilzitten.

@@ -6,7 +6,7 @@ description: Wat gebeurt er bij een hot stone massage? Uitleg over de warme sten
 h1: Hot stone massage: hoe werkt het?
 lead: Bij een hot stone massage spelen warme stenen de hoofdrol. Zo werkt de behandeling en zo voelt het.
 image: hot-stone-massage-warme-stenen
-imageAlt: Warme stenen op de rug tijdens een hot stone massage
+imageAlt: Warme basaltstenen op de rug tijdens een hot stone massage
 date: 2026-10-08
 related: hotstone, thai
 faq: Zijn de stenen niet te heet? | De stenen worden verwarmd tot een aangename temperatuur. Voelt een steen te warm, zeg het dan direct; dan wordt hij weggehaald of verplaatst.
