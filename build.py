@@ -47,6 +47,7 @@ SITE = {
     "review_write_url": _site.get("reviews", {}).get("writeUrl", ""),
     "rating": f"{float(_rating):.1f}".replace(".", ","),
     "review_count": int(_site.get("reviews", {}).get("count", 0)),
+    "review_as_of": _site.get("reviews", {}).get("asOf", ""),
     "google_verification": _site.get("seo", {}).get("googleSiteVerification", ""),
 }
 _op = _site.get("opening", {})
@@ -371,7 +372,7 @@ def footer():
       <span><span>© {datetime.date.today().year} {SITE['name']}</span> · <span>KVK {SITE['kvk']}</span> · <span>BTW {SITE['btw']}</span></span>
       <span class="footer-legal"><a href="/voorwaarden">Huisregels &amp; voorwaarden</a><a href="/privacy">Privacy &amp; cookies</a></span>
     </div>
-    <p class="footer-note">De foto's op deze website zijn sfeerbeelden van de behandelingen. Ze tonen niet de salon of de medewerkers van Baitan.</p>
+    <p class="footer-note">De foto's op deze website zijn kunstmatig gegenereerde sfeerbeelden van de behandelingen. Ze tonen niet de salon of de medewerkers van Baitan.</p>
   </div>
 </footer>
 <aside class="quick-contact" aria-label="Snel contact">
@@ -619,7 +620,7 @@ def contact_block(h_tag="h2", title="Bezoek Baitan"):
     <div class="map-consent-inner">
       {icon('pin')}
       <p class="map-title">Hollandsch Diep 71–73, Capelle aan den IJssel</p>
-      <p>De kaart van Google Maps laden we pas als je daarvoor kiest.</p>
+      <p>De kaart van Google Maps laden we pas als je daarvoor kiest. Laad je de kaart, dan maakt je browser verbinding met Google en kan Google cookies plaatsen.</p>
       <button class="btn btn-outline btn-sm" type="button" data-load-map>Kaart laden</button>
     </div>
   </div>
@@ -744,7 +745,7 @@ def page_home():
 {header()}
 <main id="main">
   <section class="hero" aria-labelledby="hero-title">
-    <div class="hero-media">{picture(Path(HERO.get('image', 'thaise-massage-capelle-aan-den-ijssel')).stem, HERO.get('imageAlt', ''), 'hero-img', eager=True, sizes="100vw")}</div>
+    <div class="hero-media">{picture(Path(HERO.get('image', 'thaise-massage-capelle-aan-den-ijssel')).stem, HERO.get('imageAlt', ''), 'hero-img', eager=True, sizes="100vw")}<span class="img-note">Kunstmatig gegenereerd sfeerbeeld</span></div>
     <div class="wrap hero-inner">
       <div class="hero-copy">
         <h1 id="hero-title">{E(HERO.get('title', ''))}</h1>
@@ -841,7 +842,7 @@ def page_home():
       </div>
       <div class="reviews-copy">
         <h2 id="reviews-title">Gemiddeld {SITE['rating']} uit 5 op Google</h2>
-        <p>Op basis van {SITE['review_count']} Google-reviews van gasten. Lees wat zij zeggen, of laat zelf een review achter na je bezoek.</p>
+        <p>Op basis van {SITE['review_count']} Google-reviews (stand {SITE['review_as_of']}). De reviews staan op Google en worden niet door Baitan gecontroleerd. Lees ze zelf, of laat na je bezoek een review achter.</p>
         <div class="btn-row">
           <a class="btn btn-light" {ext(SITE['maps_url'])}>Lees de reviews</a>
           <a class="btn btn-ghost-light" {ext(SITE['review_write_url'])}>Schrijf een review</a>
@@ -1036,6 +1037,7 @@ def page_prijzen():
     notes = [
         ("Duo-massage", "Met z'n tweeën tegelijk een massage. De duo-prijs geldt voor twee personen samen."),
         ("Betalen", "Met pin of contant in de salon."),
+        ("Btw", "Alle prijzen zijn inclusief btw."),
         ("Annuleren", "Kosteloos tot 24 uur vooraf. Daarna vindt geen restitutie plaats."),
         ("Spaarkaart", "Per 60 minuten één stempel. Bij 10 stempels krijg je 60 minuten massage naar keuze."),
     ]
@@ -1103,6 +1105,9 @@ def page_contact():
 {footer()}"""
 
 
+LEGAL_UPDATED = "2026-10-09"  # aanpassen als de tekst van voorwaarden of privacy wijzigt
+
+
 def page_legal(kind):
     if kind == "voorwaarden":
         path, title, h1 = "/voorwaarden", "Huisregels en voorwaarden | Baitan Thai Massage", "Huisregels en voorwaarden"
@@ -1110,14 +1115,15 @@ def page_legal(kind):
         sections = [
             ("Algemeen", ["Deze voorwaarden gelden voor diensten, boekingen en overeenkomsten van Baitan Thai Massage. Door een afspraak te maken ga je akkoord met deze voorwaarden."]),
             ("Diensten", ["Baitan biedt ontspannings- en wellnessmassages. De behandelingen zijn niet medisch van aard en vervangen geen behandeling door een arts of specialist."]),
-            ("Reservering en betaling", ["Afspraken kunnen online worden geboekt. Volgens de gepubliceerde voorwaarden van Baitan geschiedt betaling vooraf online, tenzij anders overeengekomen. Een afspraak is definitief na ontvangst van de betaling."]),
+            ("Reservering en betaling", ["Je maakt een afspraak online via Salonized, telefonisch, via WhatsApp of in de salon. Je betaalt in de salon met pin of contant. Vraagt de online agenda bij het boeken om een vooruitbetaling, dan zie je dat voordat je de boeking bevestigt.", "Alle prijzen zijn inclusief btw."]),
             ("Annuleren en verzetten", None),
+            ("Herroepingsrecht", ["Een massage is een vrijetijdsdienst op een vaste datum en tijd. Voor afspraken die je online, telefonisch of via WhatsApp maakt, geldt daarom geen wettelijk herroepingsrecht van 14 dagen. Je kunt wel kosteloos annuleren tot 24 uur vóór de afspraak."]),
             ("Te laat komen", ["Bij te laat komen kan de behandeltijd worden ingekort. De volledige kosten van de geboekte behandeling blijven verschuldigd."]),
             ("Gezondheid", ["Meld relevante gezondheidsinformatie, waaronder blessures, zwangerschap of medicijngebruik, vóór de behandeling. Baitan kan een behandeling weigeren wanneer gezondheidsrisico's worden ingeschat."]),
             ("Gedrag en hygiëne", ["Respectvol en hygiënisch gedrag is verplicht. Ongepast gedrag kan leiden tot onmiddellijke beëindiging van de behandeling zonder restitutie. Erotische of seksuele verzoeken zijn niet toegestaan."]),
-            ("Aansprakelijkheid", ["Baitan is niet aansprakelijk voor verlies, diefstal of schade aan persoonlijke eigendommen. Aansprakelijkheid voor directe schade is beperkt zoals in de officiële voorwaarden is beschreven."]),
-            ("Cadeaubonnen", ["Cadeaubonnen zijn niet inwisselbaar voor contant geld en hebben een geldigheidsduur van 12 maanden, tenzij anders vermeld."]),
-            ("Overmacht", ["Bij ziekte, storingen of andere onvoorziene omstandigheden kan Baitan een afspraak verzetten of annuleren. In dat geval wordt een nieuwe afspraak of restitutie aangeboden volgens de geldende voorwaarden."]),
+            ("Aansprakelijkheid", ["Laat waardevolle spullen bij voorkeur thuis. Baitan is niet aansprakelijk voor verlies, diefstal of beschadiging van persoonlijke eigendommen, tenzij dit het gevolg is van opzet of grove nalatigheid van Baitan of haar medewerkers.", "Is Baitan voor andere schade aansprakelijk, dan is die aansprakelijkheid beperkt tot het bedrag dat de aansprakelijkheidsverzekering uitkeert, of als de verzekering niet uitkeert, tot het bedrag van de geboekte behandeling. Deze beperking geldt niet bij opzet of grove nalatigheid en niet bij letselschade."]),
+            ("Cadeaubonnen", ["Een cadeaubon is minimaal 2 jaar geldig vanaf de datum van aankoop. De uiterste datum staat op de bon. Cadeaubonnen zijn niet inwisselbaar voor geld."]),
+            ("Overmacht", ["Moet Baitan een afspraak annuleren of verzetten door ziekte, een storing of een andere onvoorziene omstandigheid, dan laten we je dat zo snel mogelijk weten. Je kiest dan zelf: een nieuwe afspraak of volledige terugbetaling van wat je al hebt betaald."]),
             ("Toepasselijk recht", ["Op de dienstverlening is Nederlands recht van toepassing."]),
         ]
         cancel = "<ul><li>Kosteloos annuleren tot 24 uur vóór de afspraak.</li><li>Binnen 24 uur vindt geen restitutie plaats.</li><li>Een afspraak kan één keer kosteloos worden verzet.</li><li>Bij een no-show vervalt de afspraak zonder terugbetaling.</li></ul>"
@@ -1125,11 +1131,32 @@ def page_legal(kind):
         path, title, h1 = "/privacy", "Privacy en cookies | Baitan Thai Massage", "Privacy en cookies"
         desc = "Hoe Baitan Thai Massage omgaat met je gegevens: contact, online boeken via Salonized, Google Maps en cookies."
         sections = [
-            ("Contactgegevens", ["Als je Baitan belt, mailt of een WhatsApp-bericht stuurt, gebruiken we alleen de gegevens die nodig zijn om je vraag of afspraak af te handelen."]),
-            ("Online boeken via Salonized", ["Voor online reserveringen verwijst deze website naar de officiële Salonized-agenda van Baitan. Als je daar boekt, verwerkt Salonized je gegevens volgens het eigen privacy- en cookiebeleid."]),
-            ("Google Maps", ["De kaart van Google Maps wordt pas geladen nadat je op ‘Kaart laden’ klikt. Daarna kan Google technische gegevens verwerken volgens het eigen privacy- en cookiebeleid."]),
+            ("Wie is verantwoordelijk?", [f"Baitan Thai Massage, {SITE['street']}, {SITE['postal']} {SITE['city']} (KVK {SITE['kvk']}), is verantwoordelijk voor de verwerking van je persoonsgegevens. Vragen? Mail naar <a href=\"mailto:{SITE['email']}\">{SITE['email']}</a> of bel <a href=\"tel:{SITE['phone_href']}\">{SITE['phone_display']}</a>."]),
+            ("Welke gegevens we gebruiken en waarom", ["<ul>"
+                "<li><strong>Afspraken</strong> (online via Salonized, telefonisch, via WhatsApp of in de salon): naam, telefoonnummer, e-mailadres, behandeling, datum en tijd en betaalgegevens. Om je afspraak in te plannen, te bevestigen, je eraan te herinneren en af te rekenen. Grondslag: uitvoering van de overeenkomst (art. 6 lid 1 sub b AVG).</li>"
+                "<li><strong>Contact</strong> (telefoon, WhatsApp, e-mail): je contactgegevens en je bericht, om je vraag te beantwoorden. Grondslag: uitvoering van de overeenkomst of ons gerechtvaardigd belang om vragen te beantwoorden (art. 6 lid 1 sub b en f AVG).</li>"
+                "<li><strong>Gezondheid</strong>: vertel je ons over blessures, zwangerschap of medicijngebruik, dan gebruiken we dat alleen om de behandeling veilig af te stemmen. We leggen dit alleen vast als jij daar uitdrukkelijk toestemming voor geeft (art. 9 lid 2 sub a AVG). Je kunt die toestemming altijd intrekken.</li>"
+                "<li><strong>Administratie</strong>: betalingen en verkochte cadeaubonnen, omdat de wet dat verplicht (art. 6 lid 1 sub c AVG).</li>"
+                "<li><strong>Website</strong>: bij elk bezoek verwerkt onze hostingpartij technische gegevens zoals IP-adres, browser en tijdstip, om de website veilig en werkend te houden. Grondslag: gerechtvaardigd belang (art. 6 lid 1 sub f AVG).</li>"
+                "</ul>"]),
+            ("Wie je gegevens ontvangt", ["<ul>"
+                "<li>Salonized: online agenda en klantadministratie, in opdracht van Baitan.</li>"
+                "<li>Vercel Inc.: hosting van deze website.</li>"
+                "<li>WhatsApp (Meta): alleen als je ons via WhatsApp benadert. WhatsApp is zelf verantwoordelijk voor de eigen verwerking.</li>"
+                "<li>Google: alleen als je zelf de kaart laadt of op een Google-link klikt.</li>"
+                "<li>Onze boekhouder en de Belastingdienst, voor de administratie.</li>"
+                "</ul>", "We verkopen je gegevens nooit."]),
+            ("Doorgifte buiten de EU", ["Vercel, Google en Meta kunnen gegevens in de Verenigde Staten verwerken. Dat gebeurt op basis van het EU-VS Data Privacy Framework of de standaardcontractbepalingen van de Europese Commissie."]),
+            ("Hoe lang we je gegevens bewaren", ["<ul>"
+                "<li>Klant- en afspraakgegevens: tot 2 jaar na je laatste afspraak.</li>"
+                "<li>Berichten via WhatsApp of e-mail: tot 1 jaar na het laatste contact.</li>"
+                "<li>Gezondheidsinformatie: tot je je toestemming intrekt, en uiterlijk 2 jaar na je laatste afspraak.</li>"
+                "<li>Administratie: 7 jaar (wettelijke bewaarplicht).</li>"
+                "<li>Technische websitegegevens: zo kort mogelijk, alleen zolang dat nodig is voor beveiliging en storingen.</li>"
+                "</ul>"]),
+            ("Google Maps", ["De kaart van Google Maps wordt pas geladen nadat je op ‘Kaart laden’ klikt. Daarna maakt je browser verbinding met Google en kan Google cookies plaatsen en gegevens verwerken volgens het eigen privacy- en cookiebeleid."]),
             ("Cookies", ["Deze website plaatst geen marketing- of analyticscookies. Lettertypes worden vanaf onze eigen server geladen, niet via Google. Externe diensten zoals Salonized, WhatsApp en Google Maps gebruiken pas cookies als je ze zelf opent."]),
-            ("Je rechten", [f"Heb je een vraag over je gegevens of wil je ze laten inzien of verwijderen? Neem contact op via <a href=\"mailto:{SITE['email']}\">{SITE['email']}</a> of <a href=\"tel:{SITE['phone_href']}\">{SITE['phone_display']}</a>."]),
+            ("Je rechten", [f"Je hebt recht op inzage, correctie, verwijdering, beperking van de verwerking en overdracht van je gegevens. Je kunt bezwaar maken tegen verwerking op basis van gerechtvaardigd belang, en een gegeven toestemming altijd intrekken. Stuur je verzoek naar <a href=\"mailto:{SITE['email']}\">{SITE['email']}</a>; we reageren binnen een maand.", "Ben je het niet eens met hoe we met je gegevens omgaan, dan kun je een klacht indienen bij de <a href=\"https://autoriteitpersoonsgegevens.nl\" rel=\"noopener\">Autoriteit Persoonsgegevens</a>."]),
         ]
         cancel = ""
     crumbs = [("Home", "/"), (h1, path)]
@@ -1137,7 +1164,7 @@ def page_legal(kind):
     robots = "noindex,follow"
     secs = []
     for h, ps in sections:
-        inner = cancel if ps is None else "".join(f"<p>{p}</p>" for p in ps)
+        inner = cancel if ps is None else "".join(p if p.startswith("<ul") else f"<p>{p}</p>" for p in ps)
         secs.append(f"<h2>{h}</h2>{inner}")
     contact = f"<h2>Contact</h2><p>{SITE['name']}, {SITE['street']}, {SITE['postal']} {SITE['city']}. Telefoon <a href=\"tel:{SITE['phone_href']}\">{SITE['phone_display']}</a>, e-mail <a href=\"mailto:{SITE['email']}\">{SITE['email']}</a>. KVK {SITE['kvk']}.</p>"
     return f"""{head(title, desc, path, schema=schema, robots=robots)}
@@ -1148,7 +1175,7 @@ def page_legal(kind):
     <div class="wrap">
       {breadcrumbs(crumbs)}
       <h1 id="page-title">{h1}</h1>
-      <p class="legal-updated">Laatst bijgewerkt op {nl_date(TODAY)}</p>
+      <p class="legal-updated">Laatst bijgewerkt op {nl_date(LEGAL_UPDATED)}</p>
     </div>
   </section>
   <section class="section section-flush-top"><div class="wrap"><div class="prose legal">{"".join(secs)}{contact}</div></div></section>

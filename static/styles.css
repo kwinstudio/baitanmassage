@@ -557,3 +557,9 @@ a[href^="tel:"],.nowrap{white-space:nowrap}
 @media (min-width:900px){.price-table th:first-child{width:38%}}
 .table-scroll:focus-visible{outline:2px solid var(--olive-700);outline-offset:4px;border-radius:4px}
 @media (max-width:699px) and (orientation:portrait){.hero-media img{object-position:50% 38%}}
+
+/* Mobiel: lange woorden (bijv. "Ontspanningsmassage") mogen grid-kolommen niet breder maken dan het scherm */
+.page-hero-grid>*,.detail-grid>*,.faq-grid>*{min-width:0}
+h1,h2,h3{overflow-wrap:break-word;hyphens:auto;-webkit-hyphens:auto}
+/* Kleine, rustige vermelding op de hero-foto (kunstmatig gegenereerd beeld) */
+.img-note{position:absolute;top:14px;right:16px;z-index:1;font-size:.7rem;line-height:1;letter-spacing:.02em;color:rgba(246,241,230,.75);text-shadow:0 1px 2px rgba(0,0,0,.35);pointer-events:none}

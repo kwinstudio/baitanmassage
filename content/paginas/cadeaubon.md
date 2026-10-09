@@ -10,7 +10,7 @@ image: massagetafel-lotus-handdoek
 imageAlt: Massagetafel met handdoek, lotus en orchidee
 date: 2026-10-08
 related: duo, aroma, hotstone
-faq: Hoe lang is een cadeaubon geldig? | Een cadeaubon is 12 maanden geldig, tenzij anders vermeld.
+faq: Hoe lang is een cadeaubon geldig? | Een cadeaubon is minimaal 2 jaar geldig vanaf de datum van aankoop. De uiterste datum staat op de bon.
 faq: Kan ik een cadeaubon inwisselen voor geld? | Nee, cadeaubonnen zijn niet inwisselbaar voor contant geld.
 faq: Hoe werkt de spaarkaart? | Na je eerste bezoek krijg je een spaarkaart. Per 60 minuten massage krijg je één stempel. Bij 10 stempels krijg je 60 minuten massage naar keuze.
 ---
@@ -36,7 +36,7 @@ Alle bedragen vind je op de [prijzenpagina](/prijzen).
 
 ## Goed om te weten
 
-- Een cadeaubon is 12 maanden geldig, tenzij anders vermeld
+- Een cadeaubon is minimaal 2 jaar geldig vanaf de aankoopdatum
 - Cadeaubonnen zijn niet inwisselbaar voor contant geld
 
 ## De spaarkaart
