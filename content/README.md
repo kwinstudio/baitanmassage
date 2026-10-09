@@ -1,6 +1,6 @@
 # Inhoud in Markdown
 
-- `kennisbank/*.md` → artikelen op /kennisbank/<slug>
+- `kennisbank/*.md` → artikelen op /massagegids/<slug>
 - `paginas/*.md` → losse landingspagina's op /<slug>
 
 Bovenaan elk bestand staat een blok tussen `---` met instellingen:

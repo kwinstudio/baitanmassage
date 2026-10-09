@@ -299,7 +299,7 @@ def head(title, description, path, og_image="og-image.jpg", schema=None, robots=
 </head>"""
 
 
-NAV = [("/massages", "Behandelingen"), ("/prijzen", "Prijzen"), ("/cadeaubon", "Cadeaubon"), ("/kennisbank", "Kennisbank"), ("/over-baitan", "Over Baitan"), ("/contact", "Contact")]
+NAV = [("/massages", "Behandelingen"), ("/prijzen", "Prijzen"), ("/cadeaubon", "Cadeaubon"), ("/massagegids", "Massagegids"), ("/over-baitan", "Over Baitan"), ("/contact", "Contact")]
 
 
 def header(current=""):
@@ -347,7 +347,7 @@ def footer():
           <li><a href="/over-baitan">Over Baitan</a></li>
           <li><a href="/cadeaubon">Cadeaubon &amp; spaarkaart</a></li>
           <li><a href="/veelgestelde-vragen">Veelgestelde vragen</a></li>
-          <li><a href="/kennisbank">Kennisbank</a></li>
+          <li><a href="/massagegids">Massagegids</a></li>
           <li><a href="/massage-voor-stellen">Massage voor stellen</a></li>
           <li><a href="/massage-na-het-sporten">Massage na het sporten</a></li>
           <li><a href="/ontspanningsmassage-capelle">Ontspanningsmassage</a></li>
@@ -861,9 +861,9 @@ def page_home():
     </div>
   </section>
 
-  <section class="section section-tint" id="kennisbank" aria-labelledby="kb-title">
+  <section class="section section-tint" id="massagegids" aria-labelledby="kb-title">
     <div class="wrap">
-      <div class="section-head"><h2 id="kb-title">Meer weten over massage</h2><p><a class="link" href="/kennisbank">Naar de kennisbank {icon('arrow')}</a></p></div>
+      <div class="section-head"><h2 id="kb-title">Meer weten over massage</h2><p><a class="link" href="/massagegids">Naar de massagegids {icon('arrow')}</a></p></div>
       {article_cards(ARTICLES[:3])}
     </div>
   </section>
@@ -1063,7 +1063,7 @@ def page_prijzen():
   </section>
   <section class="section section-tint" aria-labelledby="faq-title">
     <div class="wrap faq-grid">
-      <div><h2 id="faq-title">Vragen over prijzen</h2><p>Twijfel je over de duur? Lees <a href="/kennisbank/hoe-lang-moet-een-massage-duren">hoe lang een massage moet duren</a> of bekijk <a href="/veelgestelde-vragen">alle vragen</a>.</p></div>
+      <div><h2 id="faq-title">Vragen over prijzen</h2><p>Twijfel je over de duur? Lees <a href="/massagegids/hoe-lang-moet-een-massage-duren">hoe lang een massage moet duren</a> of bekijk <a href="/veelgestelde-vragen">alle vragen</a>.</p></div>
       {faq_block(price_faqs)}
     </div>
   </section>
@@ -1301,7 +1301,7 @@ def article_cards(items, heading="h3"):
     cards = []
     for a in items:
         cards.append(f"""<li class="card">
-  <a class="card-link" href="/kennisbank/{a['slug']}">
+  <a class="card-link" href="/massagegids/{a['slug']}">
     <span class="card-media">{picture(a['image'], a.get('imageAlt', ''), sizes="(min-width: 900px) 30vw, (min-width: 600px) 45vw, 100vw")}</span>
     <div class="card-body">
       <{heading} class="card-title">{E(a['h1'])}</{heading}>
@@ -1327,13 +1327,13 @@ def article_schema(a, path):
         "author": {"@type": "Organization", "name": SITE["name"], "url": DOMAIN + "/"},
         "publisher": {"@id": BIZ_ID},
         "mainEntityOfPage": {"@id": f"{DOMAIN}{path}#webpage"},
-        "isPartOf": {"@id": f"{DOMAIN}/kennisbank#webpage"},
+        "isPartOf": {"@id": f"{DOMAIN}/massagegids#webpage"},
     }
 
 
 def page_article(a):
-    path = f"/kennisbank/{a['slug']}"
-    crumbs = [("Home", "/"), ("Kennisbank", "/kennisbank"), (a["h1"], path)]
+    path = f"/massagegids/{a['slug']}"
+    crumbs = [("Home", "/"), ("Massagegids", "/massagegids"), (a["h1"], path)]
     schema = [business_schema(), website_schema(), webpage_schema(path, a["title"], a["description"]), article_schema(a, path), crumb_schema(crumbs)]
     if a["faq"]:
         schema.append(faq_schema(a["faq"]))
@@ -1347,7 +1347,7 @@ def page_article(a):
   </section>""" if a["faq"] else ""
     return f"""{head(a['title'], a['description'], path, schema=schema, preload_img=a['image'], preload_sizes="(min-width: 1000px) 1040px, 100vw")}
 <body>
-{header('/kennisbank')}
+{header('/massagegids')}
 <main id="main">
   <article>
     <header class="article-hero">
@@ -1376,7 +1376,7 @@ def page_article(a):
   {faq_html}
   <section class="section" aria-labelledby="more-title">
     <div class="wrap">
-      <div class="section-head"><h2 id="more-title">Verder lezen</h2><p><a class="link" href="/kennisbank">Naar de kennisbank {icon('arrow')}</a></p></div>
+      <div class="section-head"><h2 id="more-title">Verder lezen</h2><p><a class="link" href="/massagegids">Naar de massagegids {icon('arrow')}</a></p></div>
       {article_cards(others)}
     </div>
   </section>
@@ -1386,12 +1386,12 @@ def page_article(a):
 
 
 def page_kennisbank():
-    path = "/kennisbank"
-    title = "Kennisbank over massage | Baitan Thai Massage Capelle"
+    path = "/massagegids"
+    title = "Massagegids: uitleg en tips | Baitan Thai Massage Capelle"
     desc = "Alles over Thaise massage, sportmassage, hot stone en aromatherapie. Uitleg, tips voor je eerste massage en hulp bij het kiezen van de juiste behandeling."
-    crumbs = [("Home", "/"), ("Kennisbank", path)]
+    crumbs = [("Home", "/"), ("Massagegids", path)]
     itemlist = {"@type": "ItemList", "itemListElement": [
-        {"@type": "ListItem", "position": i + 1, "url": f"{DOMAIN}/kennisbank/{a['slug']}", "name": a["h1"]} for i, a in enumerate(ARTICLES)]}
+        {"@type": "ListItem", "position": i + 1, "url": f"{DOMAIN}/massagegids/{a['slug']}", "name": a["h1"]} for i, a in enumerate(ARTICLES)]}
     schema = [business_schema(), website_schema(), webpage_schema(path, title, desc, "CollectionPage"), crumb_schema(crumbs), itemlist]
     return f"""{head(title, desc, path, schema=schema)}
 <body>
@@ -1400,7 +1400,7 @@ def page_kennisbank():
   <section class="page-hero page-hero-plain" aria-labelledby="page-title">
     <div class="wrap">
       {breadcrumbs(crumbs)}
-      <h1 id="page-title">Kennisbank</h1>
+      <h1 id="page-title">Massagegids</h1>
       <p class="page-lead">Uitleg over massagevormen, tips voor je eerste bezoek en hulp bij het kiezen van de behandeling die bij je past.</p>
     </div>
   </section>
@@ -1524,9 +1524,9 @@ def main():
              "voorwaarden.html": page_legal("voorwaarden"), "privacy.html": page_legal("privacy"), "404.html": page_404()}
     for t in PAGES:
         pages[f'{t["slug"]}.html'] = page_treatment(t)
-    pages["kennisbank/index.html"] = page_kennisbank()
+    pages["massagegids/index.html"] = page_kennisbank()
     for a in ARTICLES:
-        pages[f"kennisbank/{a['slug']}.html"] = page_article(a)
+        pages[f"massagegids/{a['slug']}.html"] = page_article(a)
     for lp in LANDINGS:
         pages[f"{lp['slug']}.html"] = page_landing(lp)
     pages["veelgestelde-vragen.html"] = page_faq()
@@ -1535,8 +1535,8 @@ def main():
 
     hero_img = Path(HERO.get("image", "thaise-massage-capelle-aan-den-ijssel")).stem
     urls = [("/", "1.0", hero_img), ("/massages", "0.9", None), ("/prijzen", "0.9", None)] + [(f'/{t["slug"]}', "0.8", t["image"]) for t in PAGES] + [("/contact", "0.8", None)] \
-        + [(f"/{lp['slug']}", "0.7", lp["image"]) for lp in LANDINGS] + [("/veelgestelde-vragen", "0.6", None), ("/kennisbank", "0.6", None)] \
-        + [(f"/kennisbank/{a['slug']}", "0.6", a["image"]) for a in ARTICLES]
+        + [(f"/{lp['slug']}", "0.7", lp["image"]) for lp in LANDINGS] + [("/veelgestelde-vragen", "0.6", None), ("/massagegids", "0.6", None)] \
+        + [(f"/massagegids/{a['slug']}", "0.6", a["image"]) for a in ARTICLES]
     sm = "".join(
         f"<url><loc>{DOMAIN}{u}</loc><lastmod>{TODAY}</lastmod><priority>{p}</priority>"
         + (f"<image:image><image:loc>{DOMAIN}/assets/images/{img}.webp</image:loc></image:image>" if img else "")

@@ -32,7 +32,7 @@ Geen idee? Doe de [massagekeuze](/#massagekeuze) en zie in vijf vragen wat het b
 - Geef aan welke druk je prettig vindt
 - Neem na afloop de tijd: je kunt douchen en rustig weer op gang komen
 
-Lees ook [Je eerste massage: wat kun je verwachten?](/kennisbank/je-eerste-massage) als je voor het eerst komt.
+Lees ook [Je eerste massage: wat kun je verwachten?](/massagegids/je-eerste-massage) als je voor het eerst komt.
 
 ## Openingstijden en boeken
 

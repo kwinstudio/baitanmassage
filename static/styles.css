@@ -540,7 +540,7 @@ a[href^="tel:"],.nowrap{white-space:nowrap}
   .footer-top{grid-template-columns:1fr 1fr;column-gap:24px}
   .footer-brand,.footer-top>div:nth-child(4),.footer-top>div:nth-child(5){grid-column:1/-1}
 }
-/* Kaarten in de kennisbank: op mobiel compact naast elkaar */
+/* Kaarten in de massagegids: op mobiel compact naast elkaar */
 @media (max-width:599px){
   .card-link{flex-direction:row;gap:16px;align-items:flex-start}
   .card-link .card-media{flex:0 0 104px;aspect-ratio:1;border-radius:var(--radius-sm)}

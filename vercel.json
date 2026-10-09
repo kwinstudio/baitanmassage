@@ -5,6 +5,16 @@
   "trailingSlash": false,
   "redirects": [
     {
+      "source": "/kennisbank",
+      "destination": "/massagegids",
+      "permanent": true
+    },
+    {
+      "source": "/kennisbank/:slug",
+      "destination": "/massagegids/:slug",
+      "permanent": true
+    },
+    {
       "source": "/tarieven",
       "destination": "/prijzen",
       "permanent": true

@@ -23,7 +23,7 @@ Hardlopen, fitness, voetbal, padel of fietsen: wie veel sport, vraagt veel van z
 
 **[Hot stone massage](/hot-stone-massage-capelle)**: door de warmte kan dieper worden gewerkt, terwijl het comfortabel blijft.
 
-Lees het uitgebreide verschil in [Thaise massage of sportmassage: welke past bij jou?](/kennisbank/thaise-massage-of-sportmassage)
+Lees het uitgebreide verschil in [Thaise massage of sportmassage: welke past bij jou?](/massagegids/thaise-massage-of-sportmassage)
 
 ## Tips voor sporters
 
