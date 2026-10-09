@@ -236,6 +236,17 @@ def stars():
 
 
 # ---------------------------------------------------------------- shared parts
+def preload_tags(name, sizes):
+    """Preload van de hero; met mobiele uitsnede krijgt elk schermtype zijn eigen bestand."""
+    if not name or not variants(name):
+        return ""
+    mob = f"{name}-mobiel"
+    if variants(mob):
+        return (f'<link rel="preload" as="image" type="image/avif" media="{MOBILE_MQ}" imagesrcset="{srcset(mob, "avif")}" imagesizes="100vw" fetchpriority="high">\n'
+                f'<link rel="preload" as="image" type="image/avif" media="not all and {MOBILE_MQ}" imagesrcset="{srcset(name, "avif")}" imagesizes="{sizes}" fetchpriority="high">')
+    return f'<link rel="preload" as="image" type="image/avif" imagesrcset="{srcset(name, "avif")}" imagesizes="{sizes}" fetchpriority="high">'
+
+
 def head(title, description, path, og_image="og-image.jpg", schema=None, robots="index,follow,max-image-preview:large", preload_img=None, preload_sizes="100vw"):
     canonical = DOMAIN + path
     # Eigen deelafbeelding per pagina als er een passende foto is
@@ -271,7 +282,7 @@ def head(title, description, path, og_image="og-image.jpg", schema=None, robots=
 <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
-{f'<link rel="preload" as="image" type="image/avif" imagesrcset="{srcset(preload_img, "avif")}" imagesizes="{preload_sizes}" fetchpriority="high">' if preload_img and variants(preload_img) else ""}
+{preload_tags(preload_img, preload_sizes)}
 <link rel="preload" href="/fonts/newsreader.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/figtree.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/styles.css?v={VERSION}">
@@ -351,7 +362,7 @@ def footer():
       <span><span>© {datetime.date.today().year} {SITE['name']}</span> · <span>KVK {SITE['kvk']}</span> · <span>BTW {SITE['btw']}</span></span>
       <span class="footer-legal"><a href="/voorwaarden">Huisregels &amp; voorwaarden</a><a href="/privacy">Privacy &amp; cookies</a></span>
     </div>
-    <p class="footer-note">De foto's op deze website zijn sfeerbeelden.</p>
+    <p class="footer-note">De foto's op deze website zijn met AI gemaakte sfeerbeelden van de behandelingen. Ze tonen niet de salon of de medewerkers van Baitan.</p>
   </div>
 </footer>
 <aside class="quick-contact" aria-label="Snel contact">
@@ -368,6 +379,7 @@ def footer():
 
 
 RESP_WIDTHS = [320, 480, 720, 1080, 1440, 1920, 2560]
+MOBILE_MQ = "(max-width: 699px) and (orientation: portrait)"
 
 
 def variants(name):
@@ -386,7 +398,13 @@ def picture(name, alt, cls="", eager=False, sizes="100vw"):
     img = f'<img class="{cls}" src="/assets/images/{name}.webp" alt="{E(alt)}" width="{w}" height="{h}" {load} decoding="async">'
     if not variants(name):
         return img
-    return (f'<picture><source type="image/avif" srcset="{srcset(name, "avif")}" sizes="{sizes}">'
+    # Aparte mobiele uitsnede (bijv. 4:5 voor de hero) als <naam>-mobiel bestaat
+    mob = f"{name}-mobiel"
+    art = ""
+    if variants(mob):
+        art = (f'<source media="{MOBILE_MQ}" type="image/avif" srcset="{srcset(mob, "avif")}" sizes="100vw">'
+               f'<source media="{MOBILE_MQ}" type="image/webp" srcset="{srcset(mob, "webp")}" sizes="100vw">')
+    return (f'<picture>{art}<source type="image/avif" srcset="{srcset(name, "avif")}" sizes="{sizes}">'
             f'<source type="image/webp" srcset="{srcset(name, "webp")}" sizes="{sizes}">{img}</picture>')
 
 

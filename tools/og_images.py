@@ -8,7 +8,7 @@ out = root / "static" / "og"
 out.mkdir(parents=True, exist_ok=True)
 for f in sorted(src.glob("*.webp")):
     im = Image.open(f).convert("RGB")
-    if im.width < 1100:  # te klein voor een scherpe deelafbeelding
+    if im.width < 1100 or f.stem.endswith("-mobiel"):  # te klein, of alleen een mobiele uitsnede
         continue
     og = ImageOps.fit(im, (1200, 630), Image.LANCZOS, centering=(0.5, 0.45))
     og.save(out / f"{f.stem}.jpg", "JPEG", quality=84, optimize=True, progressive=True)

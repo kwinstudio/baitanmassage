@@ -6,7 +6,7 @@ description: Toe aan rust? Boek een ontspanningsmassage bij Baitan in Capelle aa
 h1: Ontspanningsmassage in Capelle aan den IJssel
 lead: Een drukke week, een volle agenda of gewoon zin in rust? Een ontspannende massage helpt je even helemaal uit te schakelen.
 image: aromatherapie-oliemassage
-imageAlt: Rustige ontspanningsmassage met olie
+imageAlt: Rustige oliemassage van de bovenrug
 date: 2026-10-08
 related: aroma, hotstone, thai
 faq: Welke massage is het meest ontspannend? | Veel mensen kiezen voor de aromatherapie-massage of de hot stone massage als ze vooral willen ontspannen. De druk wordt altijd afgestemd op wat jij prettig vindt.

@@ -6,7 +6,7 @@ description: Na het hardlopen, fitness of voetbal toe aan een massage? Boek bij 
 h1: Massage na het sporten in Capelle aan den IJssel
 lead: Na een zware training of wedstrijd voelen je spieren het. Een stevige massage is dan een prettige afsluiting.
 image: sportmassage-kuiten
-imageAlt: Massage van de kuitspieren na het sporten
+imageAlt: Gerichte massage van de kuitspier na het sporten
 date: 2026-10-08
 related: sport, thai, hotstone
 faq: Hoe snel na het sporten kan ik een massage boeken? | Veel mensen kiezen een massage een dag na een zware training of wedstrijd. Luister vooral naar je lichaam.
