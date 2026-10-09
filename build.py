@@ -303,7 +303,7 @@ def header(current=""):
   <div class="wrap header-inner">
     <a class="brand" href="/" aria-label="Baitan Thai Massage, naar de homepage">
       <img class="brand-emblem" src="/logo/baitan-emblem-96.webp" srcset="/logo/baitan-emblem-48.webp 1x, /logo/baitan-emblem-96.webp 2x, /logo/baitan-emblem-144.webp 3x" width="40" height="44" alt="">
-      <span class="brand-text">Baitan<small>Thai Massage</small></span>
+      <img class="brand-wordmark" src="/logo/baitan-woordmerk-80.webp" srcset="/logo/baitan-woordmerk-40.webp 1x, /logo/baitan-woordmerk-80.webp 2x, /logo/baitan-woordmerk-120.webp 3x" width="79" height="28" alt="">
     </a>
     <nav class="site-nav" aria-label="Hoofdmenu">
       <ul class="nav-list" id="nav-list">{links}</ul>
@@ -362,7 +362,7 @@ def footer():
       <span><span>© {datetime.date.today().year} {SITE['name']}</span> · <span>KVK {SITE['kvk']}</span> · <span>BTW {SITE['btw']}</span></span>
       <span class="footer-legal"><a href="/voorwaarden">Huisregels &amp; voorwaarden</a><a href="/privacy">Privacy &amp; cookies</a></span>
     </div>
-    <p class="footer-note">De foto's op deze website zijn met AI gemaakte sfeerbeelden van de behandelingen. Ze tonen niet de salon of de medewerkers van Baitan.</p>
+    <p class="footer-note">De foto's op deze website zijn sfeerbeelden van de behandelingen. Ze tonen niet de salon of de medewerkers van Baitan.</p>
   </div>
 </footer>
 <aside class="quick-contact" aria-label="Snel contact">
