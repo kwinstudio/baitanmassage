@@ -303,7 +303,7 @@ def header(current=""):
   <div class="wrap header-inner">
     <a class="brand" href="/" aria-label="Baitan Thai Massage, naar de homepage">
       <img class="brand-emblem" src="/logo/baitan-emblem-96.webp" srcset="/logo/baitan-emblem-48.webp 1x, /logo/baitan-emblem-96.webp 2x, /logo/baitan-emblem-144.webp 3x" width="40" height="44" alt="">
-      <span class="brand-text">Baitan<small>Thai Massage</small></span>
+      <img class="brand-wordmark" src="/logo/baitan-woordmerk-80.webp" srcset="/logo/baitan-woordmerk-40.webp 1x, /logo/baitan-woordmerk-80.webp 2x, /logo/baitan-woordmerk-120.webp 3x" width="113" height="40" alt="">
     </a>
     <nav class="site-nav" aria-label="Hoofdmenu">
       <ul class="nav-list" id="nav-list">{links}</ul>

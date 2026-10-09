@@ -87,8 +87,7 @@ p,li{text-wrap:pretty}
 .header-inner{height:100%;display:flex;align-items:center;gap:24px}
 .brand{display:inline-flex;align-items:center;gap:12px;min-height:44px;text-decoration:none;color:var(--ink)}
 .brand-emblem{width:40px;height:44px;flex:none;object-fit:contain}
-.brand-text{display:flex;flex-direction:column;font:500 1.3rem/1 var(--display);letter-spacing:.02em}
-.brand-text small{font:600 .62rem/1 var(--text);letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-top:5px}
+.brand-wordmark{width:113px;height:40px;flex:none}
 .site-nav{margin-left:auto}
 .nav-list{display:flex;gap:4px}
 .nav-link{display:block;padding:10px 12px;border-radius:999px;font-size:.94rem;font-weight:500;color:var(--ink-2);text-decoration:none;transition:background-color .2s ease,color .2s ease}
@@ -113,7 +112,7 @@ p,li{text-wrap:pretty}
   .nav-list .nav-link{padding:16px 4px;border-radius:0;border-bottom:1px solid var(--line);font:400 1.5rem/1.2 var(--display)}
   .nav-list .nav-link:hover{background:none}
 }
-@media (max-width:420px){.brand-text small{display:none}}
+@media (max-width:420px){.brand-wordmark{width:96px;height:34px}}
 
 /* ---------- Sections */
 .section{padding-block:clamp(64px,8vw,112px)}
@@ -358,7 +357,6 @@ p,li{text-wrap:pretty}
 /* ---------- Footer */
 .site-footer{background:var(--olive-950);color:var(--on-dark-2);padding:clamp(56px,7vw,88px) 0 32px;font-size:.95rem}
 .brand-light{color:var(--on-dark)}
-.brand-light .brand-text small{color:var(--on-dark-2)}
 .footer-top{display:grid;gap:36px}
 .footer-brand p{margin:16px 0 20px;max-width:32ch}
 .footer-title{font:600 .82rem/1 var(--text);color:var(--on-dark);margin-bottom:16px}
