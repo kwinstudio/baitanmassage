@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 """Zet gegenereerde foto's (Higgsfield PNG's) om naar de bronbestanden van de site.
 
-Gebruik:  python3 tools/import_photos.py <map-met-pngs>
+Gebruik:  python3 tools/import_photos.py <map-met-bestanden>
+
+Bestanden worden herkend aan het Higgsfield job-id in de naam (png, webp of jpg).
+Een bestand "<job-id>-mobiel.*" wordt gebruikt als kant-en-klare mobiele uitsnede.
 
 - Bewaart een visueel verliesvrije kopie van elk origineel in media/originals/
   (wordt niet gepubliceerd; alleen assets/ gaat naar de site).
@@ -40,7 +43,7 @@ def main(src_dir):
     ORIG.mkdir(parents=True, exist_ok=True)
     found = 0
     for job, (name, max_w) in PHOTOS.items():
-        files = list(src_dir.rglob(f"*{job}*.png"))
+        files = [f for f in src_dir.rglob(f"*{job}*") if f.suffix.lower() in (".png", ".webp", ".jpg") and "-mobiel" not in f.stem]
         if not files:
             print("ontbreekt:", job, name)
             continue
@@ -51,7 +54,11 @@ def main(src_dir):
         h = round(im.height * w / im.width)
         im.resize((w, h), Image.LANCZOS).save(IMG / f"{name}.webp", "WEBP", quality=92, method=6)
         print("ok", name, im.size, "->", (w, h))
-        if name == HERO:
+        ready = [f for f in src_dir.rglob(f"*{job}-mobiel*")]
+        if name == HERO and ready:
+            Image.open(ready[0]).convert("RGB").save(IMG / f"{name}-mobiel.webp", "WEBP", quality=92, method=6)
+            print("ok", f"{name}-mobiel (kant-en-klaar)")
+        elif name == HERO:
             cw = round(im.height * 4 / 5)
             x0 = max(0, min(im.width - cw, round(im.width * HERO_MOBILE_CENTER_X - cw / 2)))
             crop = im.crop((x0, 0, x0 + cw, im.height))

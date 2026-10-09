@@ -812,7 +812,7 @@ def page_home():
 
   <section class="section section-tint" id="over" aria-labelledby="over-title">
     <div class="wrap about-grid">
-      <figure class="about-media">{picture(Path(ABOUT.get('image', 'thaise-kruidenstempel-massage')).stem, ABOUT.get('imageAlt', ''), sizes="(min-width: 900px) 84vw, 100vw")}</figure>
+      <figure class="about-media">{picture(Path(ABOUT.get('image', 'massage-schouders-aandacht')).stem, ABOUT.get('imageAlt', ''), sizes="(min-width: 900px) 84vw, 100vw")}</figure>
       <div class="about-copy">
         <h2 id="over-title">{E(ABOUT.get('title', 'Over Baitan'))}</h2>
         <p>{E(ABOUT.get('text', ''))}</p>
@@ -1335,7 +1335,7 @@ def page_article(a):
       {faq_block(a['faq'])}
     </div>
   </section>""" if a["faq"] else ""
-    return f"""{head(a['title'], a['description'], path, schema=schema, preload_img=a['image'], preload_sizes="(min-width: 900px) 760px, 100vw")}
+    return f"""{head(a['title'], a['description'], path, schema=schema, preload_img=a['image'], preload_sizes="(min-width: 1000px) 1040px, 100vw")}
 <body>
 {header('/kennisbank')}
 <main id="main">
@@ -1347,7 +1347,7 @@ def page_article(a):
         <p class="page-lead">{E(a['lead'])}</p>
         <p class="article-meta"><span>Door {SITE['name']}</span><time datetime="{a.get('updated', a.get('date'))}">{nl_date(a.get('updated', a.get('date')))}</time><span>{a['minutes']} min lezen</span></p>
       </div>
-      <figure class="wrap wrap-medium article-media">{picture(a['image'], a.get('imageAlt', ''), eager=True, sizes="(min-width: 900px) 960px, 100vw")}</figure>
+      <figure class="wrap wrap-medium article-media">{picture(a['image'], a.get('imageAlt', ''), eager=True, sizes="(min-width: 1000px) 1040px, 100vw")}</figure>
     </header>
     <div class="wrap article-layout">
       <aside class="toc" aria-label="Inhoud van dit artikel">
