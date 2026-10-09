@@ -22,20 +22,21 @@ IMG = ROOT / "assets" / "images"
 
 # Higgsfield job-id -> (bestandsnaam op de site, maximale breedte van de master)
 PHOTOS = {
-    "3f3892fe-1f62-418e-8535-2c20549d98d5": ("thaise-massage-capelle-aan-den-ijssel", 2560),
-    "913c05d7-9148-4fb2-bdd2-42b950f95893": ("thaise-oliemassage-rug", 2528),
-    "0a9fa0b7-3e4e-46a5-adcb-80ddef509fff": ("aromatherapie-oliemassage", 2528),
-    "618e82a5-004b-4fb3-b603-8b764c5e7d9e": ("sportmassage-kuiten", 2528),
-    "c5771609-ffb8-4c81-9f2b-1a689dfaed26": ("hot-stone-massage-warme-stenen", 2528),
-    "b8433295-8607-4600-ade6-d8f93757e027": ("duo-massage-twee-behandeltafels", 2528),
-    "00af9f91-17d8-42e1-a6de-e4dd2f4d289c": ("body-scrub-massage-rug", 2528),
-    "83371462-9b8c-469b-992f-c94921bdcee0": ("massage-schouders-aandacht", 2528),
-    "39863d39-78fe-4c9c-9c9e-2792672ca681": ("thaise-massage-handpalmdruk", 2560),
-    "225e2a13-44f1-481f-8285-25cce9b785d3": ("schoudermassage-ontspannen", 2496),
+    "8fccf07e-f19a-475c-92ec-a8ea8ec914d8": ("thaise-massage-capelle-aan-den-ijssel", 2560),
+    "a528365b-114f-4fc0-b079-768f68b6b886": ("thaise-oliemassage-rug", 2528),
+    "242215bb-6cde-4f11-8263-6f1142aa6195": ("aromatherapie-oliemassage", 2528),
+    "1ec6d5e2-0e0c-4198-804e-6c8310c43b9f": ("sportmassage-kuiten", 2528),
+    "73cf05f9-5bda-494d-82d4-f6b55d208220": ("hot-stone-massage-warme-stenen", 2528),
+    "5c12f211-8690-443f-b092-d139520c893a": ("duo-massage-twee-behandeltafels", 2528),
+    "2c50f980-e28b-43f3-8b73-a970ddcff0ec": ("body-scrub-massage-rug", 2528),
+    "d87eb841-c9d3-443a-96f1-70b1c6315bce": ("thaise-begroeting-wai", 2528),
+    "851e4e00-dd0d-4837-a614-af354ddce9a5": ("thaise-massage-handpalmdruk", 2528),
+    "281f63e1-0d76-48b8-810f-02bd1cc90920": ("massagetafel-thaise-zijde", 2528),
+    "eb3a51b2-4c93-4fb7-bc88-2f5c549a534d": ("massagetafel-lotus-handdoek", 2528),
 }
 # Mobiele uitsnede van de hero: 4:5, horizontaal gecentreerd op de behandelende handen
 HERO = "thaise-massage-capelle-aan-den-ijssel"
-HERO_MOBILE_CENTER_X = 0.60
+HERO_MOBILE_CENTER_X = 0.66
 
 
 def main(src_dir):

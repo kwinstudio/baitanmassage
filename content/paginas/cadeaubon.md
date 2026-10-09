@@ -6,8 +6,8 @@ title: Massage cadeau geven: cadeaubon en spaarkaart | Baitan
 description: Geef een massage cadeau met een cadeaubon van Baitan Thai Massage in Capelle aan den IJssel. Plus: spaar stempels en krijg 60 minuten massage gratis.
 h1: Massage cadeau geven
 lead: Een massage is een cadeau dat iedereen kan gebruiken. Met een cadeaubon van Baitan geef je rust en aandacht.
-image: body-scrub-massage-rug
-imageAlt: Body scrub met fijne korrels wordt op de rug aangebracht
+image: massagetafel-lotus-handdoek
+imageAlt: Massagetafel met handdoek, lotus en orchidee
 date: 2026-10-08
 related: duo, aroma, hotstone
 faq: Hoe lang is een cadeaubon geldig? | Een cadeaubon is 12 maanden geldig, tenzij anders vermeld.
