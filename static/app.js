@@ -107,7 +107,12 @@
     // Komt de bezoeker via een 'Afspraak maken'-knop (#agenda), zet de agenda dan direct in beeld,
     // ook nadat de widget is ingeladen en de pagina van hoogte veranderde.
     if (location.hash === '#agenda') {
-      const toAgenda = () => $('#agenda')?.scrollIntoView({ block: 'start' });
+      const toAgenda = () => {
+        const el = $('#agenda');
+        if (!el) return;
+        const offset = ($('[data-header]')?.offsetHeight || 72) + 8;
+        window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - offset, behavior: 'instant' });
+      };
       requestAnimationFrame(toAgenda);
       window.addEventListener('load', toAgenda, { once: true });
       let tries = 0;
