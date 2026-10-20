@@ -651,3 +651,13 @@ h1,h2,h3{overflow-wrap:break-word;hyphens:auto;-webkit-hyphens:auto}
 .booking-fallback{margin-top:16px;font-size:.9rem;color:var(--muted)}
 #agenda{scroll-margin-top:calc(var(--header-h) + 12px)}
 
+@media (max-width:699px){
+  /* Boekpagina mobiel: korte kop, agenda direct in beeld */
+  .booking-hero{padding-top:16px;padding-bottom:12px}
+  .booking-hero .crumbs,.booking-hero .page-lead{display:none}
+  .booking-hero h1{margin-top:0;font-size:2rem}
+  .booking-facts{margin-top:8px;gap:0 18px;font-size:.9rem}
+  #agenda .booking-wrap{padding-inline:8px}
+  .booking-embed{min-height:calc(100svh - var(--header-h) - 16px)}
+  .page-booking [data-mobile-bar]{display:none!important}
+}

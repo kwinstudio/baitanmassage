@@ -93,9 +93,18 @@
     $$('.footer-group[open]').forEach((d) => { d.open = false; });
   }
 
-  /* Boekpagina: 'Afspraak maken'-knoppen scrollen naar de agenda */
-  if ($('[data-booking-widget]')) {
-    $$('a[href="/afspraak"]').forEach((a) => a.addEventListener('click', (ev) => {
+  /* Boekpagina: widget zo hoog als het scherm (mobiel), daarna pas laden */
+  const widget = $('[data-booking-widget]');
+  if (widget) {
+    if (window.matchMedia('(max-width: 699px)').matches) {
+      const headerH = $('[data-header]')?.offsetHeight || 72;
+      widget.dataset.height = String(Math.max(560, Math.round(window.innerHeight - headerH - 16)));
+    }
+    const s = document.createElement('script');
+    s.src = widget.dataset.loader;
+    s.async = true;
+    document.body.appendChild(s);
+    $$('a[href^="/afspraak"]').forEach((a) => a.addEventListener('click', (ev) => {
       ev.preventDefault();
       $('#agenda')?.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
     }));

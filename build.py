@@ -220,7 +220,7 @@ SALONIZED_COMPANY = _site.get("booking", {}).get("salonizedCompany", "R5QhiihtyQ
 
 def book():
     """Attributen voor 'Afspraak maken': naar de eigen boekpagina met de Salonized-agenda."""
-    return f'href="{BOOK_PATH}"'
+    return f'href="{BOOK_PATH}#agenda"'
 
 
 def ext(url):
@@ -306,6 +306,7 @@ def head(title, description, path, og_image="og-image.jpg", schema=None, robots=
 <link rel="preload" href="/fonts/newsreader.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/figtree.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/styles.css?v={CSS_V}">
+{('<link rel="preconnect" href="https://widget.salonized.com" crossorigin>' + chr(10) + '<link rel="preconnect" href="https://static-widget.salonized.com">') if path == BOOK_PATH else '<link rel="prefetch" href="/afspraak">'}
 {ld}
 </head>"""
 
@@ -1243,8 +1244,7 @@ def page_afspraak():
   <section class="section section-flush-top" id="agenda" aria-label="Online agenda">
     <div class="wrap booking-wrap">
       <div class="booking-embed">
-        <div class="salonized-booking" data-company="{SALONIZED_COMPANY}" data-color="#c9bba2" data-language="nl" data-height="760" data-inline="true" data-outline="shadow" data-booking-widget></div>
-        <script src="https://static-widget.salonized.com/loader.js" async></script>
+        <div class="salonized-booking" data-company="{SALONIZED_COMPANY}" data-color="#c9bba2" data-language="nl" data-height="760" data-inline="true" data-loader="https://static-widget.salonized.com/loader.js" data-outline="shadow" data-booking-widget></div>
       </div>
       <p class="booking-fallback">De agenda wordt geleverd door Salonized (<a href="/privacy">privacy</a>). Laadt hij niet? <a {ext(SITE['booking_url'])}>Open de online agenda</a> of bel <a href="tel:{SITE['phone_href']}">{SITE['phone_display']}</a>.</p>
     </div>
