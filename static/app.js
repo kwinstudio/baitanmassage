@@ -104,6 +104,15 @@
     s.src = widget.dataset.loader;
     s.async = true;
     document.body.appendChild(s);
+    // Komt de bezoeker via een 'Afspraak maken'-knop (#agenda), zet de agenda dan direct in beeld,
+    // ook nadat de widget is ingeladen en de pagina van hoogte veranderde.
+    if (location.hash === '#agenda') {
+      const toAgenda = () => $('#agenda')?.scrollIntoView({ block: 'start' });
+      requestAnimationFrame(toAgenda);
+      window.addEventListener('load', toAgenda, { once: true });
+      let tries = 0;
+      const t = setInterval(() => { if (widget.querySelector('iframe') || ++tries > 20) { clearInterval(t); toAgenda(); } }, 150);
+    }
     $$('a[href^="/afspraak"]').forEach((a) => a.addEventListener('click', (ev) => {
       ev.preventDefault();
       $('#agenda')?.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
