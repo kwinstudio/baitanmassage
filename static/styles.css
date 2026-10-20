@@ -637,3 +637,17 @@ h1,h2,h3{overflow-wrap:break-word;hyphens:auto;-webkit-hyphens:auto}
   .nav-extra-status{margin-top:4px;text-align:center;font-size:.9rem;color:var(--muted)}
   .nav-extra-status strong{color:var(--olive-700)}
 }
+
+/* ---------- Boekpagina met Salonized-agenda */
+.booking-hero{padding-bottom:28px}
+.booking-facts{display:flex;flex-wrap:wrap;gap:10px 24px;margin-top:20px;font-size:.95rem;color:var(--ink-2)}
+.booking-facts li{display:flex;align-items:center;gap:8px;min-height:44px}
+.booking-facts .icon,.booking-facts svg{width:18px;height:18px;color:var(--olive-700)}
+.booking-facts a{font-weight:600;text-decoration:none}
+.booking-facts a:hover{text-decoration:underline;text-underline-offset:3px}
+.booking-facts [data-open-status] strong{color:var(--olive-700)}
+.booking-wrap{max-width:calc(560px + var(--gutter)*2)}
+.booking-embed{min-height:760px}
+.booking-fallback{margin-top:16px;font-size:.9rem;color:var(--muted)}
+#agenda{scroll-margin-top:calc(var(--header-h) + 12px)}
+

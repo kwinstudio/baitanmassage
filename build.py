@@ -214,6 +214,15 @@ def euro(n):
     return f"€{n}"
 
 
+BOOK_PATH = "/afspraak"
+SALONIZED_COMPANY = _site.get("booking", {}).get("salonizedCompany", "R5QhiihtyQcDjWc76BD7whTk")
+
+
+def book():
+    """Attributen voor 'Afspraak maken': naar de eigen boekpagina met de Salonized-agenda."""
+    return f'href="{BOOK_PATH}"'
+
+
 def ext(url):
     """Attributen voor een externe link."""
     return f'href="{E(url)}" target="_blank" rel="noopener"'
@@ -318,14 +327,14 @@ def header(current=""):
     </a>
     <nav class="site-nav" aria-label="Hoofdmenu">
       <ul class="nav-list" id="nav-list">{links}<li class="nav-extra">
-        <a class="btn btn-primary btn-block" {ext(SITE['booking_url'])}>Afspraak maken {icon('arrow')}</a>
+        <a class="btn btn-primary btn-block" {book()}>Afspraak maken {icon('arrow')}</a>
         <div class="nav-extra-row"><a class="btn btn-outline" href="tel:{SITE['phone_href']}">{icon('phone')} Bellen</a><a class="btn btn-outline" {ext(SITE['whatsapp_question_url'])}>{WHATSAPP} WhatsApp</a></div>
         <p class="nav-extra-status" data-open-status data-week="{week_hours_json()}">{hours_short()}</p>
       </li></ul>
     </nav>
     <div class="header-actions">
       <a class="header-phone" href="tel:{SITE['phone_href']}">{icon('phone')}<span>{SITE['phone_display']}</span></a>
-      <a class="btn btn-primary btn-sm" {ext(SITE['booking_url'])}>Afspraak maken</a>
+      <a class="btn btn-primary btn-sm" {book()}>Afspraak maken</a>
       <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav-list" data-menu-toggle><span class="sr-only">Menu</span><span class="menu-bars" aria-hidden="true"></span></button>
     </div>
   </div>
@@ -341,7 +350,7 @@ def footer():
       <div class="footer-brand">
         <a class="footer-logo" href="/" aria-label="Baitan Thai Massage, naar de homepage"><img src="/logo/baitan-logo-180.webp" srcset="/logo/baitan-logo-180.webp 1x, /logo/baitan-logo-360.webp 2x, /logo/baitan-logo-540.webp 3x" width="132" height="180" alt="Baitan Thai Massage logo" loading="lazy" decoding="async"></a>
         <p>{E(SITE['tagline'])}</p>
-        <a class="btn btn-light btn-sm" {ext(SITE['booking_url'])}>Afspraak maken</a>
+        <a class="btn btn-light btn-sm" {book()}>Afspraak maken</a>
       </div>
       <details class="footer-group" open>
         <summary class="footer-title"><h2>Behandelingen</h2></summary>
@@ -382,7 +391,7 @@ def footer():
 </footer>
 <aside class="quick-contact" aria-label="Snel contact">
 <div class="mobile-bar" data-mobile-bar>
-  <a class="btn btn-primary" {ext(SITE['booking_url'])}>Afspraak maken</a>
+  <a class="btn btn-primary" {book()}>Afspraak maken</a>
   <a class="mobile-bar-icon" {ext(SITE['whatsapp_question_url'])} aria-label="Stuur Baitan een WhatsApp-bericht">{WHATSAPP}</a>
   <a class="mobile-bar-icon" href="tel:{SITE['phone_href']}" aria-label="Bel Baitan">{icon('phone')}</a>
 </div>
@@ -592,7 +601,7 @@ def side_card(gift=False):
           <li>{icon('card')}<span>Massage vanaf €{low} voor 60 minuten</span></li>
         </ul>
         <div class="side-actions">
-          <a class="btn btn-primary btn-block" {ext(SITE['booking_url'])}>Afspraak maken</a>
+          <a class="btn btn-primary btn-block" {book()}>Afspraak maken</a>
           {second}
         </div>
         <p class="price-card-meta">{icon('phone')} Liever bellen? <a href="tel:{SITE['phone_href']}">{SITE['phone_display']}</a></p>
@@ -607,7 +616,7 @@ def cta_band(title="Zin in een moment voor jezelf?", text="Kies je behandeling e
       <p>{text}</p>
     </div>
     <div class="cta-actions">
-      <a class="btn btn-light" {ext(SITE['booking_url'])}>Afspraak maken {icon('arrow')}</a>
+      <a class="btn btn-light" {book()}>Afspraak maken {icon('arrow')}</a>
       <a class="btn btn-ghost-light" href="tel:{SITE['phone_href']}">{icon('phone')} {SITE['phone_display']}</a>
     </div>
   </div>
@@ -700,7 +709,7 @@ def business_schema():
             {"@type": "LocationFeatureSpecification", "name": "Gratis parkeren", "value": True},
         ],
         "hasOfferCatalog": {"@type": "OfferCatalog", "name": "Massages", "itemListElement": offers},
-        "potentialAction": {"@type": "ReserveAction", "target": SITE["booking_url"], "name": "Afspraak maken"},
+        "potentialAction": {"@type": "ReserveAction", "target": DOMAIN + BOOK_PATH, "name": "Afspraak maken"},
     }
 
 
@@ -764,7 +773,7 @@ def page_home():
         <h1 id="hero-title">{E(HERO.get('title', ''))}</h1>
         <p class="hero-lead">{E(HERO.get('text', ''))}</p>
         <div class="btn-row">
-          <a class="btn btn-light" {ext(SITE['booking_url'])}>{E(HERO.get('primaryButton') or 'Afspraak maken')} {icon('arrow')}</a>
+          <a class="btn btn-light" {book()}>{E(HERO.get('primaryButton') or 'Afspraak maken')} {icon('arrow')}</a>
           <a class="btn btn-ghost-light" href="#behandelingen">{E(HERO.get('secondaryButton') or 'Bekijk behandelingen')}</a>
         </div>
       </div>
@@ -810,7 +819,7 @@ def page_home():
             <ul data-quiz-why></ul>
           </div>
           <div class="btn-row">
-            <a class="btn btn-primary" {ext(SITE['booking_url'])} data-quiz-book>Afspraak maken</a>
+            <a class="btn btn-primary" {book()} data-quiz-book>Afspraak maken</a>
             <a class="btn btn-primary" {ext(SITE['whatsapp_gift_url'])} data-quiz-gift hidden>Cadeaubon via WhatsApp</a>
             <a class="btn btn-outline" href="/massages" data-quiz-link>Bekijk behandeling</a>
           </div>
@@ -830,7 +839,7 @@ def page_home():
       {price_table()}
       <div class="price-foot">
         <p>Betalen kan met pin of contant. Annuleren is kosteloos tot 24 uur vooraf.</p>
-        <a class="btn btn-primary" {ext(SITE['booking_url'])}>Bekijk vrije tijden {icon('arrow')}</a>
+        <a class="btn btn-primary" {book()}>Bekijk vrije tijden {icon('arrow')}</a>
       </div>
     </div>
   </section>
@@ -933,7 +942,7 @@ def page_treatment(t):
         "provider": {"@id": BIZ_ID},
         "areaServed": {"@type": "City", "name": SITE["city"]},
         "offers": [
-            {"@type": "Offer", "name": f'{t["name"]} {d} minuten', "price": str((t["duo"] if is_duo else t["solo"])[i]), "priceCurrency": "EUR", "url": SITE["booking_url"]}
+            {"@type": "Offer", "name": f'{t["name"]} {d} minuten', "price": str((t["duo"] if is_duo else t["solo"])[i]), "priceCurrency": "EUR", "url": DOMAIN + BOOK_PATH}
             for i, d in enumerate(DURATIONS)
         ],
     }
@@ -952,7 +961,7 @@ def page_treatment(t):
         <p class="page-lead">{t['lead']}</p>
         {hero_prices(t)}
         <div class="btn-row">
-          <a class="btn btn-primary" {ext(SITE['booking_url'])}>Afspraak maken {icon('arrow')}</a>
+          <a class="btn btn-primary" {book()}>Afspraak maken {icon('arrow')}</a>
           <a class="btn btn-outline hide-mobile" href="#prijs">Prijzen bekijken</a>
         </div>
       </div>
@@ -971,7 +980,7 @@ def page_treatment(t):
         <h2 id="prijs-title" class="price-card-title">Duur en prijs</h2>
         {prices_html}
         <p class="price-card-note">{price_note}</p>
-        <a class="btn btn-primary btn-block" {ext(SITE['booking_url'])}>Afspraak maken</a>
+        <a class="btn btn-primary btn-block" {book()}>Afspraak maken</a>
         <p class="price-card-meta">{icon('phone')} Liever bellen? <a href="tel:{SITE['phone_href']}">{SITE['phone_display']}</a></p>
       </aside>
     </div>
@@ -1084,7 +1093,7 @@ def page_prijzen():
       <ul class="notes">{notes_html}</ul>
       <div class="price-foot">
         <p>Vrije tijden zie je in de online agenda.</p>
-        <a class="btn btn-primary" {ext(SITE['booking_url'])}>Afspraak maken {icon('arrow')}</a>
+        <a class="btn btn-primary" {book()}>Afspraak maken {icon('arrow')}</a>
       </div>
     </div>
   </section>
@@ -1130,7 +1139,7 @@ def page_contact():
 {footer()}"""
 
 
-LEGAL_UPDATED = "2026-10-09"  # aanpassen als de tekst van voorwaarden of privacy wijzigt
+LEGAL_UPDATED = "2026-10-20"  # aanpassen als de tekst van voorwaarden of privacy wijzigt
 
 
 def page_legal(kind):
@@ -1166,7 +1175,7 @@ def page_legal(kind):
                 "<li><strong>Website</strong>: bij elk bezoek verwerkt onze hostingpartij technische gegevens zoals IP-adres, browser en tijdstip, om de website veilig en werkend te houden. Grondslag: gerechtvaardigd belang (art. 6 lid 1 sub f AVG).</li>"
                 "</ul>"]),
             ("Wie je gegevens ontvangt", ["<ul>"
-                "<li>Salonized: online agenda en klantadministratie, in opdracht van Baitan.</li>"
+                "<li>Salonized: online agenda (ingebouwd op de pagina Afspraak maken) en klantadministratie, in opdracht van Baitan.</li>"
                 "<li>Vercel Inc.: hosting van deze website.</li>"
                 "<li>WhatsApp (Meta): alleen als je ons via WhatsApp benadert. WhatsApp is zelf verantwoordelijk voor de eigen verwerking.</li>"
                 "<li>Google: alleen als je zelf de kaart laadt of op een Google-link klikt.</li>"
@@ -1181,7 +1190,7 @@ def page_legal(kind):
                 "<li>Technische websitegegevens: zo kort mogelijk, alleen zolang dat nodig is voor beveiliging en storingen.</li>"
                 "</ul>"]),
             ("Google Maps", ["De kaart van Google Maps wordt pas geladen nadat je op ‘Kaart laden’ klikt. Daarna maakt je browser verbinding met Google en kan Google cookies plaatsen en gegevens verwerken volgens het eigen privacy- en cookiebeleid."]),
-            ("Cookies", ["Deze website plaatst geen marketing- of analyticscookies. Lettertypes worden vanaf onze eigen server geladen, niet via Google. Externe diensten zoals Salonized, WhatsApp en Google Maps gebruiken pas cookies als je ze zelf opent."]),
+            ("Cookies", ["Deze website plaatst geen marketing- of analyticscookies. Lettertypes worden vanaf onze eigen server geladen, niet via Google.", "Op de pagina Afspraak maken is de online agenda van Salonized ingebouwd. Die laadt pas als je die pagina opent en kan functionele cookies plaatsen die nodig zijn om te boeken. WhatsApp en Google Maps gebruiken pas cookies als je ze zelf opent."]),
             ("Je rechten", [f"Je hebt recht op inzage, correctie, verwijdering, beperking van de verwerking en overdracht van je gegevens. Je kunt bezwaar maken tegen verwerking op basis van gerechtvaardigd belang, en een gegeven toestemming altijd intrekken. Stuur je verzoek naar <a href=\"mailto:{SITE['email']}\">{SITE['email']}</a>; we reageren binnen een maand.", "Ben je het niet eens met hoe we met je gegevens omgaan, dan kun je een klacht indienen bij de <a href=\"https://autoriteitpersoonsgegevens.nl\" rel=\"noopener\">Autoriteit Persoonsgegevens</a>."]),
         ]
         cancel = ""
@@ -1205,6 +1214,41 @@ def page_legal(kind):
     </div>
   </section>
   <section class="section section-flush-top"><div class="wrap"><div class="prose legal">{"".join(secs)}{contact}</div></div></section>
+</main>
+{footer()}"""
+
+
+def page_afspraak():
+    path = BOOK_PATH
+    title = "Afspraak maken | Baitan Thai Massage Capelle"
+    desc = "Boek direct online een Thaise massage, aromatherapie, sportmassage, hot stone, body scrub of duo-massage bij Baitan in Capelle aan den IJssel."
+    crumbs = [("Home", "/"), ("Afspraak maken", path)]
+    schema = [business_schema(), website_schema(), webpage_schema(path, title, desc), crumb_schema(crumbs)]
+    return f"""{head(title, desc, path, schema=schema)}
+<body class="page-booking">
+{header(path)}
+<main id="main">
+  <section class="page-hero page-hero-plain booking-hero" aria-labelledby="page-title">
+    <div class="wrap booking-wrap">
+      {breadcrumbs(crumbs)}
+      <h1 id="page-title">Afspraak maken</h1>
+      <p class="page-lead">Kies je behandeling, de duur en een tijd die jou uitkomt. Je betaalt in de salon met pin of contant.</p>
+      <ul class="booking-facts">
+        <li>{icon('clock')}<span data-open-status data-week="{week_hours_json()}">{hours_short()}</span></li>
+        <li>{icon('phone')}<a href="tel:{SITE['phone_href']}">{SITE['phone_display']}</a></li>
+        <li>{WHATSAPP}<a {ext(SITE['whatsapp_question_url'])}>WhatsApp</a></li>
+      </ul>
+    </div>
+  </section>
+  <section class="section section-flush-top" id="agenda" aria-label="Online agenda">
+    <div class="wrap booking-wrap">
+      <div class="booking-embed">
+        <div class="salonized-booking" data-company="{SALONIZED_COMPANY}" data-color="#c9bba2" data-language="nl" data-height="760" data-inline="true" data-outline="shadow" data-booking-widget></div>
+        <script src="https://static-widget.salonized.com/loader.js" async></script>
+      </div>
+      <p class="booking-fallback">De agenda wordt geleverd door Salonized (<a href="/privacy">privacy</a>). Laadt hij niet? <a {ext(SITE['booking_url'])}>Open de online agenda</a> of bel <a href="tel:{SITE['phone_href']}">{SITE['phone_display']}</a>.</p>
+    </div>
+  </section>
 </main>
 {footer()}"""
 
@@ -1492,7 +1536,7 @@ def page_landing(p):
         <h1 id="page-title">{E(p['h1'])}</h1>
         <p class="page-lead">{E(p['lead'])}</p>
         <div class="btn-row">
-          <a class="btn btn-primary" {ext(SITE['booking_url'])}>Afspraak maken {icon('arrow')}</a>
+          <a class="btn btn-primary" {book()}>Afspraak maken {icon('arrow')}</a>
           {extra_btn}
         </div>
       </div>
@@ -1573,7 +1617,7 @@ def main():
     shutil.copytree(STATIC, OUT)
     shutil.copytree(ROOT / "assets", OUT / "assets", dirs_exist_ok=True)
 
-    pages = {"index.html": page_home(), "massages.html": page_massages(), "prijzen.html": page_prijzen(), "contact.html": page_contact(),
+    pages = {"index.html": page_home(), "massages.html": page_massages(), "prijzen.html": page_prijzen(), "contact.html": page_contact(), "afspraak.html": page_afspraak(),
              "voorwaarden.html": page_legal("voorwaarden"), "privacy.html": page_legal("privacy"), "404.html": page_404()}
     for t in PAGES:
         pages[f'{t["slug"]}.html'] = page_treatment(t)
@@ -1587,7 +1631,7 @@ def main():
         write(name, content)
 
     hero_img = Path(HERO.get("image", "thaise-massage-capelle-aan-den-ijssel")).stem
-    urls = [("/", "1.0", hero_img), ("/massages", "0.9", None), ("/prijzen", "0.9", None)] + [(f'/{t["slug"]}', "0.8", t["image"]) for t in PAGES] + [("/contact", "0.8", None)] \
+    urls = [("/", "1.0", hero_img), ("/massages", "0.9", None), ("/prijzen", "0.9", None)] + [(f'/{t["slug"]}', "0.8", t["image"]) for t in PAGES] + [("/contact", "0.8", None), (BOOK_PATH, "0.8", None)] \
         + [(f"/{lp['slug']}", "0.7", lp["image"]) for lp in LANDINGS] + [("/veelgestelde-vragen", "0.6", None), ("/massagegids", "0.6", None)] \
         + [(f"/massagegids/{a['slug']}", "0.6", a["image"]) for a in ARTICLES]
     sm = "".join(

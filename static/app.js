@@ -93,6 +93,14 @@
     $$('.footer-group[open]').forEach((d) => { d.open = false; });
   }
 
+  /* Boekpagina: 'Afspraak maken'-knoppen scrollen naar de agenda */
+  if ($('[data-booking-widget]')) {
+    $$('a[href="/afspraak"]').forEach((a) => a.addEventListener('click', (ev) => {
+      ev.preventDefault();
+      $('#agenda')?.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+    }));
+  }
+
   /* Massagekeuze: vijf vragen (voor wie, doel, druk, extra, duur) -> advies met uitleg */
   const quiz = $('[data-quiz]');
   /* Massagekeuze op mobiel: pas tonen na 'Start' */
