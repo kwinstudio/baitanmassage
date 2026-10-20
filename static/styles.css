@@ -666,3 +666,6 @@ h1,h2,h3{overflow-wrap:break-word;hyphens:auto;-webkit-hyphens:auto}
 .hero-prices li:has(a) a{padding:8px 14px;border-radius:inherit}
 .hero-prices li:has(a):hover{border-color:var(--olive-700)}
 @media (max-width:699px){.hero-prices li:has(a){padding:0}.hero-prices li:has(a) a{flex-direction:column;align-items:center;gap:4px;padding:10px 6px;width:100%}}
+/* Prijzen in tabellen zijn links naar de agenda met die dienst gekozen */
+.book-price{color:inherit;text-decoration:none;border-bottom:1px dotted transparent;transition:border-color .15s ease,color .15s ease}
+.book-price:hover,.book-price:focus-visible{color:var(--olive-700);border-bottom-color:currentColor}

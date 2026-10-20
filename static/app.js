@@ -4,6 +4,12 @@
   const $$ = (s, el = document) => [...el.querySelectorAll(s)];
   const mqDesktop = window.matchMedia('(min-width: 1081px)');
 
+  /* Behandelpagina: 'Afspraak maken' opent de agenda met deze massage al gekozen */
+  const pageService = document.body.dataset.bookService;
+  if (pageService && /^\d{4,10}$/.test(pageService)) {
+    $$('a[href="/afspraak#agenda"], a[href="/afspraak"]').forEach((a) => { a.href = `/afspraak?dienst=${pageService}#agenda`; });
+  }
+
   /* Header-rand bij scrollen + mobiele contactbalk */
   const header = $('[data-header]');
   const bar = $('[data-mobile-bar]');
