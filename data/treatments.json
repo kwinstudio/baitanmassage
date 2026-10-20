@@ -14,17 +14,23 @@
       {
         "minutes": 60,
         "price": 65,
-        "duoPrice": 125
+        "duoPrice": 125,
+        "salonizedId": 2754131,
+        "salonizedDuoId": 2773138
       },
       {
         "minutes": 90,
         "price": 95,
-        "duoPrice": 180
+        "duoPrice": 180,
+        "salonizedId": 2773136,
+        "salonizedDuoId": 2773139
       },
       {
         "minutes": 120,
         "price": 125,
-        "duoPrice": 230
+        "duoPrice": 230,
+        "salonizedId": 2773137,
+        "salonizedDuoId": 2773140
       }
     ],
     "lead": "Authentieke Thaise oliemassage: rustig rekken en diepe spierbewerking met warme, geurloze olie.",
@@ -60,17 +66,23 @@
       {
         "minutes": 60,
         "price": 65,
-        "duoPrice": 125
+        "duoPrice": 125,
+        "salonizedId": 2773148,
+        "salonizedDuoId": 2773151
       },
       {
         "minutes": 90,
         "price": 95,
-        "duoPrice": 180
+        "duoPrice": 180,
+        "salonizedId": 2773149,
+        "salonizedDuoId": 2773152
       },
       {
         "minutes": 120,
         "price": 125,
-        "duoPrice": 230
+        "duoPrice": 230,
+        "salonizedId": 2773150,
+        "salonizedDuoId": 2773153
       }
     ],
     "lead": "Een aromatherapie-massage: Thaise oliemassage met een geur die jij kiest, voor lichaam én zintuigen.",
@@ -106,17 +118,23 @@
       {
         "minutes": 60,
         "price": 70,
-        "duoPrice": 140
+        "duoPrice": 140,
+        "salonizedId": 2773158,
+        "salonizedDuoId": 2773161
       },
       {
         "minutes": 90,
         "price": 105,
-        "duoPrice": 205
+        "duoPrice": 205,
+        "salonizedId": 2773159,
+        "salonizedDuoId": 2773162
       },
       {
         "minutes": 120,
         "price": 140,
-        "duoPrice": 270
+        "duoPrice": 270,
+        "salonizedId": 2773160,
+        "salonizedDuoId": 2773163
       }
     ],
     "lead": "Een stevige sportmassage voor spieren die veel te verduren krijgen door sport, werk of lang zitten.",
@@ -152,17 +170,23 @@
       {
         "minutes": 60,
         "price": 70,
-        "duoPrice": 140
+        "duoPrice": 140,
+        "salonizedId": 2773170,
+        "salonizedDuoId": 2773174
       },
       {
         "minutes": 90,
         "price": 105,
-        "duoPrice": 205
+        "duoPrice": 205,
+        "salonizedId": 2773171,
+        "salonizedDuoId": 2773175
       },
       {
         "minutes": 120,
         "price": 140,
-        "duoPrice": 270
+        "duoPrice": 270,
+        "salonizedId": 2773172,
+        "salonizedDuoId": 2773176
       }
     ],
     "lead": "Hot stone massage: traditionele technieken met warme stenen. Intens, ontspannend en verwarmend.",
@@ -258,17 +282,23 @@
       {
         "minutes": 60,
         "price": 70,
-        "duoPrice": 140
+        "duoPrice": 140,
+        "salonizedId": 2773178,
+        "salonizedDuoId": 2773181
       },
       {
         "minutes": 90,
         "price": 105,
-        "duoPrice": 205
+        "duoPrice": 205,
+        "salonizedId": 2773179,
+        "salonizedDuoId": 2773182
       },
       {
         "minutes": 120,
         "price": 140,
-        "duoPrice": 270
+        "duoPrice": 270,
+        "salonizedId": 2773180,
+        "salonizedDuoId": 2773183
       }
     ]
   }

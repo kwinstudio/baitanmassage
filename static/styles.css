@@ -661,3 +661,8 @@ h1,h2,h3{overflow-wrap:break-word;hyphens:auto;-webkit-hyphens:auto}
   .booking-embed{min-height:calc(100svh - var(--header-h) - 8px)}
   .page-booking [data-mobile-bar]{display:none!important}
 }
+.hero-prices a{display:inline-flex;align-items:baseline;gap:6px;color:inherit;text-decoration:none}
+.hero-prices li:has(a){padding:0}
+.hero-prices li:has(a) a{padding:8px 14px;border-radius:inherit}
+.hero-prices li:has(a):hover{border-color:var(--olive-700)}
+@media (max-width:699px){.hero-prices li:has(a){padding:0}.hero-prices li:has(a) a{flex-direction:column;align-items:center;gap:4px;padding:10px 6px;width:100%}}
