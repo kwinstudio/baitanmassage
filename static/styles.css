@@ -7,9 +7,9 @@
 @font-face{font-family:"Figtree Fallback";src:local("Arial");size-adjust:98%;ascent-override:96%;descent-override:25%}
 
 :root{
-  --paper:#f8f4ec;
-  --surface:#fffcf6;
-  --tint:#efe8db;
+  --paper:#ffffff;
+  --surface:#ffffff;
+  --tint:#f8f6f2;
   --ink:#22251d;
   --ink-2:#45473d;
   --muted:#635f56;
@@ -82,8 +82,8 @@ p,li{text-wrap:pretty}
 .text-btn:hover{color:var(--ink)}
 
 /* ---------- Header */
-.site-header{position:sticky;top:0;z-index:100;height:var(--header-h);background:rgba(248,244,236,.9);backdrop-filter:saturate(1.4) blur(14px);-webkit-backdrop-filter:saturate(1.4) blur(14px);border-bottom:1px solid transparent;transition:border-color .25s ease,background-color .25s ease}
-.site-header.is-scrolled{border-bottom-color:var(--line);background:rgba(248,244,236,.96)}
+.site-header{position:sticky;top:0;z-index:100;height:var(--header-h);background:rgba(255,255,255,.92);backdrop-filter:saturate(1.4) blur(14px);-webkit-backdrop-filter:saturate(1.4) blur(14px);border-bottom:1px solid transparent;transition:border-color .25s ease,background-color .25s ease}
+.site-header.is-scrolled{border-bottom-color:var(--line);background:rgba(255,255,255,.97)}
 .header-inner{height:100%;display:flex;align-items:center;gap:24px}
 .brand{display:inline-flex;align-items:center;gap:10px;min-height:44px;text-decoration:none;color:var(--ink)}
 .brand-emblem{width:40px;height:44px;flex:none;object-fit:contain}

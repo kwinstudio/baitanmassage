@@ -1644,7 +1644,7 @@ def main():
     write("robots.txt", f"User-agent: *\nAllow: /\n\nSitemap: {DOMAIN}/sitemap.xml\n")
     write("site.webmanifest", json.dumps({
         "name": SITE["name"], "short_name": "Baitan", "start_url": "/", "display": "browser",
-        "background_color": "#f8f4ec", "theme_color": "#2f3829",
+        "background_color": "#ffffff", "theme_color": "#2f3829",
         "icons": [{"src": "/icon-192.png", "sizes": "192x192", "type": "image/png"}, {"src": "/icon-512.png", "sizes": "512x512", "type": "image/png"}],
     }, ensure_ascii=False, indent=2))
 
