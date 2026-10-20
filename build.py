@@ -461,6 +461,13 @@ def price_from(t):
     return min(vals)
 
 
+def book_link(sid, text, label):
+    """Prijs als link naar de agenda met die dienst al gekozen."""
+    if not sid:
+        return text
+    return f'<a class="book-price" href="{BOOK_PATH}?dienst={sid}#agenda" aria-label="{E(label)} boeken">{text}</a>'
+
+
 def price_table(rows=None, caption="Prijzen per behandeling", show_duo=True, link=True):
     rows = rows or TREATMENTS
     head_cells = "".join(f'<th scope="col">{d} min</th>' for d in DURATIONS)
@@ -471,8 +478,10 @@ def price_table(rows=None, caption="Prijzen per behandeling", show_duo=True, lin
         name = f'<a href="/{t["slug"]}">{t["name"]}</a>' if (link and t["page"]) else t["name"]
         cells = []
         for i in range(len(DURATIONS)):
-            duo = f'<span class="duo">duo {euro(t["duo"][i])}</span>' if (show_duo and t["duo"] and t["duo"][i]) else ""
-            cells.append(f'<td><span class="solo">{euro(t["solo"][i])}</span>{duo}</td>')
+            d = DURATIONS[i]
+            duo = (f'<span class="duo">{book_link(t["sid_duo"][i], "duo " + euro(t["duo"][i]), t["name"] + " duo " + str(d) + " minuten")}</span>'
+                   if (show_duo and t["duo"] and t["duo"][i]) else "")
+            cells.append(f'<td><span class="solo">{book_link(t["sid"][i], euro(t["solo"][i]), t["name"] + " " + str(d) + " minuten")}</span>{duo}</td>')
         body.append(f'<tr><th scope="row">{name}</th>{"".join(cells)}</tr>')
     return f"""<div class="table-scroll"><table class="price-table">
 <caption class="sr-only">{caption}</caption>
@@ -488,7 +497,7 @@ def duo_table():
             continue
         if not t["duo"] or not all(t["duo"]):
             continue
-        cells = "".join(f'<td><span class="solo">{euro(p)}</span></td>' for p in t["duo"])
+        cells = "".join(f'<td><span class="solo">{book_link(sid, euro(p), t["name"] + " duo " + str(d) + " minuten")}</span></td>' for p, sid, d in zip(t["duo"], t["sid_duo"], DURATIONS))
         body.append(f'<tr><th scope="row">{t["name"]}</th>{cells}</tr>')
     return f"""<div class="table-scroll"><table class="price-table">
 <caption class="sr-only">Prijzen duo-massage voor twee personen</caption>
@@ -956,8 +965,11 @@ def page_treatment(t):
     schema = [business_schema(), website_schema(), webpage_schema(path, t["seo_title"], t["seo_description"]), service, crumb_schema(crumbs), faq_schema(faq_items)]
     steps = "".join(f'<li><span class="step-n" aria-hidden="true">{i + 1}</span><span><strong>{a}</strong>{b}</span></li>' for i, (a, b) in enumerate(t["steps"]))
     body_p = "".join(f"<p>{p}</p>" for p in t["body"])
+    # 'Afspraak maken' op deze pagina opent de agenda met deze massage (60 min) al gekozen
+    _sid = (t["sid"] or [None])[0] if not is_duo else None
+    book_attr = f' data-book-service="{_sid}"' if _sid else ""
     return f"""{head(t['seo_title'], t['seo_description'], path, schema=schema, preload_img=t['image'], preload_sizes="(min-width: 900px) 42vw, 100vw")}
-<body>
+<body{book_attr}>
 {header('/massages')}
 <main id="main">
   <section class="page-hero" aria-labelledby="page-title">
@@ -1519,6 +1531,8 @@ def page_landing(p):
     path = f"/{p['slug']}"
     crumbs = [("Home", "/"), (p["h1"] if p.get("kind") == "basis" else p["h1"].replace(" in Capelle aan den IJssel", ""), path)]
     page_type = "AboutPage" if p["slug"] == "over-baitan" else "WebPage"
+    _sport = next((t for t in TREATMENTS if t["id"] == "sport"), None)
+    landing_book = f' data-book-service="{_sport["sid"][0]}"' if p["slug"] == "massage-na-het-sporten" and _sport and _sport["sid"][0] else ""
     schema = [business_schema(), website_schema(), webpage_schema(path, p["title"], p["description"], page_type), crumb_schema(crumbs)]
     if p["faq"]:
         schema.append(faq_schema(p["faq"]))
@@ -1532,7 +1546,7 @@ def page_landing(p):
                  else '<a class="btn btn-outline" href="/prijzen">Prijzen bekijken</a>')
     rel = related_rows(p["related"])
     return f"""{head(p['title'], p['description'], path, schema=schema, preload_img=p['image'], preload_sizes="(min-width: 900px) 42vw, 100vw")}
-<body>
+<body{landing_book}>
 {header(path)}
 <main id="main">
   <section class="page-hero" aria-labelledby="page-title">
