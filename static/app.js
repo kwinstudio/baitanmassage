@@ -96,10 +96,10 @@
   /* Boekpagina: widget zo hoog als het scherm (mobiel), daarna pas laden */
   const widget = $('[data-booking-widget]');
   if (widget) {
-    if (window.matchMedia('(max-width: 699px)').matches) {
-      const headerH = $('[data-header]')?.offsetHeight || 72;
-      widget.dataset.height = String(Math.max(560, Math.round(window.innerHeight - headerH - 16)));
-    }
+    // Agenda zo hoog als het scherm (min. 600 px), op mobiel en desktop
+    const headerH = $('[data-header]')?.offsetHeight || 72;
+    const mobile = window.matchMedia('(max-width: 699px)').matches;
+    widget.dataset.height = String(Math.max(600, Math.round(window.innerHeight - headerH - (mobile ? 8 : 40))));
     const s = document.createElement('script');
     s.src = widget.dataset.loader;
     s.async = true;
