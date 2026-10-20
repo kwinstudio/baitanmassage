@@ -93,21 +93,8 @@
     $$('.footer-group[open]').forEach((d) => { d.open = false; });
   }
 
-  /* Boekpagina: Salonized-agenda meegroeien met de inhoud, knoppen scrollen naar de agenda */
-  const frame = $('[data-booking-frame]');
-  if (frame) {
-    let loads = 0;
-    window.addEventListener('message', (e) => {
-      if (!/^https:\/\/[a-z0-9-]+\.salonized\.com$/.test(e.origin)) return;
-      let d = e.data;
-      if (typeof d === 'string') { try { d = JSON.parse(d); } catch { return; } }
-      if (!d || typeof d !== 'object') return;
-      if (d.type === 'resize' && Number(d.height) > 200) frame.style.height = `${Math.ceil(Number(d.height))}px`;
-      if (d.type === 'reload' && ++loads > 1) {
-        const top = frame.getBoundingClientRect().top;
-        if (top < 0) window.scrollBy({ top: top - 96, behavior: 'auto' });
-      }
-    });
+  /* Boekpagina: 'Afspraak maken'-knoppen scrollen naar de agenda */
+  if ($('[data-booking-widget]')) {
     $$('a[href="/afspraak"]').forEach((a) => a.addEventListener('click', (ev) => {
       ev.preventDefault();
       $('#agenda')?.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });

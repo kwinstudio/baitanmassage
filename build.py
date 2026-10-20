@@ -215,6 +215,7 @@ def euro(n):
 
 
 BOOK_PATH = "/afspraak"
+SALONIZED_COMPANY = _site.get("booking", {}).get("salonizedCompany", "R5QhiihtyQcDjWc76BD7whTk")
 
 
 def book():
@@ -1223,13 +1224,12 @@ def page_afspraak():
     desc = "Boek direct online een Thaise massage, aromatherapie, sportmassage, hot stone, body scrub of duo-massage bij Baitan in Capelle aan den IJssel."
     crumbs = [("Home", "/"), ("Afspraak maken", path)]
     schema = [business_schema(), website_schema(), webpage_schema(path, title, desc), crumb_schema(crumbs)]
-    embed = SITE["booking_url"] + ("&" if "?" in SITE["booking_url"] else "?") + "layout=embed"
     return f"""{head(title, desc, path, schema=schema)}
 <body class="page-booking">
 {header(path)}
 <main id="main">
   <section class="page-hero page-hero-plain booking-hero" aria-labelledby="page-title">
-    <div class="wrap">
+    <div class="wrap booking-wrap">
       {breadcrumbs(crumbs)}
       <h1 id="page-title">Afspraak maken</h1>
       <p class="page-lead">Kies je behandeling, de duur en een tijd die jou uitkomt. Je betaalt in de salon met pin of contant.</p>
@@ -1243,7 +1243,8 @@ def page_afspraak():
   <section class="section section-flush-top" id="agenda" aria-label="Online agenda">
     <div class="wrap booking-wrap">
       <div class="booking-embed">
-        <iframe src="{E(embed)}" title="Online agenda van Baitan Thai Massage" data-booking-frame allow="payment"></iframe>
+        <div class="salonized-booking" data-company="{SALONIZED_COMPANY}" data-color="#c9bba2" data-language="nl" data-height="760" data-inline="true" data-outline="shadow" data-booking-widget></div>
+        <script src="https://static-widget.salonized.com/loader.js" async></script>
       </div>
       <p class="booking-fallback">De agenda wordt geleverd door Salonized (<a href="/privacy">privacy</a>). Laadt hij niet? <a {ext(SITE['booking_url'])}>Open de online agenda</a> of bel <a href="tel:{SITE['phone_href']}">{SITE['phone_display']}</a>.</p>
     </div>
