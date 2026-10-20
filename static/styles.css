@@ -647,7 +647,7 @@ h1,h2,h3{overflow-wrap:break-word;hyphens:auto;-webkit-hyphens:auto}
 .booking-facts a:hover{text-decoration:underline;text-underline-offset:3px}
 .booking-facts [data-open-status] strong{color:var(--olive-700)}
 .booking-wrap{max-width:calc(560px + var(--gutter)*2)}
-.booking-embed{min-height:760px}
+.booking-embed{min-height:calc(100svh - var(--header-h) - 40px)}
 .booking-fallback{margin-top:16px;font-size:.9rem;color:var(--muted)}
 #agenda{scroll-margin-top:calc(var(--header-h) + 12px)}
 
@@ -657,7 +657,7 @@ h1,h2,h3{overflow-wrap:break-word;hyphens:auto;-webkit-hyphens:auto}
   .booking-hero .crumbs,.booking-hero .page-lead{display:none}
   .booking-hero h1{margin-top:0;font-size:2rem}
   .booking-facts{margin-top:8px;gap:0 18px;font-size:.9rem}
-  #agenda .booking-wrap{padding-inline:8px}
-  .booking-embed{min-height:calc(100svh - var(--header-h) - 16px)}
+  #agenda .booking-wrap{padding-inline:4px}
+  .booking-embed{min-height:calc(100svh - var(--header-h) - 8px)}
   .page-booking [data-mobile-bar]{display:none!important}
 }
