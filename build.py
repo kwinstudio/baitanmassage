@@ -72,6 +72,8 @@ for _t in _treat:
         "image": Path(_t.get("image", "/assets/images/thaise-massage-capelle-aan-den-ijssel.webp")).stem,
         "alt": _t.get("imageAlt", _t["name"]),
         "durations": [d["minutes"] for d in _d],
+        "sid": [d.get("salonizedId") for d in _d],
+        "sid_duo": [d.get("salonizedDuoId") for d in _d],
         "solo": None if _is_duo else [d["price"] for d in _d],
         "duo": [d["price"] for d in _d] if _is_duo else [d.get("duoPrice") for d in _d],
         "seo_title": _t.get("seoTitle") or f'{_t["name"]} Capelle aan den IJssel | Baitan',
@@ -760,7 +762,7 @@ def page_home():
         "order": QUIZ_ORDER,
         "durations": DURATIONS,
         "duoUrl": f'/{duo_t["slug"]}' if duo_t and duo_t["page"] else "/prijzen",
-        "t": {t["id"]: {"name": t["name"], "lname": lname(t["name"]), "text": t["short"], "url": f'/{t["slug"]}' if t["page"] else "/prijzen", "solo": t["solo"], "duo": t["duo"]} for t in TREATMENTS if t["id"] in QUIZ_ORDER},
+        "t": {t["id"]: {"name": t["name"], "lname": lname(t["name"]), "text": t["short"], "url": f'/{t["slug"]}' if t["page"] else "/prijzen", "solo": t["solo"], "duo": t["duo"], "sid": t["sid"], "sidDuo": t["sid_duo"]} for t in TREATMENTS if t["id"] in QUIZ_ORDER},
     }
     gift_btn = f'<a class="btn btn-outline btn-sm" {ext(SITE["whatsapp_gift_url"])}>{WHATSAPP} Vraag via WhatsApp</a>'
     body = f"""{head(title, desc, "/", schema=schema, preload_img=Path(HERO.get('image', 'thaise-massage-capelle-aan-den-ijssel')).stem)}
@@ -918,7 +920,11 @@ def hero_prices(t):
     prices = t["duo"] if t["id"] == "duo" else t["solo"]
     if not prices:
         return ""
-    items = "".join(f"<li><span>{m} min</span><strong>€{p}</strong></li>" for m, p in zip(t["durations"], prices) if p)
+    ids = t["sid_duo"] if t["id"] == "duo" else t["sid"]
+    def chip(m, p, i):
+        inner = f"<span>{m} min</span><strong>€{p}</strong>"
+        return f'<li><a href="{BOOK_PATH}?dienst={i}#agenda" aria-label="{m} minuten voor €{p} boeken">{inner}</a></li>' if i else f"<li>{inner}</li>"
+    items = "".join(chip(m, p, i) for m, p, i in zip(t["durations"], prices, ids) if p)
     if t["id"] == "duo":
         return f'<p class="hero-prices-label">Voor twee personen samen, vanaf</p><ul class="hero-prices" aria-label="Prijs voor twee personen samen, vanaf">{items}</ul>'
     return f'<ul class="hero-prices" aria-label="Prijs per persoon">{items}</ul>'

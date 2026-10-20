@@ -103,6 +103,9 @@
     // Salonized gebruikt op touchscreens 'data-height-mobile' (standaard 500 px) in plaats van 'data-height'
     widget.dataset.height = h;
     widget.dataset.heightMobile = h;
+    // Gekozen massage meegeven (vanuit de massagekeuze of een prijs): klant hoeft alleen nog een tijd te kiezen
+    const dienst = new URLSearchParams(location.search).get('dienst');
+    if (dienst && /^\d{4,10}$/.test(dienst)) widget.dataset.services = JSON.stringify([Number(dienst)]);
     const s = document.createElement('script');
     s.src = widget.dataset.loader;
     s.async = true;
@@ -220,7 +223,12 @@
       const list = q('[data-quiz-why]');
       list.replaceChildren(...why.map((w) => Object.assign(document.createElement('li'), { textContent: w })));
 
-      q('[data-quiz-book]').hidden = m === 'gift';
+      const book = q('[data-quiz-book]');
+      book.hidden = m === 'gift';
+      const ids = m === 'duo' ? t.sidDuo : t.sid;
+      const sid = ids && (ids[di > -1 ? di : 0]);
+      book.href = sid ? `/afspraak?dienst=${sid}#agenda` : '/afspraak#agenda';
+      book.textContent = sid ? `Boek ${m === 'duo' ? 'samen' : 'deze massage'}` : 'Afspraak maken';
       q('[data-quiz-gift]').hidden = m !== 'gift';
       const link = q('[data-quiz-link]');
       link.href = m === 'duo' ? cfg.duoUrl : t.url;
