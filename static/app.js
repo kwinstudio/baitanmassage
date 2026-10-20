@@ -99,7 +99,10 @@
     // Agenda zo hoog als het scherm (min. 600 px), op mobiel en desktop
     const headerH = $('[data-header]')?.offsetHeight || 72;
     const mobile = window.matchMedia('(max-width: 699px)').matches;
-    widget.dataset.height = String(Math.max(600, Math.round(window.innerHeight - headerH - (mobile ? 8 : 40))));
+    const h = String(Math.max(600, Math.round(window.innerHeight - headerH - (mobile ? 8 : 40))));
+    // Salonized gebruikt op touchscreens 'data-height-mobile' (standaard 500 px) in plaats van 'data-height'
+    widget.dataset.height = h;
+    widget.dataset.heightMobile = h;
     const s = document.createElement('script');
     s.src = widget.dataset.loader;
     s.async = true;

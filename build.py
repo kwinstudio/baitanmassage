@@ -1244,7 +1244,7 @@ def page_afspraak():
   <section class="section section-flush-top" id="agenda" aria-label="Online agenda">
     <div class="wrap booking-wrap">
       <div class="booking-embed">
-        <div class="salonized-booking" data-company="{SALONIZED_COMPANY}" data-color="#c9bba2" data-language="nl" data-height="760" data-inline="true" data-loader="https://static-widget.salonized.com/loader.js" data-outline="shadow" data-booking-widget></div>
+        <div class="salonized-booking" data-company="{SALONIZED_COMPANY}" data-color="#c9bba2" data-language="nl" data-height="760" data-height-mobile="760" data-width="560" data-inline="true" data-loader="https://static-widget.salonized.com/loader.js" data-outline="shadow" data-booking-widget></div>
       </div>
       <p class="booking-fallback">De agenda wordt geleverd door Salonized (<a href="/privacy">privacy</a>). Laadt hij niet? <a {ext(SITE['booking_url'])}>Open de online agenda</a> of bel <a href="tel:{SITE['phone_href']}">{SITE['phone_display']}</a>.</p>
     </div>

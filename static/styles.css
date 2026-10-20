@@ -646,7 +646,7 @@ h1,h2,h3{overflow-wrap:break-word;hyphens:auto;-webkit-hyphens:auto}
 .booking-facts a{font-weight:600;text-decoration:none}
 .booking-facts a:hover{text-decoration:underline;text-underline-offset:3px}
 .booking-facts [data-open-status] strong{color:var(--olive-700)}
-.booking-wrap{max-width:calc(560px + var(--gutter)*2)}
+.booking-wrap{max-width:calc(600px + var(--gutter)*2)}
 .booking-embed{min-height:calc(100svh - var(--header-h) - 40px)}
 .booking-fallback{margin-top:16px;font-size:.9rem;color:var(--muted)}
 #agenda{scroll-margin-top:calc(var(--header-h) + 12px)}
