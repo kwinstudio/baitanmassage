@@ -387,7 +387,7 @@ def footer():
     </div>
     <div class="footer-bottom">
       <span><span>© {datetime.date.today().year} {SITE['name']}</span> · <span>KVK {SITE['kvk']}</span> · <span>BTW {SITE['btw']}</span></span>
-      <span class="footer-legal"><a href="/voorwaarden">Huisregels &amp; voorwaarden</a><a href="/privacy">Privacy &amp; cookies</a></span>
+      <span class="footer-legal"><a href="/voorwaarden">Huisregels &amp; voorwaarden</a><a href="/privacy">Privacy &amp; cookies</a><span class="footer-credit">Website door <a href="https://zichtwerfstudio.nl" target="_blank" rel="noopener">Zichtwerf Studio</a></span></span>
     </div>
     <p class="footer-note">De foto's op deze website zijn sfeerbeelden van de behandelingen. Ze tonen niet de salon of de medewerkers van Baitan.</p>
   </div>
