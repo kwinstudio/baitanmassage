@@ -389,7 +389,7 @@ def footer():
       <span><span>© {datetime.date.today().year} {SITE['name']}</span> · <span>KVK {SITE['kvk']}</span> · <span>BTW {SITE['btw']}</span></span>
       <span class="footer-legal"><a href="/voorwaarden">Huisregels &amp; voorwaarden</a><a href="/privacy">Privacy &amp; cookies</a><span class="footer-credit">Website door <a href="https://zichtwerfstudio.nl" target="_blank" rel="noopener">Zichtwerf Studio</a></span></span>
     </div>
-    <p class="footer-note">De foto's op deze website zijn sfeerbeelden van de behandelingen. Ze tonen niet de salon of de medewerkers van Baitan.</p>
+    <p class="footer-note">De foto bovenaan de homepage toont de ontvangstruimte van Baitan. De andere foto's zijn sfeerbeelden en tonen niet de behandelruimtes of medewerkers van Baitan.</p>
   </div>
 </footer>
 <aside class="quick-contact" aria-label="Snel contact">
@@ -1208,7 +1208,7 @@ def page_legal(kind):
             ("Aansprakelijkheid", ["Laat waardevolle spullen bij voorkeur thuis. Baitan is niet aansprakelijk voor verlies, diefstal of beschadiging van persoonlijke eigendommen, tenzij dit het gevolg is van opzet of grove nalatigheid van Baitan of haar medewerkers.", "Is Baitan voor andere schade aansprakelijk, dan is die aansprakelijkheid beperkt tot het bedrag dat de aansprakelijkheidsverzekering uitkeert, of als de verzekering niet uitkeert, tot het bedrag van de geboekte behandeling. Deze beperking geldt niet bij opzet of grove nalatigheid en niet bij letselschade."]),
             ("Cadeaubonnen", ["Een cadeaubon is minimaal 2 jaar geldig vanaf de datum van aankoop. De uiterste datum staat op de bon. Cadeaubonnen zijn niet inwisselbaar voor geld."]),
             ("Overmacht", ["Moet Baitan een afspraak annuleren of verzetten door ziekte, een storing of een andere onvoorziene omstandigheid, dan laten we je dat zo snel mogelijk weten. Je kiest dan zelf: een nieuwe afspraak of volledige terugbetaling van wat je al hebt betaald."]),
-            ("Foto's op deze website", ["De foto's op deze website zijn kunstmatig gegenereerde sfeerbeelden van de behandelingen. Ze tonen niet de salon of de medewerkers van Baitan."]),
+            ("Foto's op deze website", ["De foto bovenaan de homepage toont de ontvangstruimte van Baitan. De overige foto's op deze website zijn kunstmatig gegenereerde sfeerbeelden van de behandelingen. Ze tonen niet de behandelruimtes of medewerkers van Baitan."]),
             ("Toepasselijk recht", ["Op de dienstverlening is Nederlands recht van toepassing."]),
         ]
         cancel = "<ul><li>Kosteloos annuleren tot 24 uur vóór de afspraak.</li><li>Binnen 24 uur vindt geen restitutie plaats.</li><li>Een afspraak kan één keer kosteloos worden verzet.</li><li>Bij een no-show vervalt de afspraak zonder terugbetaling.</li></ul>"
