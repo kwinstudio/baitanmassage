@@ -553,6 +553,35 @@ def faq_block(items):
     ) + "</div>"
 
 
+def llms_txt():
+    """Korte, feitelijke samenvatting voor AI-zoekmachines (GEO), gebouwd uit dezelfde data als de site."""
+    L = [f"# {SITE['name']}", "",
+         f"> Thaise massagesalon aan het {SITE['street']}, {SITE['postal']} {SITE['city']} ({NEIGHBOURHOOD}). "
+         "Uitsluitend ontspannings- en wellnessmassages, geen erotische behandelingen.", "",
+         "## Praktisch",
+         f"- Adres: {SITE['street']}, {SITE['postal']} {SITE['city']}",
+         f"- Telefoon en WhatsApp: {SITE['phone_display']}",
+         f"- E-mail: {SITE['email']}",
+         "- Openingstijden: " + "; ".join(f"{h['label'].lower()} {h['opens']}–{h['closes']}" for h in HOURS),
+         f"- Online boeken: {DOMAIN}{BOOK_PATH}",
+         "- Betalen: pin of contant in de salon. Alle prijzen inclusief btw.",
+         "- Annuleren: kosteloos tot 24 uur vooraf.",
+         "- Gratis parkeren in de buurt; douchen na de massage mogelijk.",
+         f"- Google-reviews: gemiddeld {SITE['rating']} uit 5 ({SITE['review_count']} reviews, stand {SITE['review_as_of']})" if SITE.get('review_count') else "",
+         "", "## Behandelingen en prijzen (60 / 90 / 120 minuten)"]
+    for t in TREATMENTS:
+        url = f"{DOMAIN}/{t['slug']}" if t["page"] else f"{DOMAIN}/prijzen"
+        if t["solo"]:
+            L.append(f"- [{t['name']}]({url}): €{' / €'.join(map(str, t['solo']))} per persoon; duo €{' / €'.join(map(str, t['duo']))} voor twee. {t['short']}")
+        else:
+            L.append(f"- [{t['name']}]({url}): voor twee personen samen, vanaf €{min(t['duo'])}. {t['short']}")
+    L += ["", "## Pagina's",
+          f"- [Alle prijzen]({DOMAIN}/prijzen)", f"- [Afspraak maken]({DOMAIN}{BOOK_PATH})", f"- [Contact en route]({DOMAIN}/contact)",
+          f"- [Cadeaubon en spaarkaart]({DOMAIN}/cadeaubon)", f"- [Veelgestelde vragen]({DOMAIN}/veelgestelde-vragen)", f"- [Over Baitan]({DOMAIN}/over-baitan)",
+          "", "## Massagegids"] + [f"- [{a['title'].split(' | ')[0]}]({DOMAIN}/massagegids/{a['slug']})" for a in ARTICLES]
+    return "\n".join(x for x in L if x is not None) + "\n"
+
+
 def week_hours_json():
     idx = {"Sunday": 0, "Monday": 1, "Tuesday": 2, "Wednesday": 3, "Thursday": 4, "Friday": 5, "Saturday": 6}
     week = [None] * 7
@@ -710,9 +739,9 @@ def business_schema():
         },
         "hasMap": SITE["maps_url"],
         "geo": {"@type": "GeoCoordinates", "latitude": GEO[0], "longitude": GEO[1]},
-        "sameAs": [SITE["booking_url"]],
+        "sameAs": [x for x in [SITE["maps_url"], SITE["booking_url"]] if x],
         "containedInPlace": {"@type": "Place", "name": f"{NEIGHBOURHOOD}, {SITE['city']}"},
-        "areaServed": [{"@type": "City", "name": c} for c in ["Capelle aan den IJssel", "Rotterdam", "Krimpen aan den IJssel", "Nieuwerkerk aan den IJssel"]],
+        "areaServed": [{"@type": "City", "name": c} for c in [SITE["city"]] + NEARBY],
         "openingHoursSpecification": [
             {"@type": "OpeningHoursSpecification", "dayOfWeek": h["days"], "opens": h["opens"], "closes": h["closes"]} for h in HOURS
         ],
@@ -1661,6 +1690,7 @@ def main():
         for u, p, img in urls
     )
     write("sitemap.xml", f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">{sm}</urlset>\n')
+    write("llms.txt", llms_txt())
     write("robots.txt", f"User-agent: *\nAllow: /\n\nSitemap: {DOMAIN}/sitemap.xml\n")
     write("site.webmanifest", json.dumps({
         "name": SITE["name"], "short_name": "Baitan", "start_url": "/", "display": "browser",
