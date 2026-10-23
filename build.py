@@ -566,7 +566,9 @@ def llms_txt():
          f"- Online boeken: {DOMAIN}{BOOK_PATH}",
          "- Betalen: pin of contant in de salon. Alle prijzen inclusief btw.",
          "- Annuleren: kosteloos tot 24 uur vooraf.",
-         "- Gratis parkeren in de buurt; douchen na de massage mogelijk.",
+         "- Gratis parkeren in de buurt; dichtstbijzijnde metrostation: De Terp (Capelle aan den IJssel).",
+         "- Binnenlopen zonder afspraak kan, maar reserveren wordt aangeraden. Douchen na de massage mogelijk.",
+         "- Massage tijdens de zwangerschap: bel de salon voor informatie.",
          f"- Google-reviews: gemiddeld {SITE['rating']} uit 5 ({SITE['review_count']} reviews, stand {SITE['review_as_of']})" if SITE.get('review_count') else "",
          "", "## Behandelingen en prijzen (60 / 90 / 120 minuten)"]
     for t in TREATMENTS:
@@ -919,7 +921,7 @@ def page_home():
     <div class="wrap local-grid">
       <h2 id="locatie-title">Massage in {SITE['city']}</h2>
       <div class="local-copy">
-        <p>Baitan Thai Massage zit aan het {SITE['street']} in {NEIGHBOURHOOD}, {SITE['city']}, met gratis parkeren in de buurt. Ook vanuit {", ".join(NEARBY[:-1])} en {NEARBY[-1]} ben je er snel.</p>
+        <p>Baitan Thai Massage zit aan het {SITE['street']} in {NEIGHBOURHOOD}, {SITE['city']}, met gratis parkeren in de buurt; het dichtstbijzijnde metrostation is De Terp. Ook vanuit {", ".join(NEARBY[:-1])} en {NEARBY[-1]} ben je er snel.</p>
         <p>Zeven dagen per week open: {hours_short().replace("Ma–vr", "maandag tot en met vrijdag").replace("za–zo", "zaterdag en zondag").replace(" · ", ", ")}.</p>
         <p class="local-links"><a class="link" href="/thaise-massage-capelle-aan-den-ijssel">Thaise massage {icon('arrow')}</a><a class="link" href="/prijzen">Prijzen {icon('arrow')}</a><a class="link" {ext(SITE['route_url'])}>Route plannen {icon('arrow')}</a></p>
       </div>
@@ -1170,7 +1172,7 @@ def page_contact():
     <div class="wrap">
       {breadcrumbs(crumbs)}
       <h1 id="page-title">Contact en route</h1>
-      <p class="page-lead">Je vindt Baitan aan het Hollandsch Diep in Capelle aan den IJssel. Parkeren is gratis in de directe omgeving.</p>
+      <p class="page-lead">Je vindt Baitan aan het Hollandsch Diep in Capelle aan den IJssel. Parkeren is gratis in de directe omgeving. Met de metro stap je uit bij station De Terp.</p>
     </div>
   </section>
   <section class="section section-flush-top">
