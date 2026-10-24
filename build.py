@@ -464,7 +464,7 @@ def book_link(sid, text, label):
     """Prijs als link naar de agenda met die dienst al gekozen."""
     if not sid:
         return text
-    return f'<a class="book-price" href="{BOOK_PATH}?dienst={sid}#agenda" aria-label="{E(label)} boeken">{text}</a>'
+    return f'<a class="book-price" href="{BOOK_PATH}?dienst={sid}#agenda" aria-label="{E(_re.sub(r'<[^>]+>', '', text).strip())}: {E(label)} boeken">{text}</a>'
 
 
 def price_table(rows=None, caption="Prijzen per behandeling", show_duo=True, link=True):
@@ -756,7 +756,7 @@ def business_schema():
 
 
 def website_schema():
-    return {"@type": "WebSite", "@id": f"{DOMAIN}/#website", "url": DOMAIN + "/", "name": SITE["name"], "inLanguage": "nl-NL", "publisher": {"@id": BIZ_ID}}
+    return {"@type": "WebSite", "@id": f"{DOMAIN}/#website", "url": DOMAIN + "/", "name": SITE["name"], "alternateName": ["Baitan", "Baitan Massage", "baitanmassage.nl"], "inLanguage": "nl-NL", "publisher": {"@id": BIZ_ID}}
 
 
 def webpage_schema(path, title, description, page_type="WebPage"):
