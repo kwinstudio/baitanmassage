@@ -300,8 +300,7 @@ def head(title, description, path, og_image="og-image.jpg", schema=None, robots=
 <meta name="twitter:card" content="summary_large_image">
 <link rel="alternate" hreflang="nl-NL" href="{canonical}">
 {f'<meta name="google-site-verification" content="{E(SITE["google_verification"])}">' if SITE["google_verification"] else ""}
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="/icon-192.png" sizes="192x192" type="image/png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
 {preload_tags(preload_img, preload_sizes)}
