@@ -387,7 +387,7 @@ def footer():
     </div>
     <div class="footer-bottom">
       <span><span>© {datetime.date.today().year} {SITE['name']}</span> · <span>KVK {SITE['kvk']}</span> · <span>BTW {SITE['btw']}</span></span>
-      <span class="footer-legal"><a href="/voorwaarden">Huisregels &amp; voorwaarden</a><a href="/privacy">Privacy &amp; cookies</a><span class="footer-credit">Website door <a href="https://zichtwerfstudio.nl" target="_blank" rel="noopener">Zichtwerf Studio</a></span></span>
+      <span class="footer-legal"><a href="/voorwaarden">Huisregels &amp; voorwaarden</a><a href="/privacy">Privacy &amp; cookies</a><button class="footer-cookie" type="button" data-consent-open>Cookie-instellingen</button><span class="footer-credit">Website door <a href="https://zichtwerfstudio.nl" target="_blank" rel="noopener">Zichtwerf Studio</a></span></span>
     </div>
     <p class="footer-note">De foto bovenaan de homepage toont de ontvangstruimte van Baitan. De andere foto's zijn sfeerbeelden en tonen niet de behandelruimtes of medewerkers van Baitan.</p>
   </div>
@@ -400,6 +400,14 @@ def footer():
 </div>
 <a class="whatsapp-float" {ext(SITE['whatsapp_question_url'])} aria-label="Stuur Baitan een WhatsApp-bericht">{WHATSAPP}</a>
 </aside>
+<div class="consent" data-consent hidden role="dialog" aria-labelledby="consent-title" aria-describedby="consent-text">
+  <p class="consent-title" id="consent-title">Kaart van Google Maps tonen?</p>
+  <p id="consent-text">Dan zie je meteen waar Baitan zit. Google kan daarbij cookies plaatsen. Meer in ons <a href="/privacy#cookies">privacy- en cookiebeleid</a>.</p>
+  <div class="consent-actions">
+    <button class="btn btn-primary btn-sm" type="button" data-consent-choice="maps">Kaart tonen</button>
+    <button class="btn btn-outline btn-sm" type="button" data-consent-choice="none">Nee, bedankt</button>
+  </div>
+</div>
 <script src="/app.js?v={JS_V}" defer></script>
 </body>
 </html>"""
@@ -908,7 +916,7 @@ def page_home():
       </div>
       <div class="reviews-copy">
         <h2 id="reviews-title">Gemiddeld {SITE['rating']} uit 5 op Google</h2>
-        <p>Op basis van {SITE['review_count']} Google-reviews (stand {SITE['review_as_of']}). De reviews staan op Google en worden niet door Baitan gecontroleerd. Lees ze zelf, of laat na je bezoek een review achter.</p>
+        <p>Op basis van {SITE['review_count']} Google-reviews (stand {SITE['review_as_of']}).</p>
         <div class="btn-row">
           <a class="btn btn-light" {ext(SITE['maps_url'])}>Lees de reviews</a>
           <a class="btn btn-ghost-light" {ext(SITE['review_write_url'])}>Schrijf een review</a>
@@ -1189,7 +1197,7 @@ def page_contact():
 {footer()}"""
 
 
-LEGAL_UPDATED = "2026-10-20"  # aanpassen als de tekst van voorwaarden of privacy wijzigt
+LEGAL_UPDATED = "2026-10-24"
 
 
 def page_legal(kind):
@@ -1208,6 +1216,7 @@ def page_legal(kind):
             ("Aansprakelijkheid", ["Laat waardevolle spullen bij voorkeur thuis. Baitan is niet aansprakelijk voor verlies, diefstal of beschadiging van persoonlijke eigendommen, tenzij dit het gevolg is van opzet of grove nalatigheid van Baitan of haar medewerkers.", "Is Baitan voor andere schade aansprakelijk, dan is die aansprakelijkheid beperkt tot het bedrag dat de aansprakelijkheidsverzekering uitkeert, of als de verzekering niet uitkeert, tot het bedrag van de geboekte behandeling. Deze beperking geldt niet bij opzet of grove nalatigheid en niet bij letselschade."]),
             ("Cadeaubonnen", ["Een cadeaubon is minimaal 2 jaar geldig vanaf de datum van aankoop. De uiterste datum staat op de bon. Cadeaubonnen zijn niet inwisselbaar voor geld."]),
             ("Overmacht", ["Moet Baitan een afspraak annuleren of verzetten door ziekte, een storing of een andere onvoorziene omstandigheid, dan laten we je dat zo snel mogelijk weten. Je kiest dan zelf: een nieuwe afspraak of volledige terugbetaling van wat je al hebt betaald."]),
+            ("Reviews", ["Het gemiddelde cijfer en het aantal reviews op deze website komen van Google. De reviews staan op Google en worden niet door Baitan gecontroleerd of geselecteerd."]),
             ("Foto's op deze website", ["De foto bovenaan de homepage toont de ontvangstruimte van Baitan. De overige foto's op deze website zijn kunstmatig gegenereerde sfeerbeelden van de behandelingen. Ze tonen niet de behandelruimtes of medewerkers van Baitan."]),
             ("Toepasselijk recht", ["Op de dienstverlening is Nederlands recht van toepassing."]),
         ]
@@ -1239,8 +1248,8 @@ def page_legal(kind):
                 "<li>Administratie: 7 jaar (wettelijke bewaarplicht).</li>"
                 "<li>Technische websitegegevens: zo kort mogelijk, alleen zolang dat nodig is voor beveiliging en storingen.</li>"
                 "</ul>"]),
-            ("Google Maps", ["De kaart van Google Maps wordt pas geladen nadat je op ‘Kaart laden’ klikt. Daarna maakt je browser verbinding met Google en kan Google cookies plaatsen en gegevens verwerken volgens het eigen privacy- en cookiebeleid."]),
-            ("Cookies", ["Deze website plaatst geen marketing- of analyticscookies. Lettertypes worden vanaf onze eigen server geladen, niet via Google.", "Op de pagina Afspraak maken is de online agenda van Salonized ingebouwd. Die laadt pas als je die pagina opent en kan functionele cookies plaatsen die nodig zijn om te boeken. WhatsApp en Google Maps gebruiken pas cookies als je ze zelf opent."]),
+            ("Google Maps", ["Bij je eerste bezoek vragen we of je de kaart van Google Maps wilt zien. Kies je ‘Kaart tonen’, dan wordt de kaart voortaan automatisch geladen; kies je ‘Nee, bedankt’, dan blijft hij uit tot je zelf op ‘Kaart laden’ klikt. Laadt de kaart, dan maakt je browser verbinding met Google en kan Google cookies plaatsen en gegevens verwerken volgens het eigen privacy- en cookiebeleid. Je keuze wordt alleen in je eigen browser bewaard en is altijd te wijzigen via ‘Cookie-instellingen’ onderaan elke pagina."]),
+            ("Cookies", ["Deze website plaatst geen marketing- of analyticscookies. Lettertypes worden vanaf onze eigen server geladen, niet via Google.", "Op de pagina Afspraak maken is de online agenda van Salonized ingebouwd. Die laadt pas als je die pagina opent en kan functionele cookies plaatsen die nodig zijn om te boeken. WhatsApp gebruikt pas cookies als je het zelf opent; Google Maps alleen als je daar toestemming voor geeft."]),
             ("Je rechten", [f"Je hebt recht op inzage, correctie, verwijdering, beperking van de verwerking en overdracht van je gegevens. Je kunt bezwaar maken tegen verwerking op basis van gerechtvaardigd belang, en een gegeven toestemming altijd intrekken. Stuur je verzoek naar <a href=\"mailto:{SITE['email']}\">{SITE['email']}</a>; we reageren binnen een maand.", "Ben je het niet eens met hoe we met je gegevens omgaan, dan kun je een klacht indienen bij de <a href=\"https://autoriteitpersoonsgegevens.nl\" rel=\"noopener\">Autoriteit Persoonsgegevens</a>."]),
         ]
         cancel = ""
@@ -1250,7 +1259,7 @@ def page_legal(kind):
     secs = []
     for h, ps in sections:
         inner = cancel if ps is None else "".join(p if p.startswith("<ul") else f"<p>{p}</p>" for p in ps)
-        secs.append(f"<h2>{h}</h2>{inner}")
+        secs.append(f'<h2 id="{_re.sub(r"[^a-z0-9]+", "-", h.lower()).strip("-")}">{h}</h2>{inner}')
     contact = f"<h2>Contact</h2><p>{SITE['name']}, {SITE['street']}, {SITE['postal']} {SITE['city']}. Telefoon <a href=\"tel:{SITE['phone_href']}\">{SITE['phone_display']}</a>, e-mail <a href=\"mailto:{SITE['email']}\">{SITE['email']}</a>. KVK {SITE['kvk']}.</p>"
     return f"""{head(title, desc, path, schema=schema, robots=robots)}
 <body>
