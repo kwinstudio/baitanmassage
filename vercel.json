@@ -26,12 +26,12 @@
     },
     {
       "source": "/online-reserveren",
-      "destination": "https://baitan-thai-massage.salonized.com/services",
+      "destination": "/afspraak",
       "permanent": true
     },
     {
       "source": "/online-reserveren/",
-      "destination": "https://baitan-thai-massage.salonized.com/services",
+      "destination": "/afspraak",
       "permanent": true
     },
     {
@@ -127,6 +127,76 @@
     {
       "source": "/assets/images/schoudermassage-ontspannen.webp",
       "destination": "/assets/images/massagetafel-thaise-zijde.webp",
+      "permanent": true
+    },
+    {
+      "source": "/booking",
+      "destination": "/afspraak",
+      "permanent": true
+    },
+    {
+      "source": "/booking/",
+      "destination": "/afspraak",
+      "permanent": true
+    },
+    {
+      "source": "/booking-my-account",
+      "destination": "/afspraak",
+      "permanent": true
+    },
+    {
+      "source": "/booking-my-account/",
+      "destination": "/afspraak",
+      "permanent": true
+    },
+    {
+      "source": "/thank-you-for-booking",
+      "destination": "/afspraak",
+      "permanent": true
+    },
+    {
+      "source": "/thank-you-for-booking/",
+      "destination": "/afspraak",
+      "permanent": true
+    },
+    {
+      "source": "/hello-world",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/hello-world/",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/sln_attendant/:path*",
+      "destination": "/afspraak",
+      "permanent": true
+    },
+    {
+      "source": "/category/:path*",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/author/:path*",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/wp-login.php",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/feed",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/feed/",
+      "destination": "/",
       "permanent": true
     }
   ],
