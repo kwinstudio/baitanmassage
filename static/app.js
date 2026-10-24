@@ -46,10 +46,12 @@
     mqDesktop.addEventListener?.('change', (e) => { if (e.matches) setOpen(false); });
   }
 
-  /* Google Maps pas laden na toestemming */
-  $$('[data-load-map]').forEach((btn) => btn.addEventListener('click', () => {
-    const shell = btn.closest('[data-map]');
-    if (!shell) return;
+  /* Google Maps: laden na toestemming (eenmalig via de knop, of altijd via de cookiekeuze) */
+  const CONSENT_KEY = 'baitan-consent';
+  const getConsent = () => { try { return localStorage.getItem(CONSENT_KEY); } catch (e) { return null; } };
+  const setConsent = (v) => { try { localStorage.setItem(CONSENT_KEY, v); } catch (e) { /* privémodus: keuze geldt alleen nu */ } };
+  const loadMap = (shell) => {
+    if (!shell || !shell.isConnected) return;
     const iframe = document.createElement('iframe');
     iframe.className = 'map-frame';
     iframe.title = 'Kaart: Baitan Thai Massage, Hollandsch Diep 71–73, Capelle aan den IJssel';
@@ -57,7 +59,25 @@
     iframe.referrerPolicy = 'no-referrer-when-downgrade';
     iframe.src = shell.dataset.map;
     shell.replaceWith(iframe);
-  }));
+  };
+  const loadAllMaps = () => $$('[data-map]').forEach(loadMap);
+  $$('[data-load-map]').forEach((btn) => btn.addEventListener('click', () => loadMap(btn.closest('[data-map]'))));
+
+  const banner = $('[data-consent]');
+  if (banner) {
+    const show = () => { banner.hidden = false; document.body.classList.add('has-consent'); };
+    const hide = () => { banner.hidden = true; document.body.classList.remove('has-consent'); };
+    const choice = getConsent();
+    if (choice === 'maps') loadAllMaps();
+    else if (!choice) show();
+    $$('[data-consent-choice]', banner).forEach((b) => b.addEventListener('click', () => {
+      const v = b.dataset.consentChoice;
+      setConsent(v);
+      hide();
+      if (v === 'maps') loadAllMaps();
+    }));
+    $$('[data-consent-open]').forEach((b) => b.addEventListener('click', show));
+  }
 
   /* Live openingsstatus (tijd in Nederland) */
   const statusEls = $$('[data-open-status]');
