@@ -778,7 +778,6 @@ def webpage_schema(path, title, description, page_type="WebPage"):
         "inLanguage": "nl-NL",
         "isPartOf": {"@id": f"{DOMAIN}/#website"},
         "about": {"@id": BIZ_ID},
-        "dateModified": TODAY,
     }
 
 
@@ -1694,8 +1693,10 @@ def main():
     urls = [("/", "1.0", hero_img), ("/massages", "0.9", None), ("/prijzen", "0.9", None)] + [(f'/{t["slug"]}', "0.8", t["image"]) for t in PAGES] + [("/contact", "0.8", None), (BOOK_PATH, "0.8", None)] \
         + [(f"/{lp['slug']}", "0.7", lp["image"]) for lp in LANDINGS] + [("/veelgestelde-vragen", "0.6", None), ("/massagegids", "0.6", None)] \
         + [(f"/massagegids/{a['slug']}", "0.6", a["image"]) for a in ARTICLES]
+    # lastmod alleen waar we een echte wijzigingsdatum hebben (artikelen); een bouwdatum op elke pagina negeert Google
+    art_dates = {f"/massagegids/{a['slug']}": a.get("updated") or a.get("date") for a in ARTICLES}
     sm = "".join(
-        f"<url><loc>{DOMAIN}{u}</loc><lastmod>{TODAY}</lastmod><priority>{p}</priority>"
+        f"<url><loc>{DOMAIN}{u}</loc>" + (f"<lastmod>{art_dates[u]}</lastmod>" if art_dates.get(u) else "") + f"<priority>{p}</priority>"
         + (f"<image:image><image:loc>{DOMAIN}/assets/images/{img}.webp</image:loc></image:image>" if img else "")
         + "</url>"
         for u, p, img in urls
