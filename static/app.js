@@ -54,7 +54,7 @@
     if (!shell || !shell.isConnected) return;
     const iframe = document.createElement('iframe');
     iframe.className = 'map-frame';
-    iframe.title = 'Kaart: Baitan Thai Massage, Hollandsch Diep 71–73, Capelle aan den IJssel';
+    iframe.title = 'Kaart: Baitan Thai Massage, Hollandsch Diep 71, Capelle aan den IJssel';
     iframe.loading = 'lazy';
     iframe.referrerPolicy = 'no-referrer-when-downgrade';
     iframe.src = shell.dataset.map;

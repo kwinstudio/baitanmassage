@@ -4,8 +4,8 @@
   "phoneDisplay": "06 83 936 366",
   "phoneHref": "+31683936366",
   "email": "baitanmassage@gmail.com",
-  "address": "Hollandsch Diep 71–73, 2904 EP Capelle aan den IJssel",
-  "addressLine1": "Hollandsch Diep 71–73",
+  "address": "Hollandsch Diep 71, 2904 EP Capelle aan den IJssel",
+  "addressLine1": "Hollandsch Diep 71",
   "postalCity": "2904 EP Capelle aan den IJssel",
   "kvk": "84338245",
   "btw": "NL003949907B52",
@@ -91,7 +91,7 @@
     },
     {
       "question": "Waar zit Baitan Thai Massage?",
-      "answer": "Aan het Hollandsch Diep 71–73, 2904 EP Capelle aan den IJssel."
+      "answer": "Aan het Hollandsch Diep 71, 2904 EP Capelle aan den IJssel."
     },
     {
       "question": "Kan ik online boeken?",
@@ -107,8 +107,8 @@
     "weekendClose": "20:00"
   },
   "contact": {
-    "routeUrl": "https://www.google.com/maps/dir/?api=1&destination=Hollandsch+Diep+71-73%2C+2904+EP+Capelle+aan+den+IJssel",
-    "mapEmbedUrl": "https://www.google.com/maps?q=Hollandsch%20Diep%2071-73%2C%202904%20EP%20Capelle%20aan%20den%20IJssel&output=embed"
+    "routeUrl": "https://www.google.com/maps/dir/?api=1&destination=Hollandsch+Diep+71%2C+2904+EP+Capelle+aan+den+IJssel",
+    "mapEmbedUrl": "https://www.google.com/maps?q=Hollandsch%20Diep%2071%2C%202904%20EP%20Capelle%20aan%20den%20IJssel&output=embed"
   },
   "seo": {
     "title": "Thaise massage Capelle aan den IJssel | Baitan Thai Massage",
