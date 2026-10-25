@@ -692,7 +692,7 @@ def contact_block(h_tag="h2", title="Bezoek Baitan"):
   <div class="map-consent" data-map="{E(SITE['map_embed_url'])}">
     <div class="map-consent-inner">
       {icon('pin')}
-      <p class="map-title">Hollandsch Diep 71–73, Capelle aan den IJssel</p>
+      <p class="map-title">Hollandsch Diep 71, Capelle aan den IJssel</p>
       <p>De kaart van Google Maps laden we pas als je daarvoor kiest. Laad je de kaart, dan maakt je browser verbinding met Google en kan Google cookies plaatsen.</p>
       <button class="btn btn-outline btn-sm" type="button" data-load-map>Kaart laden</button>
     </div>
@@ -1047,7 +1047,7 @@ def page_treatment(t):
     <div class="wrap faq-grid">
       <div>
         <h2 id="goed-title">Goed om te weten</h2>
-        <p>Baitan zit aan het Hollandsch Diep 71–73 in Capelle aan den IJssel, met gratis parkeren in de buurt.</p>
+        <p>Baitan zit aan het Hollandsch Diep 71 in Capelle aan den IJssel, met gratis parkeren in de buurt.</p>
         {facilities_list()}
       </div>
       {faq_block(faq_items)}
@@ -1168,7 +1168,7 @@ def page_prijzen():
 def page_contact():
     path = "/contact"
     title = "Contact en route | Baitan Thai Massage Capelle"
-    desc = "Baitan Thai Massage, Hollandsch Diep 71–73 in Capelle aan den IJssel. Bel 06 83 936 366, stuur een WhatsApp of plan je route. Gratis parkeren."
+    desc = "Baitan Thai Massage, Hollandsch Diep 71 in Capelle aan den IJssel. Bel 06 83 936 366, stuur een WhatsApp of plan je route. Gratis parkeren."
     crumbs = [("Home", "/"), ("Contact", path)]
     schema = [business_schema(), website_schema(), webpage_schema(path, title, desc, "ContactPage"), crumb_schema(crumbs)]
     return f"""{head(title, desc, path, schema=schema)}

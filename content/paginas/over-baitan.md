@@ -14,7 +14,7 @@ faq: Biedt Baitan erotische massages aan? | Nee. Baitan biedt uitsluitend ontspa
 faq: Kan ik na de massage douchen? | Ja, dat kan in de salon.
 faq: Hoe kan ik betalen? | Je betaalt in de salon met pin of contant.
 ---
-Baitan Thai Massage is een Thaise massagesalon aan het Hollandsch Diep 71–73 in Oostgaarde, Capelle aan den IJssel. Hier laat je de drukte achter je en krijg je alle aandacht.
+Baitan Thai Massage is een Thaise massagesalon aan het Hollandsch Diep 71 in Oostgaarde, Capelle aan den IJssel. Hier laat je de drukte achter je en krijg je alle aandacht.
 
 ## Wat we doen bij Baitan
 
