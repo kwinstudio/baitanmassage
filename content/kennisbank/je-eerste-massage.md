@@ -1,4 +1,5 @@
 ---
+updated: 2026-10-25
 slug: je-eerste-massage
 order: 3
 title: Je eerste massage: wat kun je verwachten? | Baitan
@@ -9,7 +10,7 @@ image: massagetafel-thaise-zijde
 imageAlt: Klaargemaakte massagetafel met Thaise zijde, handdoek en lotus
 date: 2026-10-08
 related: thai, aroma
-faq: Moet ik me helemaal uitkleden? | Nee. Meestal houd je je ondergoed aan en word je toegedekt. Twijfel je? Vraag het gerust in de salon.
+faq: Moet ik me helemaal uitkleden? | Nee. Je houdt altijd je onderbroek aan en wordt toegedekt.
 faq: Mag ik praten tijdens de massage? | Natuurlijk. Veel mensen worden vanzelf stil, maar praten of iets aangeven mag altijd.
 faq: Hoe lang van tevoren moet ik er zijn? | Een paar minuten voor je afspraak, zodat je op tijd begint. Kom je te laat, dan wordt de behandeltijd korter.
 ---
@@ -35,7 +36,7 @@ Bij twijfel over je gezondheid overleg je eerst met je huisarts.
 
 ## Tijdens de massage
 
-Bij een oliemassage lig je op een behandeltafel, meestal in je ondergoed en toegedekt, zodat alleen het deel dat gemasseerd wordt vrij ligt.
+Bij een oliemassage lig je op een behandeltafel. Je houdt altijd je onderbroek aan en wordt toegedekt, zodat alleen het deel dat gemasseerd wordt vrij ligt.
 
 De druk wordt op jou afgestemd. Te hard, te zacht, te warm of te koud, of voel je je ergens niet prettig bij? Zeg het gewoon, want alleen jij weet wat prettig voelt.
 
