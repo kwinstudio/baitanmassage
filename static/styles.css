@@ -684,3 +684,15 @@ body.has-consent .mobile-bar,body.has-consent .whatsapp-float{visibility:hidden}
 .footer-cookie{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer;text-decoration:none}
 .footer-cookie:hover{color:var(--on-dark);text-decoration:underline;text-underline-offset:3px}
 @media (prefers-reduced-motion:no-preference){.consent:not([hidden]){animation:hero-rise .5s var(--ease-out) both}}
+/* Geruststelling en Google-score bij boekknoppen */
+.reassure{display:flex;align-items:flex-start;gap:8px;margin-top:14px;font-size:.88rem;line-height:1.45;color:var(--muted)}
+.reassure .icon{width:16px;height:16px;flex:none;margin-top:2px;color:var(--olive-700)}
+.reassure-light{color:rgba(246,241,230,.82)}
+.reassure-light .icon{color:var(--gold-soft)}
+.proof{margin-top:8px;font-size:.88rem}
+.proof a{display:inline-flex;align-items:center;gap:8px;min-height:32px;color:var(--ink-2);text-decoration:none}
+.proof a:hover span{text-decoration:underline;text-underline-offset:3px}
+.proof .stars{color:var(--gold);font-size:.8rem;letter-spacing:1px}
+.proof-light a{color:rgba(246,241,230,.9)}
+.cta-actions .reassure{flex-basis:100%;margin-top:4px}
+.side-card .reassure{margin-top:12px}
