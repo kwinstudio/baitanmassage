@@ -5,6 +5,23 @@
   "trailingSlash": false,
   "redirects": [
     {
+      "source": "/afspraak",
+      "has": [
+        {
+          "type": "query",
+          "key": "dienst",
+          "value": "(?<dienst>\\d{4,10})"
+        }
+      ],
+      "destination": "https://widget.salonized.com/widget?color=%23c9bba2&language=nl&company=R5QhiihtyQcDjWc76BD7whTk&standalone=true&services[]=:dienst",
+      "permanent": false
+    },
+    {
+      "source": "/afspraak",
+      "destination": "https://widget.salonized.com/widget?color=%23c9bba2&language=nl&company=R5QhiihtyQcDjWc76BD7whTk&standalone=true",
+      "permanent": false
+    },
+    {
       "source": "/kennisbank",
       "destination": "/massagegids",
       "permanent": true
@@ -26,12 +43,12 @@
     },
     {
       "source": "/online-reserveren",
-      "destination": "/afspraak",
+      "destination": "https://widget.salonized.com/widget?color=%23c9bba2&language=nl&company=R5QhiihtyQcDjWc76BD7whTk&standalone=true",
       "permanent": true
     },
     {
       "source": "/online-reserveren/",
-      "destination": "/afspraak",
+      "destination": "https://widget.salonized.com/widget?color=%23c9bba2&language=nl&company=R5QhiihtyQcDjWc76BD7whTk&standalone=true",
       "permanent": true
     },
     {
@@ -131,32 +148,32 @@
     },
     {
       "source": "/booking",
-      "destination": "/afspraak",
+      "destination": "https://widget.salonized.com/widget?color=%23c9bba2&language=nl&company=R5QhiihtyQcDjWc76BD7whTk&standalone=true",
       "permanent": true
     },
     {
       "source": "/booking/",
-      "destination": "/afspraak",
+      "destination": "https://widget.salonized.com/widget?color=%23c9bba2&language=nl&company=R5QhiihtyQcDjWc76BD7whTk&standalone=true",
       "permanent": true
     },
     {
       "source": "/booking-my-account",
-      "destination": "/afspraak",
+      "destination": "https://widget.salonized.com/widget?color=%23c9bba2&language=nl&company=R5QhiihtyQcDjWc76BD7whTk&standalone=true",
       "permanent": true
     },
     {
       "source": "/booking-my-account/",
-      "destination": "/afspraak",
+      "destination": "https://widget.salonized.com/widget?color=%23c9bba2&language=nl&company=R5QhiihtyQcDjWc76BD7whTk&standalone=true",
       "permanent": true
     },
     {
       "source": "/thank-you-for-booking",
-      "destination": "/afspraak",
+      "destination": "https://widget.salonized.com/widget?color=%23c9bba2&language=nl&company=R5QhiihtyQcDjWc76BD7whTk&standalone=true",
       "permanent": true
     },
     {
       "source": "/thank-you-for-booking/",
-      "destination": "/afspraak",
+      "destination": "https://widget.salonized.com/widget?color=%23c9bba2&language=nl&company=R5QhiihtyQcDjWc76BD7whTk&standalone=true",
       "permanent": true
     },
     {
@@ -171,7 +188,7 @@
     },
     {
       "source": "/sln_attendant/:path*",
-      "destination": "/afspraak",
+      "destination": "https://widget.salonized.com/widget?color=%23c9bba2&language=nl&company=R5QhiihtyQcDjWc76BD7whTk&standalone=true",
       "permanent": true
     },
     {
