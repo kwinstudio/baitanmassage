@@ -216,13 +216,19 @@ def euro(n):
     return f"€{n}"
 
 
-BOOK_PATH = "/afspraak"
 SALONIZED_COMPANY = _site.get("booking", {}).get("salonizedCompany", "R5QhiihtyQcDjWc76BD7whTk")
+# Boeken gaat rechtstreeks naar de online agenda van Salonized (volledig scherm)
+BOOK_URL = f"https://widget.salonized.com/widget?color=%23c9bba2&language=nl&company={SALONIZED_COMPANY}&standalone=true"
 
 
-def book():
-    """Attributen voor 'Afspraak maken': naar de eigen boekpagina met de Salonized-agenda."""
-    return f'href="{BOOK_PATH}#agenda"'
+def book_url(sid=None):
+    """Salonized-agenda, optioneel met de behandeling al gekozen."""
+    return BOOK_URL + (f"&services[]={sid}" if sid else "")
+
+
+def book(sid=None):
+    """Attributen voor 'Afspraak maken': opent de online agenda van Salonized."""
+    return f'href="{E(book_url(sid))}" data-book'
 
 
 def ext(url):
@@ -309,7 +315,7 @@ def head(title, description, path, og_image="og-image.jpg", schema=None, robots=
 <link rel="preload" href="/fonts/newsreader.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/figtree.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/styles.css?v={CSS_V}">
-{('<link rel="preconnect" href="https://widget.salonized.com" crossorigin>' + chr(10) + '<link rel="preconnect" href="https://static-widget.salonized.com">') if path == BOOK_PATH else '<link rel="prefetch" href="/afspraak">'}
+<link rel="preconnect" href="https://widget.salonized.com" crossorigin>
 {ld}
 </head>"""
 
@@ -474,7 +480,7 @@ def book_link(sid, text, label):
     """Prijs als link naar de agenda met die dienst al gekozen."""
     if not sid:
         return text
-    return f'<a class="book-price" href="{BOOK_PATH}?dienst={sid}#agenda" aria-label="{E(_re.sub(r'<[^>]+>', '', text).strip())}: {E(label)} boeken">{text}</a>'
+    return f'<a class="book-price" href="{E(book_url(sid))}" aria-label="{E(_re.sub(r'<[^>]+>', '', text).strip())}: {E(label)} boeken">{text}</a>'
 
 
 def price_table(rows=None, caption="Prijzen per behandeling", show_duo=True, link=True):
@@ -572,7 +578,7 @@ def llms_txt():
          f"- Telefoon en WhatsApp: {SITE['phone_display']}",
          f"- E-mail: {SITE['email']}",
          "- Openingstijden: " + "; ".join(f"{h['label'].lower()} {h['opens']}–{h['closes']}" for h in HOURS),
-         f"- Online boeken: {DOMAIN}{BOOK_PATH}",
+         f"- Online boeken (Salonized): {BOOK_URL}",
          "- Betalen: pin of contant in de salon. Alle prijzen inclusief btw.",
          "- Annuleren: kosteloos tot 24 uur vooraf.",
          "- Gratis parkeren in de buurt; dichtstbijzijnde metrostation: De Terp (Capelle aan den IJssel).",
@@ -587,7 +593,7 @@ def llms_txt():
         else:
             L.append(f"- [{t['name']}]({url}): voor twee personen samen, vanaf €{min(t['duo'])}. {t['short']}")
     L += ["", "## Pagina's",
-          f"- [Alle prijzen]({DOMAIN}/prijzen)", f"- [Afspraak maken]({DOMAIN}{BOOK_PATH})", f"- [Contact en route]({DOMAIN}/contact)",
+          f"- [Alle prijzen]({DOMAIN}/prijzen)", f"- [Afspraak maken]({BOOK_URL})", f"- [Contact en route]({DOMAIN}/contact)",
           f"- [Cadeaubon en spaarkaart]({DOMAIN}/cadeaubon)", f"- [Veelgestelde vragen]({DOMAIN}/veelgestelde-vragen)", f"- [Over Baitan]({DOMAIN}/over-baitan)",
           "", "## Massagegids"] + [f"- [{a['title'].split(' | ')[0]}]({DOMAIN}/massagegids/{a['slug']})" for a in ARTICLES]
     return "\n".join(x for x in L if x is not None) + "\n"
@@ -775,7 +781,7 @@ def business_schema():
             {"@type": "LocationFeatureSpecification", "name": "Gratis parkeren", "value": True},
         ],
         "hasOfferCatalog": {"@type": "OfferCatalog", "name": "Massages", "itemListElement": offers},
-        "potentialAction": {"@type": "ReserveAction", "target": DOMAIN + BOOK_PATH, "name": "Afspraak maken"},
+        "potentialAction": {"@type": "ReserveAction", "target": BOOK_URL, "name": "Afspraak maken"},
     }
 
 
@@ -986,7 +992,7 @@ def hero_prices(t):
     ids = t["sid_duo"] if t["id"] == "duo" else t["sid"]
     def chip(m, p, i):
         inner = f"<span>{m} min</span><strong>€{p}</strong>"
-        return f'<li><a href="{BOOK_PATH}?dienst={i}#agenda" aria-label="{m} minuten voor €{p} boeken">{inner}</a></li>' if i else f"<li>{inner}</li>"
+        return f'<li><a href="{E(book_url(i))}" aria-label="{m} minuten voor €{p} boeken">{inner}</a></li>' if i else f"<li>{inner}</li>"
     items = "".join(chip(m, p, i) for m, p, i in zip(t["durations"], prices, ids) if p)
     if t["id"] == "duo":
         return f'<p class="hero-prices-label">Voor twee personen samen, vanaf</p><ul class="hero-prices" aria-label="Prijs voor twee personen samen, vanaf">{items}</ul>'
@@ -1012,7 +1018,7 @@ def page_treatment(t):
         "provider": {"@id": BIZ_ID},
         "areaServed": {"@type": "City", "name": SITE["city"]},
         "offers": [
-            {"@type": "Offer", "name": f'{t["name"]} {d} minuten', "price": str((t["duo"] if is_duo else t["solo"])[i]), "priceCurrency": "EUR", "url": DOMAIN + BOOK_PATH}
+            {"@type": "Offer", "name": f'{t["name"]} {d} minuten', "price": str((t["duo"] if is_duo else t["solo"])[i]), "priceCurrency": "EUR", "url": book_url((t["sid_duo"] if is_duo else t["sid"])[i])}
             for i, d in enumerate(DURATIONS)
         ],
     }
@@ -1251,7 +1257,7 @@ def page_legal(kind):
                 "<li><strong>Website</strong>: bij elk bezoek verwerkt onze hostingpartij technische gegevens zoals IP-adres, browser en tijdstip, om de website veilig en werkend te houden. Grondslag: gerechtvaardigd belang (art. 6 lid 1 sub f AVG).</li>"
                 "</ul>"]),
             ("Wie je gegevens ontvangt", ["<ul>"
-                "<li>Salonized: online agenda (ingebouwd op de pagina Afspraak maken) en klantadministratie, in opdracht van Baitan.</li>"
+                "<li>Salonized: online agenda (de knoppen ‘Afspraak maken’ openen de agenda op de website van Salonized) en klantadministratie, in opdracht van Baitan.</li>"
                 "<li>Vercel Inc.: hosting van deze website.</li>"
                 "<li>WhatsApp (Meta): alleen als je ons via WhatsApp benadert. WhatsApp is zelf verantwoordelijk voor de eigen verwerking.</li>"
                 "<li>Google: alleen als je zelf de kaart laadt of op een Google-link klikt.</li>"
@@ -1266,7 +1272,7 @@ def page_legal(kind):
                 "<li>Technische websitegegevens: zo kort mogelijk, alleen zolang dat nodig is voor beveiliging en storingen.</li>"
                 "</ul>"]),
             ("Google Maps", ["Bij je eerste bezoek vragen we of je de kaart van Google Maps wilt zien. Kies je ‘Kaart tonen’, dan wordt de kaart voortaan automatisch geladen; kies je ‘Nee, bedankt’, dan blijft hij uit tot je zelf op ‘Kaart laden’ klikt. Laadt de kaart, dan maakt je browser verbinding met Google en kan Google cookies plaatsen en gegevens verwerken volgens het eigen privacy- en cookiebeleid. Je keuze wordt alleen in je eigen browser bewaard en is altijd te wijzigen via ‘Cookie-instellingen’ onderaan elke pagina."]),
-            ("Cookies", ["Deze website plaatst geen marketing- of analyticscookies. Lettertypes worden vanaf onze eigen server geladen, niet via Google.", "Op de pagina Afspraak maken is de online agenda van Salonized ingebouwd. Die laadt pas als je die pagina opent en kan functionele cookies plaatsen die nodig zijn om te boeken. WhatsApp gebruikt pas cookies als je het zelf opent; Google Maps alleen als je daar toestemming voor geeft."]),
+            ("Cookies", ["Deze website plaatst geen marketing- of analyticscookies. Lettertypes worden vanaf onze eigen server geladen, niet via Google.", "Online boeken gaat via de website van Salonized; daar kan Salonized functionele cookies plaatsen die nodig zijn om te boeken. WhatsApp gebruikt pas cookies als je het zelf opent; Google Maps alleen als je daar toestemming voor geeft."]),
             ("Je rechten", [f"Je hebt recht op inzage, correctie, verwijdering, beperking van de verwerking en overdracht van je gegevens. Je kunt bezwaar maken tegen verwerking op basis van gerechtvaardigd belang, en een gegeven toestemming altijd intrekken. Stuur je verzoek naar <a href=\"mailto:{SITE['email']}\">{SITE['email']}</a>; we reageren binnen een maand.", "Ben je het niet eens met hoe we met je gegevens omgaan, dan kun je een klacht indienen bij de <a href=\"https://autoriteitpersoonsgegevens.nl\" rel=\"noopener\">Autoriteit Persoonsgegevens</a>."]),
         ]
         cancel = ""
@@ -1290,42 +1296,6 @@ def page_legal(kind):
     </div>
   </section>
   <section class="section section-flush-top"><div class="wrap"><div class="prose legal">{"".join(secs)}{contact}</div></div></section>
-</main>
-{footer()}"""
-
-
-def page_afspraak():
-    path = BOOK_PATH
-    title = "Afspraak maken | Baitan Thai Massage Capelle"
-    desc = "Boek direct online een Thaise massage, aromatherapie, sportmassage, hot stone, body scrub of duo-massage bij Baitan in Capelle aan den IJssel."
-    crumbs = [("Home", "/"), ("Afspraak maken", path)]
-    schema = [business_schema(), website_schema(), webpage_schema(path, title, desc), crumb_schema(crumbs)]
-    return f"""{head(title, desc, path, schema=schema)}
-<body class="page-booking">
-{header(path)}
-<main id="main">
-  <section class="page-hero page-hero-plain booking-hero" aria-labelledby="page-title">
-    <div class="wrap booking-wrap">
-      {breadcrumbs(crumbs)}
-      <h1 id="page-title">Afspraak maken</h1>
-      <p class="page-lead">Kies je behandeling, de duur en een tijd die jou uitkomt. Je betaalt in de salon met pin of contant.</p>
-      {reassure()}
-      {proof()}
-      <ul class="booking-facts">
-        <li>{icon('clock')}<span data-open-status data-week="{week_hours_json()}">{hours_short()}</span></li>
-        <li>{icon('phone')}<a href="tel:{SITE['phone_href']}">{SITE['phone_display']}</a></li>
-        <li>{WHATSAPP}<a {ext(SITE['whatsapp_question_url'])}>WhatsApp</a></li>
-      </ul>
-    </div>
-  </section>
-  <section class="section section-flush-top" id="agenda" aria-label="Online agenda">
-    <div class="wrap booking-wrap">
-      <div class="booking-embed">
-        <div class="salonized-booking" data-company="{SALONIZED_COMPANY}" data-color="#c9bba2" data-language="nl" data-height="760" data-height-mobile="760" data-width="560" data-inline="true" data-loader="https://static-widget.salonized.com/loader.js" data-outline="shadow" data-booking-widget></div>
-      </div>
-      <p class="booking-fallback">De agenda wordt geleverd door Salonized (<a href="/privacy">privacy</a>). Laadt hij niet? <a {ext(SITE['booking_url'])}>Open de online agenda</a> of bel <a href="tel:{SITE['phone_href']}">{SITE['phone_display']}</a>.</p>
-    </div>
-  </section>
 </main>
 {footer()}"""
 
@@ -1696,7 +1666,7 @@ def main():
     shutil.copytree(STATIC, OUT)
     shutil.copytree(ROOT / "assets", OUT / "assets", dirs_exist_ok=True)
 
-    pages = {"index.html": page_home(), "massages.html": page_massages(), "prijzen.html": page_prijzen(), "contact.html": page_contact(), "afspraak.html": page_afspraak(),
+    pages = {"index.html": page_home(), "massages.html": page_massages(), "prijzen.html": page_prijzen(), "contact.html": page_contact(),
              "voorwaarden.html": page_legal("voorwaarden"), "privacy.html": page_legal("privacy"), "404.html": page_404()}
     for t in PAGES:
         pages[f'{t["slug"]}.html'] = page_treatment(t)
@@ -1710,7 +1680,7 @@ def main():
         write(name, content)
 
     hero_img = Path(HERO.get("image", "thaise-massage-capelle-aan-den-ijssel")).stem
-    urls = [("/", "1.0", hero_img), ("/massages", "0.9", None), ("/prijzen", "0.9", None)] + [(f'/{t["slug"]}', "0.8", t["image"]) for t in PAGES] + [("/contact", "0.8", None), (BOOK_PATH, "0.8", None)] \
+    urls = [("/", "1.0", hero_img), ("/massages", "0.9", None), ("/prijzen", "0.9", None)] + [(f'/{t["slug"]}', "0.8", t["image"]) for t in PAGES] + [("/contact", "0.8", None)] \
         + [(f"/{lp['slug']}", "0.7", lp["image"]) for lp in LANDINGS] + [("/veelgestelde-vragen", "0.6", None), ("/massagegids", "0.6", None)] \
         + [(f"/massagegids/{a['slug']}", "0.6", a["image"]) for a in ARTICLES]
     # lastmod alleen waar we een echte wijzigingsdatum hebben (artikelen); een bouwdatum op elke pagina negeert Google

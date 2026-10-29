@@ -7,7 +7,7 @@
   /* Behandelpagina: 'Afspraak maken' opent de agenda met deze massage al gekozen */
   const pageService = document.body.dataset.bookService;
   if (pageService && /^\d{4,10}$/.test(pageService)) {
-    $$('a[href="/afspraak#agenda"], a[href="/afspraak"]').forEach((a) => { a.href = `/afspraak?dienst=${pageService}#agenda`; });
+    $$('a[data-book]').forEach((a) => { if (!a.href.includes('services[]=')) a.href += `&services[]=${pageService}`; });
   }
 
   /* Header-rand bij scrollen + mobiele contactbalk */
@@ -119,43 +119,6 @@
     $$('.footer-group[open]').forEach((d) => { d.open = false; });
   }
 
-  /* Boekpagina: widget zo hoog als het scherm (mobiel), daarna pas laden */
-  const widget = $('[data-booking-widget]');
-  if (widget) {
-    // Agenda zo hoog als het scherm (min. 600 px), op mobiel en desktop
-    const headerH = $('[data-header]')?.offsetHeight || 72;
-    const mobile = window.matchMedia('(max-width: 699px)').matches;
-    const h = String(Math.max(600, Math.round(window.innerHeight - headerH - (mobile ? 8 : 40))));
-    // Salonized gebruikt op touchscreens 'data-height-mobile' (standaard 500 px) in plaats van 'data-height'
-    widget.dataset.height = h;
-    widget.dataset.heightMobile = h;
-    // Gekozen massage meegeven (vanuit de massagekeuze of een prijs): klant hoeft alleen nog een tijd te kiezen
-    const dienst = new URLSearchParams(location.search).get('dienst');
-    if (dienst && /^\d{4,10}$/.test(dienst)) widget.dataset.services = JSON.stringify([Number(dienst)]);
-    const s = document.createElement('script');
-    s.src = widget.dataset.loader;
-    s.async = true;
-    document.body.appendChild(s);
-    // Komt de bezoeker via een 'Afspraak maken'-knop (#agenda), zet de agenda dan direct in beeld,
-    // ook nadat de widget is ingeladen en de pagina van hoogte veranderde.
-    if (location.hash === '#agenda') {
-      const toAgenda = () => {
-        const el = $('#agenda');
-        if (!el) return;
-        const offset = ($('[data-header]')?.offsetHeight || 72) + 8;
-        window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - offset, behavior: 'instant' });
-      };
-      requestAnimationFrame(toAgenda);
-      window.addEventListener('load', toAgenda, { once: true });
-      let tries = 0;
-      const t = setInterval(() => { if (widget.querySelector('iframe') || ++tries > 20) { clearInterval(t); toAgenda(); } }, 150);
-    }
-    $$('a[href^="/afspraak"]').forEach((a) => a.addEventListener('click', (ev) => {
-      ev.preventDefault();
-      $('#agenda')?.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
-    }));
-  }
-
   /* Massagekeuze: vijf vragen (voor wie, doel, druk, extra, duur) -> advies met uitleg */
   const quiz = $('[data-quiz]');
   /* Massagekeuze op mobiel: pas tonen na 'Start' */
@@ -253,7 +216,9 @@
       book.hidden = m === 'gift';
       const ids = m === 'duo' ? t.sidDuo : t.sid;
       const sid = ids && (ids[di > -1 ? di : 0]);
-      book.href = sid ? `/afspraak?dienst=${sid}#agenda` : '/afspraak#agenda';
+      const base = book.dataset.bookBase || book.href.split('&services[]=')[0];
+      book.dataset.bookBase = base;
+      book.href = sid ? `${base}&services[]=${sid}` : base;
       book.textContent = sid ? `Boek ${m === 'duo' ? 'samen' : 'deze massage'}` : 'Afspraak maken';
       q('[data-quiz-gift]').hidden = m !== 'gift';
       const link = q('[data-quiz-link]');
