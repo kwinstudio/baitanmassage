@@ -232,6 +232,7 @@ def ext(url):
 
 # ---------------------------------------------------------------- icons
 ICONS = {
+    "check": '<path d="M5 12.5l4.5 4.5L19 7.5"/>',
     "arrow": '<path d="M5 12h14M13 6l6 6-6 6"/>',
     "phone": '<path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/>',
     "pin": '<path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/>',
@@ -652,11 +653,24 @@ def side_card(gift=False):
           <li>{icon('card')}<span>Massage vanaf €{low} voor 60 minuten</span></li>
         </ul>
         <div class="side-actions">
-          <a class="btn btn-primary btn-block" {book()}>Afspraak maken</a>
+          <a class="btn btn-primary btn-block" {book()}>Bekijk vrije tijden</a>
           {second}
         </div>
+        {reassure()}
         <p class="price-card-meta">{icon('phone')} Liever bellen? <a href="tel:{SITE['phone_href']}">{SITE['phone_display']}</a></p>
       </aside>"""
+
+
+def reassure(light=False):
+    """Korte geruststelling direct onder een boekknop: weinig moeite, geen risico (alles waar)."""
+    cls = "reassure reassure-light" if light else "reassure"
+    return f'<p class="{cls}">{icon("check")}<span>Zelf je tijd kiezen · gratis annuleren tot 24 uur · betalen in de salon</span></p>'
+
+
+def proof(light=False):
+    """Sociale bewijskracht naast de boekknop: echte Google-score."""
+    cls = "proof proof-light" if light else "proof"
+    return f'<p class="{cls}"><a {ext(SITE["maps_url"])}>{stars()}<span><strong>{SITE["rating"]}</strong> uit {SITE["review_count"]} Google-reviews</span></a></p>'
 
 
 def cta_band(title="Zin in een moment voor jezelf?", text="Kies je behandeling en tijd in de online agenda."):
@@ -667,8 +681,9 @@ def cta_band(title="Zin in een moment voor jezelf?", text="Kies je behandeling e
       <p>{text}</p>
     </div>
     <div class="cta-actions">
-      <a class="btn btn-light" {book()}>Afspraak maken {icon('arrow')}</a>
+      <a class="btn btn-light" {book()}>Bekijk vrije tijden {icon('arrow')}</a>
       <a class="btn btn-ghost-light" href="tel:{SITE['phone_href']}">{icon('phone')} {SITE['phone_display']}</a>
+      {reassure(light=True)}
     </div>
   </div>
 </section>"""
@@ -826,6 +841,7 @@ def page_home():
           <a class="btn btn-light" {book()}>{E(HERO.get('primaryButton') or 'Afspraak maken')} {icon('arrow')}</a>
           <a class="btn btn-ghost-light" href="#behandelingen">{E(HERO.get('secondaryButton') or 'Bekijk behandelingen')}</a>
         </div>
+        {reassure(light=True)}
       </div>
       <ul class="hero-facts" aria-label="In het kort">
         <li><a {ext(SITE['maps_url'])}>{stars()}<span><strong>{SITE['rating']}</strong> uit {SITE['review_count']} Google-reviews</span></a></li>
@@ -1018,9 +1034,11 @@ def page_treatment(t):
         <p class="page-lead">{t['lead']}</p>
         {hero_prices(t)}
         <div class="btn-row">
-          <a class="btn btn-primary" {book()}>Afspraak maken {icon('arrow')}</a>
+          <a class="btn btn-primary" {book()}>Bekijk vrije tijden {icon('arrow')}</a>
           <a class="btn btn-outline hide-mobile" href="#prijs">Prijzen bekijken</a>
         </div>
+        {reassure()}
+        {proof()}
       </div>
       <figure class="page-hero-media">{picture(t['image'], t['alt'], eager=True, sizes="(min-width: 900px) 42vw, 100vw")}</figure>
     </div>
@@ -1291,6 +1309,8 @@ def page_afspraak():
       {breadcrumbs(crumbs)}
       <h1 id="page-title">Afspraak maken</h1>
       <p class="page-lead">Kies je behandeling, de duur en een tijd die jou uitkomt. Je betaalt in de salon met pin of contant.</p>
+      {reassure()}
+      {proof()}
       <ul class="booking-facts">
         <li>{icon('clock')}<span data-open-status data-week="{week_hours_json()}">{hours_short()}</span></li>
         <li>{icon('phone')}<a href="tel:{SITE['phone_href']}">{SITE['phone_display']}</a></li>
