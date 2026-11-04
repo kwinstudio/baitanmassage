@@ -215,6 +215,66 @@
       "source": "/feed/",
       "destination": "/",
       "permanent": true
+    },
+    {
+      "source": "/sln_service/:slug(thaise-duo-massage.*)",
+      "destination": "/duo-massage-capelle",
+      "permanent": true
+    },
+    {
+      "source": "/sln_service/:slug(traditionele-thaise.*|thaise-olie.*)",
+      "destination": "/thaise-massage-capelle-aan-den-ijssel",
+      "permanent": true
+    },
+    {
+      "source": "/sln_service/:slug(sportmassage.*)",
+      "destination": "/sportmassage-capelle",
+      "permanent": true
+    },
+    {
+      "source": "/sln_service/:slug(body-scrub.*)",
+      "destination": "/body-scrub-massage-capelle",
+      "permanent": true
+    },
+    {
+      "source": "/sln_service/:slug(hot-stone.*|hotstone.*)",
+      "destination": "/hot-stone-massage-capelle",
+      "permanent": true
+    },
+    {
+      "source": "/sln_service/:slug(aroma.*)",
+      "destination": "/aromatherapie-massage-capelle",
+      "permanent": true
+    },
+    {
+      "source": "/sln_service/:path*",
+      "destination": "/massages",
+      "permanent": true
+    },
+    {
+      "source": "/servicecategory/thaise-olie-massage/:path*",
+      "destination": "/thaise-massage-capelle-aan-den-ijssel",
+      "permanent": true
+    },
+    {
+      "source": "/servicecategory/thaise-duo-massage/:path*",
+      "destination": "/duo-massage-capelle",
+      "permanent": true
+    },
+    {
+      "source": "/servicecategory/body-scrub-massage/:path*",
+      "destination": "/body-scrub-massage-capelle",
+      "permanent": true
+    },
+    {
+      "source": "/servicecategory/sportmassage/:path*",
+      "destination": "/sportmassage-capelle",
+      "permanent": true
+    },
+    {
+      "source": "/servicecategory/:path*",
+      "destination": "/massages",
+      "permanent": true
     }
   ],
   "headers": [
