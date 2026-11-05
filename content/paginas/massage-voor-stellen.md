@@ -5,8 +5,8 @@ title: Massage voor stellen in Capelle aan den IJssel | Baitan
 description: Samen ontspannen met je partner? Bij Baitan in Capelle aan den IJssel boek je een duo-massage voor twee. Thaise massage, aromatherapie of hot stone.
 h1: Massage voor stellen in Capelle aan den IJssel
 lead: Met een duo-massage genieten jij en je partner tegelijk van een massage naar keuze.
-image: duo-massage-twee-behandeltafels
-imageAlt: Twee behandeltafels klaar voor een duo-massage
+image: salon-duo-massagekamer
+imageAlt: De duo-massagekamer van Baitan met twee behandeltafels, warm licht en handdoeken met het Baitan-logo
 date: 2026-10-08
 related: duo, aroma, hotstone
 faq: Liggen we samen in één ruimte? | Vraag het bij het boeken of in de salon, dan weet je wat je kunt verwachten.

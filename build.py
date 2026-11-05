@@ -396,7 +396,7 @@ def footer():
       <span><span>© {datetime.date.today().year} {SITE['name']}</span> · <span>KVK {SITE['kvk']}</span> · <span>BTW {SITE['btw']}</span></span>
       <span class="footer-legal"><a href="/voorwaarden">Huisregels &amp; voorwaarden</a><a href="/privacy">Privacy &amp; cookies</a><button class="footer-cookie" type="button" data-consent-open>Cookie-instellingen</button><span class="footer-credit">Website door <a href="https://zichtwerfstudio.nl" target="_blank" rel="noopener">Zichtwerf Studio</a></span></span>
     </div>
-    <p class="footer-note">De foto bovenaan de homepage toont de ontvangstruimte van Baitan. De andere foto's zijn sfeerbeelden en tonen niet de behandelruimtes of medewerkers van Baitan.</p>
+    <p class="footer-note">De foto's van de ontvangst en de behandelkamers tonen de salon van Baitan. De overige foto's bij de behandelingen zijn sfeerbeelden.</p>
   </div>
 </footer>
 <aside class="quick-contact" aria-label="Snel contact">
@@ -679,6 +679,33 @@ def proof(light=False):
     return f'<p class="{cls}"><a {ext(SITE["maps_url"])}>{stars()}<span><strong>{SITE["rating"]}</strong> uit {SITE["review_count"]} Google-reviews</span></a></p>'
 
 
+SALON_PHOTOS = [
+    ("salon-ontvangst", "De ontvangstbalie van Baitan Thai Massage met het verlichte logo, Thaise beelden en orchideeën"),
+    ("salon-duo-massagekamer", "De duo-massagekamer van Baitan met twee behandeltafels, warm licht en handdoeken met het Baitan-logo"),
+    ("salon-behandelkamer", "Behandelkamer bij Baitan met Thaise zijde op de massagetafel, kaarslicht en goudkleurig behang"),
+    ("salon-behandelkamers", "Twee behandelkamers naast elkaar bij Baitan, elk met een massagetafel en eigen wastafel"),
+    ("salon-behandelkamer-rozen", "Behandelkamer bij Baitan met een opgemaakte massagetafel, rozenblaadjes en handdoekzwanen"),
+]
+
+
+def salon_gallery(title="Een kijkje in de salon", tint=False):
+    """Echte foto's van de salon: groot beeld + vier kleinere; op mobiel een veegbare rij."""
+    items = "".join(
+        f'<li class="gallery-item{" gallery-item-lead" if i == 0 else ""}">'
+        f'<figure>{picture(n, alt, sizes=("(min-width: 900px) 50vw, 85vw" if i == 0 else "(min-width: 900px) 25vw, 85vw"))}</figure></li>'
+        for i, (n, alt) in enumerate(SALON_PHOTOS)
+    )
+    return f"""<section class="section{' section-tint' if tint else ''}" id="salon" aria-labelledby="salon-title">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="salon-title">{title}</h2>
+        <p>Zo ziet het eruit bij Baitan aan het {SITE['street']}: rustige behandelkamers, warm licht en Thaise sfeer.</p>
+      </div>
+      <ul class="gallery" aria-label="Foto's van de salon">{items}</ul>
+    </div>
+  </section>"""
+
+
 def cta_band(title="Zin in een moment voor jezelf?", text="Kies je behandeling en tijd in de online agenda."):
     return f"""<section class="cta-band">
   <div class="wrap cta-inner">
@@ -926,6 +953,8 @@ def page_home():
       </div>
     </div>
   </section>
+
+  {salon_gallery()}
 
 {perks_section()}
 
@@ -1240,7 +1269,7 @@ def page_legal(kind):
             ("Cadeaubonnen", ["Een cadeaubon is minimaal 2 jaar geldig vanaf de datum van aankoop. De uiterste datum staat op de bon. Cadeaubonnen zijn niet inwisselbaar voor geld."]),
             ("Overmacht", ["Moet Baitan een afspraak annuleren of verzetten door ziekte, een storing of een andere onvoorziene omstandigheid, dan laten we je dat zo snel mogelijk weten. Je kiest dan zelf: een nieuwe afspraak of volledige terugbetaling van wat je al hebt betaald."]),
             ("Reviews", ["Het gemiddelde cijfer en het aantal reviews op deze website komen van Google. De reviews staan op Google en worden niet door Baitan gecontroleerd of geselecteerd."]),
-            ("Foto's op deze website", ["De foto bovenaan de homepage toont de ontvangstruimte van Baitan. De overige foto's op deze website zijn kunstmatig gegenereerde sfeerbeelden van de behandelingen. Ze tonen niet de behandelruimtes of medewerkers van Baitan."]),
+            ("Foto's op deze website", ["De foto bovenaan de homepage en de foto's van de ontvangst en de behandelkamers tonen de salon van Baitan. De overige foto's bij de behandelingen zijn kunstmatig gegenereerde sfeerbeelden; ze tonen niet de medewerkers van Baitan."]),
             ("Toepasselijk recht", ["Op de dienstverlening is Nederlands recht van toepassing."]),
         ]
         cancel = "<ul><li>Kosteloos annuleren tot 24 uur vóór de afspraak.</li><li>Binnen 24 uur vindt geen restitutie plaats.</li><li>Een afspraak kan één keer kosteloos worden verzet.</li><li>Bij een no-show vervalt de afspraak zonder terugbetaling.</li></ul>"
@@ -1592,6 +1621,7 @@ def page_landing(p):
       <figure class="page-hero-media">{picture(p['image'], p.get('imageAlt', ''), eager=True, sizes="(min-width: 900px) 42vw, 100vw")}</figure>
     </div>
   </section>
+  {salon_gallery("De salon") if p['slug'] == 'over-baitan' else ''}
   <section class="section">
     <div class="wrap detail-grid">
       <div class="prose">{p['html']}</div>
