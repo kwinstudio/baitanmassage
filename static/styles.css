@@ -696,3 +696,15 @@ body.has-consent .mobile-bar,body.has-consent .whatsapp-float{visibility:hidden}
 .proof-light a{color:rgba(246,241,230,.9)}
 .cta-actions .reassure{flex-basis:100%;margin-top:4px}
 .side-card .reassure{margin-top:12px}
+/* Foto's van de salon */
+.gallery{display:flex;gap:12px;margin-top:28px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:6px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.gallery::-webkit-scrollbar{display:none}
+.gallery-item{flex:0 0 82%;scroll-snap-align:start}
+.gallery figure{margin:0;height:100%;border-radius:var(--radius);overflow:hidden;background:var(--line);aspect-ratio:4/5}
+.gallery img{width:100%;height:100%;object-fit:cover;display:block}
+@media (min-width:700px){
+  .gallery{display:grid;overflow:visible;grid-template-columns:repeat(4,1fr);grid-auto-rows:clamp(180px,20vw,280px);gap:16px}
+  .gallery-item{min-width:0}
+  .gallery-item-lead{grid-column:span 2;grid-row:span 2}
+  .gallery figure{aspect-ratio:auto}
+}
